@@ -2,4 +2,10 @@
     <string name="app_name">Reminder</string>
     <string name="made_by">Made By</string>
     <string name="todo">todo</string>
+    <string name="hintCorreo">email</string>
+    <string name="hintPass">password</string>
+    <string name="login">Login</string>
+    <string name="createAccount">Don\'t have an account yet? Sign up now!</string>
+    <string name="loginWithGoogle">Acceder con Google</string>
+    <string name="signUpWith">or sign up with</string>
 </resources>
