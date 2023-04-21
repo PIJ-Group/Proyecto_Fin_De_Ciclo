@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:theme="@style/Theme.Reminder"
     tools:context=".Login">
 
     <com.airbnb.lottie.LottieAnimationView
@@ -22,7 +23,7 @@
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/layoutCorreo"
         android:layout_width="309dp"
-        android:layout_height="55dp"
+        android:layout_height="50dp"
         android:layout_marginTop="112dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -34,20 +35,21 @@
             android:layout_width="314dp"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/white"
-            android:fontFamily="@font/typewriter"
+            android:fontFamily="@font/modern"
             android:hint="@string/hintCorreo"
             android:textColorHint="@color/teal_700"
             android:textSize="16sp"
             tools:layout_editor_absoluteX="-154dp"
-            tools:layout_editor_absoluteY="299dp" />
+            tools:layout_editor_absoluteY="299dp"
+            tools:ignore="TextContrastCheck"/>
 
-         <requestFocus/>
+        <requestFocus />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/layoutPass"
         android:layout_width="309dp"
-        android:layout_height="55dp"
+        android:layout_height="50dp"
         android:layout_marginTop="52dp"
         app:endIconMode="password_toggle"
         app:layout_constraintEnd_toEndOf="parent"
@@ -60,7 +62,7 @@
             android:layout_width="314dp"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/white"
-            android:fontFamily="@font/typewriter"
+            android:fontFamily="@font/modern"
             android:hint="@string/hintPass"
             android:inputType="textPassword"
             android:textColorHint="@color/teal_700"
@@ -88,7 +90,8 @@
         android:id="@+id/createAccount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="32dp"
+        android:cursorVisible="true"
         android:fontFamily="@font/modern"
         android:text="@string/createAccount"
         android:textColor="@color/pink_light"
@@ -103,22 +106,22 @@
         android:id="@+id/signUpWith"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="56dp"
         android:fontFamily="@font/modern"
         android:text="@string/signUpWith"
-        android:textColor="@color/pink_light"
+        android:textColor="@color/pink_dark"
         android:textSize="20sp"
-        android:textStyle="bold"
+
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.484"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/createAccount" />
 
     <Button
-        android:id="@+id/buttonGoogle"
+        android:id="@+id/googleButton"
         android:layout_width="70dp"
         android:layout_height="70dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="32dp"
         android:background="#00FFFFFF"
         android:drawableLeft="@drawable/google"
         app:cornerRadius="30sp"
@@ -129,10 +132,10 @@
         app:layout_constraintTop_toBottomOf="@+id/signUpWith" />
 
     <Button
-        android:id="@+id/buttonFacebook"
+        android:id="@+id/facebookButton"
         android:layout_width="70dp"
         android:layout_height="70dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="32dp"
         android:background="#00FFFFFF"
         android:drawableLeft="@drawable/fb"
         app:cornerRadius="30sp"
@@ -143,10 +146,10 @@
         app:layout_constraintTop_toBottomOf="@+id/signUpWith" />
 
     <Button
-        android:id="@+id/buttonTwitter"
+        android:id="@+id/twitterButton"
         android:layout_width="70dp"
         android:layout_height="70dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="32dp"
         android:background="#00FFFFFF"
         android:drawableLeft="@drawable/twitter"
         app:cornerRadius="30sp"
