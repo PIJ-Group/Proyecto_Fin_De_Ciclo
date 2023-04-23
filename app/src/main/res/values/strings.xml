@@ -19,4 +19,19 @@
     <string name="confirm_password">Confirm password</string>
     <string name="user_registration">User registration</string>
     <string name="i_have_account">I already have an account</string>
+
+    <!---Add Note-->
+    <string name="Userid_User">User id</string>
+    <string name="User_mail">User e-mail</string>
+    <string name="Current_Date_time">Current date and time</string>
+    <string name="Title">Title</string>
+    <string name="Description">Description</string>
+    <string name="Calendar_btn">Calendar</string>
+    <string name="Date">00/00/0000</string>
+    <string name="Status">Not finished</string>
+
+    <!---Menu-->
+    <string name="Add_Note">Add Note</string>
+
+
 </resources>
