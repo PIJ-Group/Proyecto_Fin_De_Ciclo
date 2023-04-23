@@ -7,5 +7,4 @@
         android:title="@string/Add_Note"
         app:showAsAction="ifRoom">
     </item>
-
 </menu>
