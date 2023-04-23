@@ -32,6 +32,9 @@
 
     <!---Menu-->
     <string name="Add_Note">Add Note</string>
+    <string name="Add_btn">add</string>
+    <string name="Edit_btn">edit</string>
+    <string name="Logout">logout</string>
 
 
 </resources>
