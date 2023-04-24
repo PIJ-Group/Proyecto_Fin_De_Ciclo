@@ -35,6 +35,7 @@
     <string name="Add_btn">add</string>
     <string name="Edit_btn">edit</string>
     <string name="Logout">logout</string>
+    <string name="item_title">Title</string>
 
 
 </resources>
