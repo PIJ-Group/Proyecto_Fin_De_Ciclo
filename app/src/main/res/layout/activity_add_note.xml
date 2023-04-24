@@ -1,19 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
+<androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:theme="@style/Theme.Reminder"
     tools:context=".AddNote.AddNote">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="10dp">
+        android:padding="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <!--User Id
-            Id del usuario-->
+           Id del usuario-->
         <TextView
             android:id="@+id/Userid_User"
             android:layout_width="wrap_content"
@@ -22,6 +26,8 @@
             android:layout_marginTop="8dp"
             android:fontFamily="@font/vanilla"
             android:hint="@string/Userid_User"
+            android:textColor="#000000"
+            android:textColorHint="#757575"
             android:textSize="18sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -36,6 +42,7 @@
             android:layout_marginTop="8dp"
             android:fontFamily="@font/vanilla"
             android:hint="@string/User_mail"
+            android:textColorHint="#757575"
             android:textSize="18sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/Userid_User" />
@@ -50,6 +57,7 @@
             android:layout_marginTop="8dp"
             android:fontFamily="@font/vanilla"
             android:hint="@string/Current_Date_time"
+            android:textColorHint="#757575"
             android:textSize="18sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/User_mail" />
@@ -62,8 +70,10 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
+            android:autofillHints=""
             android:fontFamily="@font/vanilla"
             android:hint="@string/Title"
+            android:inputType="text"
             android:textSize="24sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/Current_Date_time" />
@@ -76,10 +86,13 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
+            android:autofillHints=""
             android:fontFamily="@font/vanilla"
             android:gravity="start"
             android:hint="@string/Description"
+            android:inputType="text"
             android:minHeight="150dp"
+            android:textColorHint="#78909C"
             android:textSize="20sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/Title" />
@@ -114,6 +127,7 @@
                 android:layout_marginTop="8dp"
                 android:fontFamily="@font/vanilla"
                 android:hint="@string/Date"
+                android:textColorHint="#78909C"
                 android:textSize="24sp"
                 app:layout_constraintStart_toEndOf="@+id/Calendar_btn"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -127,11 +141,11 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:fontFamily="@font/vanilla"
-            android:hint="@string/Status"
+            android:text="@string/Status"
             android:textSize="20sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/linearLayoutCompat2" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-</ScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>
