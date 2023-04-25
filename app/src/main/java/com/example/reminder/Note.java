@@ -1,4 +1,4 @@
-package com.example.reminder.Model;
+package com.example.reminder;
 
 public class Note {
 
