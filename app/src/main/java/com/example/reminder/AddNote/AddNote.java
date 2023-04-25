@@ -141,7 +141,10 @@ public class AddNote extends AppCompatActivity {
             Note note = new Note(eMail + "/" + dateTimeCurrent, userId,
                     eMail,dateTimeCurrent,title, description, date, status);
 
-            //String User_Note = db.collection("Notes").add(note);
+            db.collection("Tasks").document("userId").set(note);
+
+            toastOk("Note successfully added");
+            onBackPressed();
 
             //Video 36 min 8
 
@@ -149,8 +152,8 @@ public class AddNote extends AppCompatActivity {
             toastWarning("All fields must be filled");
         }
     }
-
-    public boolean OnCreateOptionsMenu(Menu menu){
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu){
         MenuInflater menuInflater = getMenuInflater();
         menuInflater.inflate(R.menu.menu_add_note,menu);
         return super.onCreateOptionsMenu(menu);
@@ -160,7 +163,7 @@ public class AddNote extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()){
             case R.id.Add_Note_BD:
-                toastOk("Note successfully added");
+                AddNoteFireBase();
             break;
         }
         return super.onOptionsItemSelected(item);
