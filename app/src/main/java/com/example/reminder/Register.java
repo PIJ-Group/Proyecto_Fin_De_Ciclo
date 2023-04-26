@@ -45,7 +45,7 @@ public class Register extends AppCompatActivity {
                 passText.setError(getString(R.string.empty_field));
             } else if (password.length() < 6) {
                 passText.setError(getString(R.string.invalid_password));
-            } else if (!confirmedPassword.equals(password)) {
+            } else if (!confirmedPassword.equals(password) || confirmedPassword.isEmpty()) {
                 confirmedPassText.setError(getString(R.string.not_match));
             } else {
 
