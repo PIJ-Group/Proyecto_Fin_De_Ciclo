@@ -36,6 +36,10 @@
     <string name="Edit_btn">edit</string>
     <string name="Logout">logout</string>
     <string name="item_title">Title</string>
+    <string name="invalid_password">password very short</string>
+    <string name="created_user">usuario creado</string>
+    <string name="already_user_registered">Usuario Existente</string>
+    <string name="not_match">Las constraseñas no coinciden</string>
 
 
 </resources>

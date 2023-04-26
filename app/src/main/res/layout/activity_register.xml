@@ -54,7 +54,7 @@
             android:layout_marginTop="15dp">
 
             <EditText
-                android:id="@+id/NombreEt"
+                android:id="@+id/completeName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:drawableStart="@drawable/name_icon"
@@ -72,7 +72,7 @@
             android:layout_marginTop="10dp">
 
             <EditText
-                android:id="@+id/CorreoEt"
+                android:id="@+id/emailBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:drawableStart="@drawable/email_icon"
@@ -92,7 +92,7 @@
             app:passwordToggleEnabled="true">
 
             <EditText
-                android:id="@+id/ContaseñaEt"
+                android:id="@+id/passBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:drawableStart="@drawable/ic_baseline_lock_24"
@@ -113,7 +113,7 @@
             app:passwordToggleEnabled="true">
 
             <EditText
-                android:id="@+id/ConfirmarContraseñaEt"
+                android:id="@+id/confirmedPassBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:drawableStart="@drawable/ic_baseline_lock_24"
@@ -126,7 +126,7 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <Button
-            android:id="@+id/RegistrarUsuario"
+            android:id="@+id/userRegister"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
@@ -135,7 +135,7 @@
             android:textSize="18sp" />
 
         <TextView
-            android:id="@+id/TengounacuentaTXT"
+            android:id="@+id/haveAccount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
