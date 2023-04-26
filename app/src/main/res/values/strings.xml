@@ -36,10 +36,11 @@
     <string name="Edit_btn">edit</string>
     <string name="Logout">logout</string>
     <string name="item_title">Title</string>
-    <string name="invalid_password">password very short</string>
-    <string name="created_user">usuario creado</string>
-    <string name="already_user_registered">Usuario Existente</string>
-    <string name="not_match">Las constraseñas no coinciden</string>
+    <string name="item_hour">Hour</string>
+    <string name="dialog_item_details">Ver detalles</string>
+    <string name="dialog_item_edit">Editar</string>
+    <string name="dialog_item_delete">Eliminar</string>
+    <string name="event_deleted">Evento eliminado</string>
 
 
 </resources>

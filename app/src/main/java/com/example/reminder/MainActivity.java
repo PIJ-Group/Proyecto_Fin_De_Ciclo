@@ -2,22 +2,29 @@ package com.example.reminder;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
 
-import com.example.reminder.AddNote.AddNote;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.firestore.core.View;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,9 +54,8 @@ public class MainActivity extends AppCompatActivity {
 
     //Insertar item en listview
     private void updateNotes() {
-        //COMPROBRAR QUE LA COLECCIÓN ES LA CORRESPONDIENTE!!!
-        db.collection("Tareas")
-                .whereEqualTo("emailUsuario", emailUsuario)
+        db.collection("Tasks")
+                .whereEqualTo("Email", emailUsuario)
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
                     public void onEvent(@Nullable QuerySnapshot value,
@@ -62,8 +68,7 @@ public class MainActivity extends AppCompatActivity {
                         listNotesId.clear();
                         for (QueryDocumentSnapshot doc : value) {
                             listNotesId.add(doc.getId());
-                            //COMPROBAR EL CAMPO!!!
-                            listNotes.add(doc.getString("nombreTarea"));
+                            listNotes.add(doc.getString("taskName"));
                         }
 
                         if(listNotes.size() == 0){
@@ -103,5 +108,56 @@ public class MainActivity extends AppCompatActivity {
             default: return super.onOptionsItemSelected(item);
 
         }
+    }
+
+    //Dialog del botón elipsis del item con funcionalidad
+    public void otherOptions(View view) {
+        AlertDialog dialog = new AlertDialog.Builder(this)
+            .setPositiveButton(R.string.dialog_item_details, new DialogInterface.OnClickListener() {
+            @Override
+                public void onClick(DialogInterface dialog, int i) {
+                    //PASAR A ACTIVITY DE DETALLES
+                }
+            })
+            .setNeutralButton(R.string.dialog_item_edit, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int i) {
+                    //PASAR A ACTIVITY DE EDITAR
+                }
+            })
+            .setNegativeButton(R.string.dialog_item_delete, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int i) {
+                    //ELIMIAR TAREA
+                }
+            })
+            .create();
+        dialog.show();
+    }
+    /*
+    //Método para poder borrar la tarea ya realizada
+    public void deleteNote(View view) {
+        View parent = (View) view.getParent();
+        TextView taskTv = parent.findViewById(R.id.item_title);
+        String taskContent = taskTv.getText().toString();
+        int position = listNotes.indexOf(taskContent);
+
+        db.collection("Tasks").document(listNotesId.get(position)).delete();
+
+        toastOk(getString(R.string.event_deleted));
+    }*/
+
+    //Método para incluir un toast personalizado de confirmación.
+    public void toastOk(String msg){
+        LayoutInflater layoutInflater = getLayoutInflater();
+        android.view.View view = layoutInflater.inflate(R.layout.toast_ok, (ViewGroup) findViewById(R.id.custom_ok));
+        TextView txtMensaje = view.findViewById(R.id.text_ok);
+        txtMensaje.setText(msg);
+
+        Toast toast = new Toast(getApplicationContext());
+        toast.setGravity(Gravity.CENTER_VERTICAL | Gravity.BOTTOM, 0,200);
+        toast.setDuration (Toast.LENGTH_LONG);
+        toast.setView(view);
+        toast.show();
     }
 }

@@ -6,146 +6,114 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:theme="@style/Theme.Reminder"
-    tools:context=".AddNote.AddNote">
+    tools:context=".AddNote">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <!--ID DEL USUARIO-->
+    <TextView
+        android:id="@+id/Userid_User"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:fontFamily="@font/vanilla"
+        android:hint="@string/Userid_User"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!--MAIL DEL USUARIO-->
+    <TextView
+        android:id="@+id/User_mail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:fontFamily="@font/vanilla"
+        android:hint="@string/User_mail"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/Userid_User" />
+
+    <!--FECHA Y HORA DEL SISTEMA-->
+    <TextView
+        android:id="@+id/Current_Date_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:fontFamily="@font/vanilla"
+        android:hint="@string/Current_Date_time"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/User_mail" />
+
+    <!--TITULO DE LA NOTA-->
+    <EditText
+        android:id="@+id/Title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="10dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="8dp"
+        android:fontFamily="@font/vanilla"
+        android:hint="@string/Title"
+        android:textSize="25sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@+id/Current_Date_time" />
 
-        <!--User Id
-           Id del usuario-->
-        <TextView
-            android:id="@+id/Userid_User"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:fontFamily="@font/vanilla"
-            android:hint="@string/Userid_User"
-            android:textColor="#000000"
-            android:textColorHint="#757575"
-            android:textSize="18sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+    <!--DESCRIPCION DE LA NOTA-->
+    <EditText
+        android:id="@+id/Description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="8dp"
+        android:gravity="start"
+        android:hint="@string/Description"
+        android:minHeight="150dp"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/Title" />
 
-        <!--User E-mail
-            correo del usuario-->
-        <TextView
-            android:id="@+id/User_mail"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:fontFamily="@font/vanilla"
-            android:hint="@string/User_mail"
-            android:textColorHint="#757575"
-            android:textSize="18sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/Userid_User" />
+    <!--BOTON DE CALENDARIO-->
+    <Button
+        android:id="@+id/Calendar_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:text="@string/Calendar_btn"
+        app:icon="@drawable/icon_calendar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/Description" />
 
-        <!--Current time and date from the device
-            Fecha y hora actual del dispositivo-->
-        <TextView
-            android:id="@+id/Current_Date_time"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:fontFamily="@font/vanilla"
-            android:hint="@string/Current_Date_time"
-            android:textColorHint="#757575"
-            android:textSize="18sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/User_mail" />
+    <!--FECHA SELECCIONADA-->
+    <TextView
+        android:id="@+id/Date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="24dp"
+        android:fontFamily="@font/vanilla"
+        android:hint="@string/Date"
+        android:textSize="20sp"
+        app:layout_constraintStart_toEndOf="@+id/Calendar_btn"
+        app:layout_constraintTop_toBottomOf="@+id/Description" />
 
-        <!--Note Title
-            Título de la nota-->
-        <EditText
-            android:id="@+id/Title"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:autofillHints=""
-            android:fontFamily="@font/vanilla"
-            android:hint="@string/Title"
-            android:inputType="text"
-            android:textSize="24sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/Current_Date_time" />
-
-        <!--Note Description
-            Descripción de la nota-->
-        <EditText
-            android:id="@+id/Description"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:autofillHints=""
-            android:fontFamily="@font/vanilla"
-            android:gravity="start"
-            android:hint="@string/Description"
-            android:inputType="text"
-            android:minHeight="150dp"
-            android:textColorHint="#78909C"
-            android:textSize="20sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/Title" />
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/linearLayoutCompat2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/Description">
-
-            <!--Open calendar button
-            Boton para abir calendario-->
-            <Button
-                android:id="@+id/Calendar_btn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/Calendar_btn"
-                app:icon="@drawable/icon_calendar"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <!--Show chosen date
-                Ver fecha elegida-->
-            <TextView
-                android:id="@+id/Date"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="8dp"
-                android:fontFamily="@font/vanilla"
-                android:hint="@string/Date"
-                android:textColorHint="#78909C"
-                android:textSize="24sp"
-                app:layout_constraintStart_toEndOf="@+id/Calendar_btn"
-                app:layout_constraintTop_toTopOf="parent" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <TextView
-            android:id="@+id/Status"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:fontFamily="@font/vanilla"
-            android:text="@string/Status"
-            android:textSize="20sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/linearLayoutCompat2" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    <!--ESTADO DE LA NOTA-->
+    <TextView
+        android:id="@+id/Status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="24dp"
+        android:fontFamily="@font/vanilla"
+        android:text="@string/Status"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/Calendar_btn" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

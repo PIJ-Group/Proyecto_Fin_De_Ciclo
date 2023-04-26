@@ -1,4 +1,4 @@
-package com.example.reminder.AddNote;
+package com.example.reminder;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
@@ -18,8 +18,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.reminder.Model.Note;
-import com.example.reminder.R;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.text.SimpleDateFormat;
