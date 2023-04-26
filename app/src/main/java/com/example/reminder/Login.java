@@ -151,19 +151,6 @@ public class Login extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void toastOk(String msg) {
-        LayoutInflater layoutInflater = getLayoutInflater();
-        View view = layoutInflater.inflate(R.layout.toast_ok, findViewById(R.id.custom_ok));
-        TextView txtMensaje = view.findViewById(R.id.text_ok);
-        txtMensaje.setText(msg);
-
-        Toast toast = new Toast(getApplicationContext());
-        toast.setGravity(Gravity.CENTER_VERTICAL | Gravity.BOTTOM, 0, 200);
-        toast.setDuration(Toast.LENGTH_LONG);
-        toast.setView(view);
-        toast.show();
-    }
-
     public void toastWarning(String msg) {
         LayoutInflater layoutInflater = getLayoutInflater();
         View view = layoutInflater.inflate(R.layout.toast_warning, findViewById(R.id.custom_warning));

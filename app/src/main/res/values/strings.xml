@@ -41,6 +41,10 @@
     <string name="dialog_item_edit">Editar</string>
     <string name="dialog_item_delete">Eliminar</string>
     <string name="event_deleted">Evento eliminado</string>
+    <string name="created_user">Usuario creado</string>
+    <string name="already_user_registered">Usuario existente</string>
+    <string name="invalid_password">contraseña muy corta</string>
+    <string name="not_match">Las contraseñas no coinciden</string>
 
 
 </resources>
