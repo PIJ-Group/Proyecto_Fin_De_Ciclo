@@ -1,62 +1,104 @@
 package com.example.reminder;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class Register extends AppCompatActivity {
-    Button botonRegistro;
-    EditText emailText, passText, confirmedPassText;
+    Button btnRegister;
+    EditText inputUserName,inputEmailText, inputPassText, inputConfirmedPassText;
     private FirebaseAuth mAuth;
+    FirebaseAuth firebaseAuth;
+    FirebaseFirestore db;
+
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
-
+        db = FirebaseFirestore.getInstance();
         mAuth = FirebaseAuth.getInstance();
-        emailText = findViewById(R.id.emailBox); //Texto del correo
-        passText = findViewById(R.id.passBox);
-        confirmedPassText = findViewById(R.id.confirmedPassBox);
+        inputEmailText = findViewById(R.id.emailBox); //Texto del correo
+        inputPassText = findViewById(R.id.passBox);
+        inputConfirmedPassText = findViewById(R.id.confirmedPassBox);
+        inputUserName = findViewById(R.id.completeName);
 
-        botonRegistro = findViewById(R.id.userRegister);
-        botonRegistro.setOnClickListener(view -> {
+
+        btnRegister = findViewById(R.id.userRegister);
+        btnRegister.setOnClickListener(view -> {
             //CREAR USUARIO EN FIREBASE
-            String email = emailText.getText().toString();
-            String password = passText.getText().toString();
-            String confirmedPassword = confirmedPassText.getText().toString();
+            String email = inputEmailText.getText().toString();
+            String password = inputPassText.getText().toString();
+            String confirmedPassword = inputConfirmedPassText.getText().toString();
+            String userName = inputUserName.getText().toString();
 
             if (email.isEmpty()) {
-                emailText.setError(getString(R.string.empty_field));
+                inputEmailText.setError(getString(R.string.empty_field));
             } else if (!email.contains("@") || !email.contains(".") || email.contains(" ")) {
-                emailText.setError(getString(R.string.invalid_email));
+                inputEmailText.setError(getString(R.string.invalid_email));
             } else if (password.isEmpty()) {
-                passText.setError(getString(R.string.empty_field));
+                inputPassText.setError(getString(R.string.empty_field));
             } else if (password.length() < 6) {
-                passText.setError(getString(R.string.invalid_password));
+                inputPassText.setError(getString(R.string.invalid_password));
             } else if (!confirmedPassword.equals(password) || confirmedPassword.isEmpty()) {
-                confirmedPassText.setError(getString(R.string.not_match));
+                inputConfirmedPassText.setError(getString(R.string.not_match));
             } else {
 
                 mAuth.createUserWithEmailAndPassword(email, password)
                         .addOnCompleteListener(task -> {
                             if (task.isSuccessful()) {
+                            FirebaseUser user = mAuth.getCurrentUser();
+                            String userId = user.getUid();
+                            DocumentReference documentReference = db.collection("Users").document(userId);
+                            Map<String,Object> dataUser = new HashMap<>();
+                            dataUser.put("user_name",userName);
+                            dataUser.put("email_user",email);
+                            documentReference.set(dataUser).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void aVoid) {
+                                    Log.d("register", "Datos de usuario creados");
+                                    toastOk(getString(R.string.created_user));
+                                    Intent intent = new Intent(Register.this, MainActivity.class);
+                                    startActivity(intent);
+                                    Register.this.finish();
 
-                                toastOk(getString(R.string.created_user));
+                                }
+                            }).addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    Log.d("register", "Error al crear documento");
+                                }
+                            });
 
-                                Intent intent = new Intent(Register.this, MainActivity.class);
-                                startActivity(intent);
+
 
                             } else {
                                 // If sign in fails, display a message to the user.
@@ -94,4 +136,5 @@ public class Register extends AppCompatActivity {
         toast.setView(view);
         toast.show();
     }
+
 }
