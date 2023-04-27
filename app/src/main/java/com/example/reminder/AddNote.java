@@ -18,6 +18,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.text.SimpleDateFormat;
@@ -33,13 +34,16 @@ public class AddNote extends AppCompatActivity {
     int day, month, year;
 
     FirebaseFirestore db;
+    FirebaseAuth nAuth;
+    String userName, userMail;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_note);
 
-        ActionBar actionBar= getSupportActionBar();
+        ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle("");
         actionBar.setDisplayShowHomeEnabled(true);
         actionBar.setDisplayHomeAsUpEnabled(true);
@@ -63,18 +67,18 @@ public class AddNote extends AppCompatActivity {
                         String dayFormatted, monthFormatted;
 
                         //Get day
-                        if (daySelected < 10){
+                        if (daySelected < 10) {
                             dayFormatted = "0" + daySelected;
-                        }else {
+                        } else {
                             dayFormatted = String.valueOf(daySelected);
                         }
                         //Get month
 
                         int Month = monthSelected + 1;
 
-                        if (Month < 10){
+                        if (Month < 10) {
                             monthFormatted = "0" + Month;
-                        }else {
+                        } else {
                             monthFormatted = String.valueOf(Month);
                         }
 
@@ -82,14 +86,14 @@ public class AddNote extends AppCompatActivity {
                         Date.setText(dayFormatted + "/" + monthFormatted + "/" + yearSelected);
                     }
                 }
-                ,year,month,day);
+                        , year, month, day);
                 datePickerDialog.show();
             }
         });
 
     }
 
-    private void VarInit(){
+    private void VarInit() {
         Userid_User = findViewById(R.id.Userid_User);
         User_mail = findViewById(R.id.User_mail);
         Current_Date_time = findViewById(R.id.Current_Date_time);
@@ -102,25 +106,29 @@ public class AddNote extends AppCompatActivity {
         Calendar_btn = findViewById(R.id.Calendar_btn);
 
         db = FirebaseFirestore.getInstance();
-    }
-    //Obtiene los datos de usuario del menú ppal
-    //OJO tiene que hacer Jorge lo del video 29
-    private void DataObtent(){
-        // OJO poner dentro de los paréntesis el nombre del dato enviado en el menu ppal
-        String userIdRecover = getIntent().getStringExtra("Uid");
-        String userMailRecover = getIntent().getStringExtra("Mail");
-
-        Userid_User.setText(userIdRecover);
-        User_mail.setText(userMailRecover);
+        nAuth = FirebaseAuth.getInstance();
+        userName = nAuth.getCurrentUser().getDisplayName();
+        userMail = nAuth.getCurrentUser().getEmail();
     }
 
-    private void CurrentDateTimeObtent(){
+    //Obtiene los datos del menú ppal y del registro de usuario
+    private void DataObtent() {
+
+        String dateRecover = getIntent().getStringExtra("calendarDate");
+
+        Userid_User.setText(userName);
+        User_mail.setText(userMail);
+        Date.setText(dateRecover);
+    }
+
+    //Obtiene la fecha y hora
+    private void CurrentDateTimeObtent() {
         String DateTimeReg = new SimpleDateFormat("dd-MM-yyyy/HH:mm:ss a",
                 Locale.getDefault()).format(System.currentTimeMillis());
         Current_Date_time.setText(DateTimeReg);
     }
 
-    private void AddNoteFireBase(){
+    private void AddNoteFireBase() {
 
         //Get data
         String userId = Userid_User.getText().toString();
@@ -132,37 +140,37 @@ public class AddNote extends AppCompatActivity {
         String status = Status.getText().toString();
 
         //Data validation
-        if(!userId.equals("") || !eMail.equals("") || !dateTimeCurrent.equals("") ||
-                !title.equals("") || !description.equals("") || date.equals("") ||
-                !status.equals("")){
+        if (!dateTimeCurrent.equals("") && !title.equals("") &&
+                !description.equals("") && date.equals("") &&
+                !status.equals("")) {
 
             Note note = new Note(eMail + "/" + dateTimeCurrent, userId,
-                    eMail,dateTimeCurrent,title, description, date, status);
+                    eMail, dateTimeCurrent, title, description, date, status);
 
-            db.collection("Tasks").document("userId").set(note);
+            db.collection("Notes").add(note);
 
             toastOk("Note successfully added");
             onBackPressed();
 
-            //Video 36 min 8
 
-        }else{
+        } else {
             toastWarning("All fields must be filled");
         }
     }
+
     @Override
-    public boolean onCreateOptionsMenu(Menu menu){
+    public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater menuInflater = getMenuInflater();
-        menuInflater.inflate(R.menu.menu_add_note,menu);
+        menuInflater.inflate(R.menu.menu_add_note, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()){
+        switch (item.getItemId()) {
             case R.id.Add_Note_BD:
                 AddNoteFireBase();
-            break;
+                break;
         }
         return super.onOptionsItemSelected(item);
     }

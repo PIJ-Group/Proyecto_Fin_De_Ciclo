@@ -15,9 +15,13 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
+        android:layout_marginEnd="355dp"
         android:fontFamily="@font/vanilla"
         android:hint="@string/Userid_User"
+        android:textColorHint="#757575"
         android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/User_mail"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -28,9 +32,13 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
+        android:layout_marginEnd="323dp"
         android:fontFamily="@font/vanilla"
         android:hint="@string/User_mail"
+        android:textColorHint="#757575"
         android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/Current_Date_time"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/Userid_User" />
 
@@ -41,9 +49,13 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
+        android:layout_marginEnd="241dp"
         android:fontFamily="@font/vanilla"
         android:hint="@string/Current_Date_time"
+        android:textColorHint="#757575"
         android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/Title"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/User_mail" />
 
@@ -53,11 +65,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:fontFamily="@font/vanilla"
         android:hint="@string/Title"
+        android:textColorHint="#78909C"
         android:textSize="25sp"
+        app:layout_constraintBottom_toTopOf="@+id/Description"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/Current_Date_time" />
@@ -73,7 +87,9 @@
         android:gravity="start"
         android:hint="@string/Description"
         android:minHeight="150dp"
+        android:textColorHint="#78909C"
         android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/Calendar_btn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/Title" />
@@ -87,32 +103,44 @@
         android:layout_marginTop="16dp"
         android:text="@string/Calendar_btn"
         app:icon="@drawable/icon_calendar"
+        app:layout_constraintBottom_toTopOf="@+id/Status"
+        app:layout_constraintEnd_toStartOf="@+id/Date"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/Description" />
 
     <!--FECHA SELECCIONADA-->
+
+    <!--ESTADO DE LA NOTA-->
     <TextView
         android:id="@+id/Date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="24dp"
+        android:layout_marginEnd="131dp"
         android:fontFamily="@font/vanilla"
         android:hint="@string/Date"
+        android:textColorHint="#78909C"
         android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/Calendar_btn"
-        app:layout_constraintTop_toBottomOf="@+id/Description" />
+        app:layout_constraintTop_toBottomOf="@+id/Description"
+        app:layout_constraintVertical_bias="0.0" />
 
-    <!--ESTADO DE LA NOTA-->
     <TextView
         android:id="@+id/Status"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="24dp"
+        android:layout_marginEnd="307dp"
+        android:layout_marginBottom="288dp"
         android:fontFamily="@font/vanilla"
         android:text="@string/Status"
         android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/Calendar_btn" />
 
