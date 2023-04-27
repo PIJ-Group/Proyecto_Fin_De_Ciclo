@@ -140,8 +140,8 @@ public class AddNote extends AppCompatActivity {
         String status = Status.getText().toString();
 
         //Data validation
-        if (!userId.equals("") || !eMail.equals("") || !dateTimeCurrent.equals("") ||
-                !title.equals("") || !description.equals("") || date.equals("") ||
+        if (!dateTimeCurrent.equals("") && !title.equals("") &&
+                !description.equals("") && date.equals("") &&
                 !status.equals("")) {
 
             Note note = new Note(eMail + "/" + dateTimeCurrent, userId,
