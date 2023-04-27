@@ -14,6 +14,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.CalendarView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -39,6 +40,9 @@ public class MainActivity extends AppCompatActivity {
     List<String> listNotesId = new ArrayList<>();
     ArrayAdapter<String> mAdapterNotes;
 
+    CalendarView calendarView;
+    String calendarDate;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,6 +51,16 @@ public class MainActivity extends AppCompatActivity {
         db = FirebaseFirestore.getInstance();
         mAuth = FirebaseAuth.getInstance();
         listViewNotes = findViewById(R.id.listView);
+
+        calendarView = (CalendarView) findViewById(R.id.calendar);
+
+        //Recoger fecha del calendario
+        calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
+            @Override
+            public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
+                calendarDate = dayOfMonth + "/" + (month + 1) + "/" + year;
+            }
+        });
 
         //Actualizar la UI con las tareas del usuario logueado
         updateNotes();
@@ -93,12 +107,14 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
+            //Pasamos a la activity de añadir nota
             case R.id.Add:
-                //pasar a activity de add_notes
                 Intent intent = new Intent(MainActivity.this, AddNote.class);
+                intent.putExtra("calendarDate", calendarDate);
                 startActivity(intent);
                 return true;
 
+            //Desconectamos el usuario y pasamos a la activity de login
             case R.id.Logout:
                 mAuth.signOut();
                 onBackPressed();
@@ -129,13 +145,15 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void onClick(DialogInterface dialog, int i) {
                     //ELIMIAR TAREA
+                    //deleteNote();
                 }
             })
             .create();
         dialog.show();
     }
-    /*
+    
     //Método para poder borrar la tarea ya realizada
+    /*
     public void deleteNote(View view) {
         View parent = (View) view.getParent();
         TextView taskTv = parent.findViewById(R.id.item_title);
@@ -145,8 +163,8 @@ public class MainActivity extends AppCompatActivity {
         db.collection("Tasks").document(listNotesId.get(position)).delete();
 
         toastOk(getString(R.string.event_deleted));
-    }*/
-
+    }
+    */
     //Método para incluir un toast personalizado de confirmación.
     public void toastOk(String msg){
         LayoutInflater layoutInflater = getLayoutInflater();
