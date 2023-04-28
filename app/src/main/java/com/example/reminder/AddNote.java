@@ -38,7 +38,7 @@ public class AddNote extends AppCompatActivity {
 
     FirebaseFirestore db;
     FirebaseAuth nAuth;
-    String userName, userMail;
+    String dateRecover, userName, userMail;
 
 
     @Override
@@ -150,14 +150,14 @@ public class AddNote extends AppCompatActivity {
 
         db = FirebaseFirestore.getInstance();
         nAuth = FirebaseAuth.getInstance();
-        userName = nAuth.getCurrentUser().getDisplayName();
-        userMail = nAuth.getCurrentUser().getEmail();
     }
 
     //Obtiene los datos del menú ppal y del registro de usuario
     private void DataObtent() {
 
-        String dateRecover = getIntent().getStringExtra("calendarDate");
+        dateRecover = getIntent().getStringExtra("calendarDate");
+        userName = nAuth.getCurrentUser().getDisplayName(); //Ver si se puede recoger el nombre de usuario del registro
+        userMail = nAuth.getCurrentUser().getEmail();
 
         Userid_User.setText(userName);
         User_mail.setText(userMail);
@@ -180,15 +180,16 @@ public class AddNote extends AppCompatActivity {
         String title = Title.getText().toString();
         String description = Description.getText().toString();
         String date = Date.getText().toString();
+        String hour = Hour.getText().toString();
         String status = Status.getText().toString();
 
         //Data validation
         if (!dateTimeCurrent.equals("") && !title.equals("") &&
-                !description.equals("") && date.equals("") &&
-                !status.equals("")) {
+                !description.equals("") && !date.equals("") &&
+                !hour.equals("") && !status.equals("")) {
 
             Note note = new Note(eMail + "/" + dateTimeCurrent, userId,
-                    eMail, dateTimeCurrent, title, description, date, status);
+                    eMail, dateTimeCurrent, title, description, date, hour, status);
 
             db.collection("Notes").add(note);
 
