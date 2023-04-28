@@ -104,7 +104,26 @@ public class AddNote extends AppCompatActivity {
                 TimePickerDialog timePickerDialog = new TimePickerDialog(AddNote.this, new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                        Hour.setText(hourOfDay + ":" + minute);
+
+                        String hourFormatted, minutesFormatted;
+
+                        //Get hour
+                        if (hourOfDay < 10) {
+                            hourFormatted = "0" + hourOfDay;
+                        } else {
+                            hourFormatted = String.valueOf(hourOfDay);
+                        }
+                        //Get minute
+
+                       // int Month = monthSelected + 1;
+
+                        if (minute < 10) {
+                            minutesFormatted = "0" + minute;
+                        } else {
+                            minutesFormatted = String.valueOf(minute);
+                        }
+
+                        Hour.setText(hourFormatted + ":" + minutesFormatted);
                     }
                 },hour,minutes,false);
                 timePickerDialog.show();
