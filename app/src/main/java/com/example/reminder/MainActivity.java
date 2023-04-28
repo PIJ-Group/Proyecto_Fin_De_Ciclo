@@ -58,7 +58,26 @@ public class MainActivity extends AppCompatActivity {
         calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
             public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
-                calendarDate = dayOfMonth + "/" + (month + 1) + "/" + year;
+
+                String dayFormatted, monthFormatted;
+
+                //Get day
+                if (dayOfMonth < 10) {
+                    dayFormatted = "0" + dayOfMonth;
+                } else {
+                    dayFormatted = String.valueOf(dayOfMonth);
+                }
+                //Get month
+
+                int Month = month + 1;
+
+                if (Month < 10) {
+                    monthFormatted = "0" + Month;
+                } else {
+                    monthFormatted = String.valueOf(Month);
+                }
+
+                calendarDate = dayFormatted + "/" + monthFormatted + "/" + year;
             }
         });
 
