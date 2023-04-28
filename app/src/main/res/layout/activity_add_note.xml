@@ -103,14 +103,11 @@
         android:layout_marginTop="16dp"
         android:text="@string/Calendar_btn"
         app:icon="@drawable/icon_calendar"
-        app:layout_constraintBottom_toTopOf="@+id/Status"
         app:layout_constraintEnd_toStartOf="@+id/Date"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/Description" />
 
     <!--FECHA SELECCIONADA-->
-
-    <!--ESTADO DE LA NOTA-->
     <TextView
         android:id="@+id/Date"
         android:layout_width="wrap_content"
@@ -128,20 +125,52 @@
         app:layout_constraintTop_toBottomOf="@+id/Description"
         app:layout_constraintVertical_bias="0.0" />
 
+
+    <!--ESTADO DE LA NOTA-->
+
+    <Button
+        android:id="@+id/Hour_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/Hour_btn"
+        app:icon="@drawable/icon_hour"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.036"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/Calendar_btn"
+        app:layout_constraintVertical_bias="0.051" />
+
+    <TextView
+        android:id="@+id/Hour"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:fontFamily="@font/vanilla"
+        android:hint="@string/Hour"
+        android:textColorHint="#78909C"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.448"
+        app:layout_constraintStart_toEndOf="@+id/Hour_btn"
+        app:layout_constraintTop_toBottomOf="@+id/Date"
+        app:layout_constraintVertical_bias="0.091" />
+
     <TextView
         android:id="@+id/Status"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="307dp"
-        android:layout_marginBottom="288dp"
+        android:layout_marginTop="8dp"
         android:fontFamily="@font/vanilla"
         android:text="@string/Status"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.034"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Calendar_btn" />
+        app:layout_constraintTop_toBottomOf="@+id/Hour_btn"
+        app:layout_constraintVertical_bias="0.037" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

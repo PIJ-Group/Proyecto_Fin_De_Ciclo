@@ -29,6 +29,8 @@
     <string name="Calendar_btn">Calendar</string>
     <string name="Date">00/00/0000</string>
     <string name="Status">Not finished</string>
+    <string name="Hour_btn">Hour</string>
+    <string name="Hour">00:00</string>
 
     <!---Menu-->
     <string name="Add_Note">Add Note</string>

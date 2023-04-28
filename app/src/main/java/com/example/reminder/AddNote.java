@@ -5,6 +5,7 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -12,10 +13,12 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -27,11 +30,11 @@ import java.util.Locale;
 
 public class AddNote extends AppCompatActivity {
 
-    TextView Userid_User, User_mail, Current_Date_time, Date, Status;
+    TextView Userid_User, User_mail, Current_Date_time, Date, Hour, Status;
     EditText Title, Description;
-    Button Calendar_btn;
+    Button Calendar_btn, Hour_btn;
 
-    int day, month, year;
+    int day, month, year, hour, minutes;
 
     FirebaseFirestore db;
     FirebaseAuth nAuth;
@@ -52,7 +55,7 @@ public class AddNote extends AppCompatActivity {
         DataObtent();
         CurrentDateTimeObtent();
 
-        Calendar_btn.setOnClickListener(new View.OnClickListener() {
+        Calendar_btn.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 final Calendar calendar = Calendar.getInstance();
@@ -91,19 +94,59 @@ public class AddNote extends AppCompatActivity {
             }
         });
 
+        Hour_btn.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final Calendar clock = Calendar.getInstance();
+                hour = clock.get(Calendar.HOUR_OF_DAY);
+                minutes = clock.get(Calendar.MINUTE);
+
+                TimePickerDialog timePickerDialog = new TimePickerDialog(AddNote.this, new TimePickerDialog.OnTimeSetListener() {
+                    @Override
+                    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+
+                        String hourFormatted, minutesFormatted;
+
+                        //Get hour
+                        if (hourOfDay < 10) {
+                            hourFormatted = "0" + hourOfDay;
+                        } else {
+                            hourFormatted = String.valueOf(hourOfDay);
+                        }
+                        //Get minute
+
+                       // int Month = monthSelected + 1;
+
+                        if (minute < 10) {
+                            minutesFormatted = "0" + minute;
+                        } else {
+                            minutesFormatted = String.valueOf(minute);
+                        }
+
+                        Hour.setText(hourFormatted + ":" + minutesFormatted);
+                    }
+                },hour,minutes,false);
+                timePickerDialog.show();
+            }
+        });
+
     }
 
+
+    //Inicializa variables
     private void VarInit() {
         Userid_User = findViewById(R.id.Userid_User);
         User_mail = findViewById(R.id.User_mail);
         Current_Date_time = findViewById(R.id.Current_Date_time);
         Date = findViewById(R.id.Date);
+        Hour = findViewById(R.id.Hour);
         Status = findViewById(R.id.Status);
 
         Title = findViewById(R.id.Title);
         Description = findViewById((R.id.Description));
 
         Calendar_btn = findViewById(R.id.Calendar_btn);
+        Hour_btn = findViewById(R.id.Hour_btn);
 
         db = FirebaseFirestore.getInstance();
         nAuth = FirebaseAuth.getInstance();
@@ -121,7 +164,7 @@ public class AddNote extends AppCompatActivity {
         Date.setText(dateRecover);
     }
 
-    //Obtiene la fecha y hora
+    //Obtiene la fecha y hora del sistema
     private void CurrentDateTimeObtent() {
         String DateTimeReg = new SimpleDateFormat("dd-MM-yyyy/HH:mm:ss a",
                 Locale.getDefault()).format(System.currentTimeMillis());
