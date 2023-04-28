@@ -38,7 +38,7 @@ public class AddNote extends AppCompatActivity {
 
     FirebaseFirestore db;
     FirebaseAuth nAuth;
-    String userName, userMail;
+    String dateRecover, userName, userMail;
 
 
     @Override
@@ -150,14 +150,14 @@ public class AddNote extends AppCompatActivity {
 
         db = FirebaseFirestore.getInstance();
         nAuth = FirebaseAuth.getInstance();
-        userName = nAuth.getCurrentUser().getDisplayName();
-        userMail = nAuth.getCurrentUser().getEmail();
     }
 
     //Obtiene los datos del menú ppal y del registro de usuario
     private void DataObtent() {
 
-        String dateRecover = getIntent().getStringExtra("calendarDate");
+        dateRecover = getIntent().getStringExtra("calendarDate");
+        userName = nAuth.getCurrentUser().getDisplayName(); //Ver si se puede recoger el nombre de usuario del registro
+        userMail = nAuth.getCurrentUser().getEmail();
 
         Userid_User.setText(userName);
         User_mail.setText(userMail);
