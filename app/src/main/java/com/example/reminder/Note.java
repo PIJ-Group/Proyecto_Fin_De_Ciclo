@@ -3,12 +3,12 @@ package com.example.reminder;
 public class Note {
 
     //Class attributes
-    String noteId, userId, userMail, currentDate, title, description, noteDate, status;
+    String noteId, userId, userMail, currentDate, title, description, noteDate, noteHour, status;
 
     public Note() {
     }
 
-    public Note(String noteId, String userId, String userMail, String currentDate, String title, String description, String noteDate, String status) {
+    public Note(String noteId, String userId, String userMail, String currentDate, String title, String description, String noteDate, String noteHour, String status) {
         this.noteId = noteId;
         this.userId = userId;
         this.userMail = userMail;
@@ -16,6 +16,7 @@ public class Note {
         this.title = title;
         this.description = description;
         this.noteDate = noteDate;
+        this.noteHour = noteHour;
         this.status = status;
     }
 
@@ -73,6 +74,14 @@ public class Note {
 
     public void setNoteDate(String noteDate) {
         this.noteDate = noteDate;
+    }
+
+    public String getNoteHour() {
+        return noteHour;
+    }
+
+    public void setNoteHour(String noteHour) {
+        this.noteHour = noteHour;
     }
 
     public String getStatus() {

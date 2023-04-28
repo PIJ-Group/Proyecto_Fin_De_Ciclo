@@ -180,15 +180,16 @@ public class AddNote extends AppCompatActivity {
         String title = Title.getText().toString();
         String description = Description.getText().toString();
         String date = Date.getText().toString();
+        String hour = Hour.getText().toString();
         String status = Status.getText().toString();
 
         //Data validation
         if (!dateTimeCurrent.equals("") && !title.equals("") &&
-                !description.equals("") && date.equals("") &&
-                !status.equals("")) {
+                !description.equals("") && !date.equals("") &&
+                !hour.equals("") && !status.equals("")) {
 
             Note note = new Note(eMail + "/" + dateTimeCurrent, userId,
-                    eMail, dateTimeCurrent, title, description, date, status);
+                    eMail, dateTimeCurrent, title, description, date, hour, status);
 
             db.collection("Notes").add(note);
 
