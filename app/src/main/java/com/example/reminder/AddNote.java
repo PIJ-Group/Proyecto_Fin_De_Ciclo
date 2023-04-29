@@ -1,6 +1,7 @@
 package com.example.reminder;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -22,7 +23,12 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -38,7 +44,7 @@ public class AddNote extends AppCompatActivity {
 
     FirebaseFirestore db;
     FirebaseAuth nAuth;
-    String dateRecover, userName, userMail;
+    String dateRecover, userId, userMail;
 
 
     @Override
@@ -154,14 +160,22 @@ public class AddNote extends AppCompatActivity {
 
     //Obtiene los datos del menú ppal y del registro de usuario
     private void DataObtent() {
+        FirebaseUser user = nAuth.getCurrentUser();
+        userId = user.getUid();
+        DocumentReference documentReference = db.collection("Users").document(userId);
+        documentReference.addSnapshotListener(this, new EventListener<DocumentSnapshot>() {
+            @Override
+            public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException error) {
+                Userid_User.setText(documentSnapshot.getString("user_name"));
+            }
+        });
 
         dateRecover = getIntent().getStringExtra("calendarDate");
-        userName = nAuth.getCurrentUser().getDisplayName(); //Ver si se puede recoger el nombre de usuario del registro
         userMail = nAuth.getCurrentUser().getEmail();
 
-        Userid_User.setText(userName);
         User_mail.setText(userMail);
         Date.setText(dateRecover);
+
     }
 
     //Obtiene la fecha y hora del sistema
