@@ -51,7 +51,8 @@
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="15dp">
+            android:layout_marginTop="15dp"
+            app:boxCornerRadiusTopStart="32dp">
 
             <EditText
                 android:id="@+id/completeName"
@@ -60,6 +61,7 @@
                 android:drawableStart="@drawable/name_icon"
                 android:drawablePadding="10dp"
                 android:fontFamily="@font/vanilla"
+                android:backgroundTint="@color/white"
                 android:hint="@string/name"
                 android:inputType="textPersonName|textCapWords"
                 android:padding="20dp" />
@@ -69,7 +71,8 @@
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp">
+            android:layout_marginTop="10dp"
+            app:boxCornerRadiusTopStart="32dp">
 
             <EditText
                 android:id="@+id/emailBox"
@@ -78,6 +81,7 @@
                 android:drawableStart="@drawable/email_icon"
                 android:drawablePadding="10dp"
                 android:fontFamily="@font/vanilla"
+                android:backgroundTint="@color/white"
                 android:hint="@string/email"
                 android:inputType="textEmailAddress"
                 android:padding="20dp" />
@@ -89,7 +93,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             app:hintEnabled="false"
-            app:passwordToggleEnabled="true">
+            app:passwordToggleEnabled="true"
+            app:boxCornerRadiusTopStart="32dp">
 
             <EditText
                 android:id="@+id/passBox"
@@ -98,6 +103,7 @@
                 android:drawableStart="@drawable/ic_baseline_lock_24"
                 android:drawablePadding="10dp"
                 android:fontFamily="@font/vanilla"
+                android:backgroundTint="@color/white"
                 android:hint="@string/hintPass"
                 android:inputType="textPassword"
                 android:padding="20dp" />
@@ -110,7 +116,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             app:hintEnabled="false"
-            app:passwordToggleEnabled="true">
+            app:passwordToggleEnabled="true"
+            app:boxCornerRadiusTopStart="32dp">
 
             <EditText
                 android:id="@+id/confirmedPassBox"
@@ -119,6 +126,7 @@
                 android:drawableStart="@drawable/ic_baseline_lock_24"
                 android:drawablePadding="10dp"
                 android:fontFamily="@font/vanilla"
+                android:backgroundTint="@color/white"
                 android:hint="@string/confirm_password"
                 android:inputType="textPassword"
                 android:padding="20dp" />
@@ -131,6 +139,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
             android:fontFamily="@font/vanilla"
+            android:backgroundTint="@color/pink_principal"
+            app:cornerRadius="32sp"
             android:text="@string/user_registration"
             android:textSize="18sp" />
 
