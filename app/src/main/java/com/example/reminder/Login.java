@@ -10,6 +10,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -37,6 +38,9 @@ public class Login extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        ActionBar actionBar = getSupportActionBar();
+
 
         //Objects.requireNonNull(getSupportActionBar()).hide();
 
@@ -80,7 +84,7 @@ public class Login extends AppCompatActivity {
         botonRegistro = findViewById(R.id.createAccount);
         botonRegistro.setOnClickListener(view -> {
             startActivity(new Intent(Login.this, Register.class));
-            finish();
+
         });
 
         //-------------------Google------------------------//
