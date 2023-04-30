@@ -5,12 +5,9 @@
     android:id="@+id/scrollView"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:theme="@style/Theme.Reminder"
     tools:context=".Login">
 
     <com.airbnb.lottie.LottieAnimationView
@@ -49,7 +46,7 @@
             tools:layout_editor_absoluteY="299dp"
             tools:ignore="TextContrastCheck"/>
 
-        <requestFocus />
+
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -112,7 +109,7 @@
         android:id="@+id/signUpWith"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="56dp"
+        android:layout_marginTop="81dp"
         android:fontFamily="@font/modern"
         android:text="@string/signUpWith"
         android:textColor="@color/pink_dark"
@@ -127,11 +124,12 @@
         android:id="@+id/googleButton"
         android:layout_width="70dp"
         android:layout_height="70dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="56dp"
         android:background="#00FFFFFF"
         android:drawableLeft="@drawable/google"
         app:cornerRadius="30sp"
         app:iconTint="@color/pink_principal"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.187"
         app:layout_constraintStart_toStartOf="parent"
@@ -141,11 +139,12 @@
         android:id="@+id/facebookButton"
         android:layout_width="70dp"
         android:layout_height="70dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="56dp"
         android:background="#00FFFFFF"
         android:drawableLeft="@drawable/fb"
         app:cornerRadius="30sp"
         app:iconTint="@color/pink_principal"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
@@ -155,11 +154,12 @@
         android:id="@+id/twitterButton"
         android:layout_width="70dp"
         android:layout_height="70dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="56dp"
         android:background="#00FFFFFF"
         android:drawableLeft="@drawable/twitter"
         app:cornerRadius="30sp"
         app:iconTint="@color/pink_principal"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.797"
         app:layout_constraintStart_toStartOf="parent"

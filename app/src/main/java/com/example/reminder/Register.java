@@ -12,6 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnFailureListener;
@@ -27,6 +28,7 @@ import java.util.Map;
 public class Register extends AppCompatActivity {
     Button btnRegister;
     EditText inputUserName,inputEmailText, inputPassText, inputConfirmedPassText;
+    TextView haveAndAccount;
     private FirebaseAuth mAuth;
     FirebaseAuth firebaseAuth;
     FirebaseFirestore db;
@@ -37,12 +39,19 @@ public class Register extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setTitle("Register");
+        }
+
         db = FirebaseFirestore.getInstance();
         mAuth = FirebaseAuth.getInstance();
         inputEmailText = findViewById(R.id.emailBox); //Texto del correo
         inputPassText = findViewById(R.id.passBox);
         inputConfirmedPassText = findViewById(R.id.confirmedPassBox);
         inputUserName = findViewById(R.id.completeName);
+        haveAndAccount = findViewById(R.id.haveAccount);
 
 
         btnRegister = findViewById(R.id.userRegister);
@@ -101,6 +110,11 @@ public class Register extends AppCompatActivity {
                             }
                         });
             }
+        });
+        haveAndAccount.setOnClickListener(view ->{
+            startActivity(new Intent(Register.this,Login.class));
+            Register.this.finish();
+
         });
     }
 
