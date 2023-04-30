@@ -36,7 +36,7 @@ import java.util.Locale;
 
 public class AddNote extends AppCompatActivity {
 
-    TextView Userid_User, User_mail, Current_Date_time, Date, Hour, Status;
+    TextView Userid_User, Current_Date_time, Date, Hour, Status;
     EditText Title, Description;
     Button Calendar_btn, Hour_btn;
 
@@ -142,7 +142,6 @@ public class AddNote extends AppCompatActivity {
     //Inicializa variables
     private void VarInit() {
         Userid_User = findViewById(R.id.Userid_User);
-        User_mail = findViewById(R.id.User_mail);
         Current_Date_time = findViewById(R.id.Current_Date_time);
         Date = findViewById(R.id.Date);
         Hour = findViewById(R.id.Hour);
@@ -171,9 +170,7 @@ public class AddNote extends AppCompatActivity {
         });
 
         dateRecover = getIntent().getStringExtra("calendarDate");
-        userMail = nAuth.getCurrentUser().getEmail();
 
-        User_mail.setText(userMail);
         Date.setText(dateRecover);
 
     }
@@ -189,7 +186,6 @@ public class AddNote extends AppCompatActivity {
 
         //Get data
         String userId = Userid_User.getText().toString();
-        String eMail = User_mail.getText().toString();
         String dateTimeCurrent = Current_Date_time.getText().toString();
         String title = Title.getText().toString();
         String description = Description.getText().toString();
@@ -202,8 +198,8 @@ public class AddNote extends AppCompatActivity {
                 !description.equals("") && !date.equals("") &&
                 !hour.equals("") && !status.equals("")) {
 
-            Note note = new Note(eMail + "/" + dateTimeCurrent, userId,
-                    eMail, dateTimeCurrent, title, description, date, hour, status);
+            Note note = new Note(userId + "/" + dateTimeCurrent, userId,
+                    dateTimeCurrent, title, description, date, hour, status);
 
             db.collection("Notes").add(note);
 
