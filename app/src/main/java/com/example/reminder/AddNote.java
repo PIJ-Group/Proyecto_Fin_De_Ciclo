@@ -5,6 +5,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.os.Bundle;
@@ -44,7 +45,7 @@ public class AddNote extends AppCompatActivity {
 
     FirebaseFirestore db;
     FirebaseAuth nAuth;
-    String dateRecover, userId, userMail;
+    String dateRecover, userId;
 
 
     @Override
@@ -53,9 +54,12 @@ public class AddNote extends AppCompatActivity {
         setContentView(R.layout.activity_add_note);
 
         ActionBar actionBar = getSupportActionBar();
-        actionBar.setTitle("");
-        actionBar.setDisplayShowHomeEnabled(true);
-        actionBar.setDisplayHomeAsUpEnabled(true);
+        if (actionBar != null) {
+            actionBar.setTitle("Add Note");
+            actionBar.setDisplayShowHomeEnabled(true);
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
+
 
         VarInit();
         DataObtent();
@@ -70,6 +74,7 @@ public class AddNote extends AppCompatActivity {
                 year = calendar.get(Calendar.YEAR);
 
                 DatePickerDialog datePickerDialog = new DatePickerDialog(AddNote.this, new DatePickerDialog.OnDateSetListener() {
+                    @SuppressLint("SetTextI18n")
                     @Override
                     public void onDateSet(DatePicker view, int yearSelected, int monthSelected, int daySelected) {
 
@@ -108,6 +113,7 @@ public class AddNote extends AppCompatActivity {
                 minutes = clock.get(Calendar.MINUTE);
 
                 TimePickerDialog timePickerDialog = new TimePickerDialog(AddNote.this, new TimePickerDialog.OnTimeSetListener() {
+                    @SuppressLint("SetTextI18n")
                     @Override
                     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
 
@@ -160,12 +166,16 @@ public class AddNote extends AppCompatActivity {
     //Obtiene los datos del menú ppal y del registro de usuario
     private void DataObtent() {
         FirebaseUser user = nAuth.getCurrentUser();
-        userId = user.getUid();
+        if (user != null) {
+            userId = user.getUid();
+        }
         DocumentReference documentReference = db.collection("Users").document(userId);
         documentReference.addSnapshotListener(this, new EventListener<DocumentSnapshot>() {
             @Override
             public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException error) {
-                Userid_User.setText(documentSnapshot.getString("user_name"));
+                if (documentSnapshot != null) {
+                    Userid_User.setText(documentSnapshot.getString("user_name"));
+                }
             }
         });
 
@@ -206,7 +216,6 @@ public class AddNote extends AppCompatActivity {
             toastOk("Note successfully added");
             onBackPressed();
 
-
         } else {
             toastWarning("All fields must be filled");
         }
@@ -221,10 +230,8 @@ public class AddNote extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.Add_Note_BD:
-                AddNoteFireBase();
-                break;
+        if (item.getItemId() == R.id.Add_Note_BD) {
+            AddNoteFireBase();
         }
         return super.onOptionsItemSelected(item);
     }
