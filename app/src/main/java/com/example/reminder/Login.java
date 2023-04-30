@@ -76,7 +76,8 @@ public class Login extends AppCompatActivity {
             }
 
         });
-        botonRegistro = findViewById(R.id.signUpWith);
+        //Botón de registro de usuario
+        botonRegistro = findViewById(R.id.createAccount);
         botonRegistro.setOnClickListener(view -> {
             startActivity(new Intent(Login.this, Register.class));
             finish();
