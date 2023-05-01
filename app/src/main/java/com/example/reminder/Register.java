@@ -2,14 +2,19 @@ package com.example.reminder;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Looper;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
@@ -32,6 +37,7 @@ public class Register extends AppCompatActivity {
     private FirebaseAuth mAuth;
     FirebaseAuth firebaseAuth;
     FirebaseFirestore db;
+    ProgressBar loading;
 
 
 
@@ -52,6 +58,7 @@ public class Register extends AppCompatActivity {
         inputConfirmedPassText = findViewById(R.id.confirmedPassBox);
         inputUserName = findViewById(R.id.completeName);
         haveAndAccount = findViewById(R.id.haveAccount);
+        loading = findViewById(R.id.loading);
 
 
         btnRegister = findViewById(R.id.userRegister);
@@ -77,6 +84,7 @@ public class Register extends AppCompatActivity {
                 mAuth.createUserWithEmailAndPassword(email, password)
                         .addOnCompleteListener(task -> {
                             if (task.isSuccessful()) {
+                                loading.setVisibility(View.VISIBLE);
                             FirebaseUser user = mAuth.getCurrentUser();
                             String userId = user.getUid();
                             DocumentReference documentReference = db.collection("Users").document(userId);
@@ -117,6 +125,10 @@ public class Register extends AppCompatActivity {
 
         });
     }
+
+
+
+
 
     public void toastOk(String msg) {
         LayoutInflater layoutInflater = getLayoutInflater();
