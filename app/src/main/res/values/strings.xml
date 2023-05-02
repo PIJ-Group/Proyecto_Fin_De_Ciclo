@@ -7,7 +7,7 @@
     <string name="login">Login</string>
     <string name="createAccount">Don\'t have an account yet? Sign up now!</string>
     <string name="loginWithGoogle">Acceder con Google</string>
-    <string name="signUpWith"><u>or sign up with</u></string>
+    <string name="signUpWith">or sign up with</string>
     <string name="empty_field">empty field</string>
     <string name="invalid_email">invalid email</string>
     <string name="failed_authentication">failed authentication</string>
