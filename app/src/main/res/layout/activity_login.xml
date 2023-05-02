@@ -97,7 +97,7 @@
         android:cursorVisible="true"
         android:fontFamily="@font/modern"
         android:text="@string/createAccount"
-        android:textColor="@color/pink_light"
+        android:textColor="@color/pink_dark"
         android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
@@ -112,7 +112,7 @@
         android:layout_marginTop="81dp"
         android:fontFamily="@font/modern"
         android:text="@string/signUpWith"
-        android:textColor="@color/pink_dark"
+        android:textColor="@color/pink_light"
         android:textSize="20sp"
 
         app:layout_constraintEnd_toEndOf="parent"
