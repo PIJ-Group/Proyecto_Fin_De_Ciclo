@@ -33,7 +33,7 @@
     <string name="Hour">00:00</string>
 
     <!--Update Note-->
-    <string name="Id_Update_Note">Note id</string>
+    <string name="Id_Note_Update">Note id</string>
     <string name="Userid_User_Update">User id</string>
     <string name="User_mail_Update">User e-mail</string>
     <string name="Registration_Date_Update">Registration date</string>
