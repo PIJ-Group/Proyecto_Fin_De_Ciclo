@@ -1,5 +1,6 @@
 package com.example.reminder;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Gravity;
@@ -11,6 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -33,6 +35,28 @@ public class Login extends AppCompatActivity {
     TextView botonRegistro;
     EditText emailText, passText;
     private FirebaseAuth mAuth;
+
+    @Override
+    public void onBackPressed(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("¿Do you want to exit?")
+                .setPositiveButton("YES", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Intent intent = new Intent(Intent.ACTION_MAIN);
+                        intent.addCategory(Intent.CATEGORY_HOME);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(intent);
+                    }
+                })
+                .setNegativeButton("NO", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+        builder.show();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,6 +95,7 @@ public class Login extends AppCompatActivity {
                                 // Sign in success, update UI with the signed-in user's information
                                 Intent intent = new Intent(Login.this, MainActivity.class);
                                 startActivity(intent);
+                                //No cierro
                             } else {
                                 // If sign in fails, display a message to the user.
                                 toastWarning(getString(R.string.failed_authentication));
@@ -86,6 +111,8 @@ public class Login extends AppCompatActivity {
             startActivity(new Intent(Login.this, Register.class));
 
         });
+
+
 
         //-------------------Google------------------------//
         //Configuración del inicio de sesión en Google
@@ -132,7 +159,7 @@ public class Login extends AppCompatActivity {
                         // Sign in success, update UI with the signed-in user's information
                         FirebaseUser user = mAuth.getCurrentUser();
                         goHome();
-                        Login.this.finish();
+                        //No cierro
                         updateUI(user);
                     } else {
                         // If sign in fails, display a message to the user.
