@@ -32,6 +32,19 @@
     <string name="Hour_btn">Hour</string>
     <string name="Hour">00:00</string>
 
+    <!--Update Note-->
+    <string name="Id_Update_Note">Note id</string>
+    <string name="Userid_User_Update">User id</string>
+    <string name="User_mail_Update">User e-mail</string>
+    <string name="Registration_Date_Update">Registration date</string>
+    <string name="Title_Update">Title</string>
+    <string name="Description_Update">Description</string>
+    <string name="Calendar_btn_Update">Calendar</string>
+    <string name="Date_Update">00/00/0000</string>
+    <string name="Status_Update">Not finished</string>
+    <string name="Hour_btn_Update">Hour</string>
+    <string name="Hour_Update">00:00</string>
+
     <!---Menu-->
     <string name="Add_Note">Add Note</string>
     <string name="Add_btn">add</string>

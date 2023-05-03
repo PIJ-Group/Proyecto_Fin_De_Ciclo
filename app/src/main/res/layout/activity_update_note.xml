@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/addScrollView"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/Theme.Reminder"
+        tools:context=".UpdateNote">
+
+        <!--USER ID-->
+        <TextView
+            android:id="@+id/Userid_User_Update"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:fontFamily="@font/vanilla"
+            android:hint="@string/Userid_User_Update"
+            android:textColorHint="#757575"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toTopOf="@+id/Registration_Date_Update"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <!--REGISTRATION DATE-->
+        <TextView
+            android:id="@+id/Registration_Date_Update"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:fontFamily="@font/vanilla"
+            android:hint="@string/Registration_Date_Update"
+            android:textColorHint="#757575"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toTopOf="@+id/Title_Update"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.497"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/Userid_User_Update" />
+
+        <!--NOTE TITLE-->
+        <EditText
+            android:id="@+id/Title_Update"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:fontFamily="@font/vanilla"
+            android:hint="@string/Title_Update"
+            android:textColorHint="#78909C"
+            android:textSize="25sp"
+            app:layout_constraintBottom_toTopOf="@+id/Description_Update"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/Registration_Date_Update" />
+
+        <!--NOTE DESCRIPTION-->
+        <EditText
+            android:id="@+id/Description_Update"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="8dp"
+            android:gravity="start"
+            android:hint="@string/Description_Update"
+            android:minHeight="150dp"
+            android:textColorHint="#78909C"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toTopOf="@+id/Calendar_btn_Update"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/Title_Update" />
+
+        <!--CALENDAR BUTTON-->
+        <Button
+            android:id="@+id/Calendar_btn_Update"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            android:backgroundTint="@color/pink_principal"
+            android:text="@string/Calendar_btn_Update"
+            app:cornerRadius="32sp"
+            app:icon="@drawable/icon_calendar"
+            app:layout_constraintEnd_toStartOf="@+id/Date_Update"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/Description_Update"
+            tools:ignore="TextContrastCheck" />
+
+        <!--DATE SELECTED-->
+        <TextView
+            android:id="@+id/Date_Update"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="131dp"
+            android:fontFamily="@font/vanilla"
+            android:hint="@string/Date_Update"
+            android:textColorHint="#78909C"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/Calendar_btn_Update"
+            app:layout_constraintTop_toBottomOf="@+id/Description_Update"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <!--TIME BUTTON-->
+        <Button
+            android:id="@+id/Hour_btn_Update"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/pink_principal"
+            android:text="@string/Hour_btn_Update"
+            app:cornerRadius="32sp"
+            app:icon="@drawable/icon_hour"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.036"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/Calendar_btn_Update"
+            app:layout_constraintVertical_bias="0.051"
+            tools:ignore="TextContrastCheck" />
+
+        <!--TIME SELECTED-->
+        <TextView
+            android:id="@+id/Hour_Update"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:fontFamily="@font/vanilla"
+            android:hint="@string/Hour_Update"
+            android:textColorHint="#78909C"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.448"
+            app:layout_constraintStart_toEndOf="@+id/Hour_btn_Update"
+            app:layout_constraintTop_toBottomOf="@+id/Date_Update"
+            app:layout_constraintVertical_bias="0.091" />
+
+        <!--NOTE STATUS-->
+        <TextView
+            android:id="@+id/Status_Update"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:fontFamily="@font/vanilla"
+            android:text="@string/Status_Update"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.034"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/Hour_btn_Update"
+            app:layout_constraintVertical_bias="0.037" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>
