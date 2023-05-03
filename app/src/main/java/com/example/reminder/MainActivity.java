@@ -19,12 +19,18 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+
+import com.example.reminder.ArchivedNotes.ArchivedNotes;
+import com.example.reminder.ListNotes.ListNotes;
+
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
@@ -36,14 +42,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
+    FirebaseUser user;
     FirebaseAuth mAuth;
     FirebaseFirestore db;
-    String emailUsuario;
+    String emailUser, noteTitle, noteHour;
+    TextView itemTitle, itemHour;
+    View item;
 
     ListView listViewNotes;
-    List<String> listNotes = new ArrayList<>();
+    List<String> listNotesTitle = new ArrayList<>();
+    List<String> listNotesHour = new ArrayList<>();
     List<String> listNotesId = new ArrayList<>();
-    ArrayAdapter<String> mAdapterNotes;
+    ArrayAdapter<String> AdapterNotesTitle, AdapterNotesHour;
 
     CalendarView calendarView;
     String calendarDate;
@@ -57,6 +67,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        user = mAuth.getCurrentUser();
         db = FirebaseFirestore.getInstance();
         mAuth = FirebaseAuth.getInstance();
         listViewNotes = findViewById(R.id.listView);
@@ -70,14 +81,14 @@ public class MainActivity extends AppCompatActivity {
 
                 String dayFormatted, monthFormatted;
 
-                //Get day
+                //Get formatted day
                 if (dayOfMonth < 10) {
                     dayFormatted = "0" + dayOfMonth;
                 } else {
                     dayFormatted = String.valueOf(dayOfMonth);
                 }
-                //Get month
 
+                //Get formatted month
                 int Month = month + 1;
 
                 if (Month < 10) {
@@ -104,9 +115,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
     //Insertar item en listview
+    //FALTA POR IMPLEMENTAR COMPLETAMENTE
     private void updateNotes() {
-        db.collection("Tasks")
-                .whereEqualTo("Email", emailUsuario)
+        if (user != null) {
+            emailUser = user.getEmail();
+        }
+        db.collection("Users")
+                .whereEqualTo("noteDate", calendarDate)
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
                     public void onEvent(@Nullable QuerySnapshot value,
@@ -115,18 +130,24 @@ public class MainActivity extends AppCompatActivity {
                             return;
                         }
 
-                        listNotes.clear();
+                        listNotesTitle.clear();
+                        listNotesHour.clear();
                         listNotesId.clear();
+
                         for (QueryDocumentSnapshot doc : value) {
                             listNotesId.add(doc.getId());
-                            listNotes.add(doc.getString("taskName"));
+                            listNotesTitle.add(doc.getString("title"));
+                            listNotesHour.add(doc.getString("noteHour"));
                         }
 
-                        if (listNotes.size() == 0) {
+                        if(listNotesTitle.size() == 0){
                             listViewNotes.setAdapter(null);
-                        } else {
-                            mAdapterNotes = new ArrayAdapter<String>(MainActivity.this, R.layout.item_note, R.id.item_title, listNotes);
-                            listViewNotes.setAdapter(mAdapterNotes);
+                        }else{
+                            AdapterNotesTitle = new ArrayAdapter<String>(MainActivity.this, R.layout.item_note, R.id.item_title, listNotesTitle);
+                            AdapterNotesHour = new ArrayAdapter<String>(MainActivity.this, R.layout.item_note, R.id.item_hour, listNotesHour);
+                            listViewNotes.setAdapter(AdapterNotesTitle);
+                            listViewNotes.setAdapter(AdapterNotesHour);
+
                         }
 
                     }
@@ -168,42 +189,40 @@ public class MainActivity extends AppCompatActivity {
     //Dialog del botón elipsis del item con funcionalidad
     public void otherOptions(View view) {
         AlertDialog dialog = new AlertDialog.Builder(this)
-                .setPositiveButton(R.string.dialog_item_details, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int i) {
-                        //PASAR A ACTIVITY DE DETALLES
-                    }
-                })
-                .setNeutralButton(R.string.dialog_item_edit, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int i) {
-                        //PASAR A ACTIVITY DE EDITAR
-                    }
-                })
-                .setNegativeButton(R.string.dialog_item_delete, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int i) {
-                        //ELIMIAR TAREA
-                        //deleteNote();
-                    }
-                })
-                .create();
+
+            .setPositiveButton(R.string.dialog_item_details, new DialogInterface.OnClickListener() {
+            @Override
+                public void onClick(DialogInterface dialog, int i) {
+                    //PASAR A ACTIVITY DE DETALLES (REVISAR)
+                    Intent intent = new Intent(MainActivity.this, ArchivedNotes.class);
+                    startActivity(intent);
+                }
+            })
+            .setNeutralButton(R.string.dialog_item_edit, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int i) {
+                    //PASAR A ACTIVITY DE EDITAR (REVISAR)
+                    Intent intent = new Intent(MainActivity.this, ListNotes.class);
+                    startActivity(intent);
+                }
+            })
+            .setNegativeButton(R.string.dialog_item_delete, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int i) {
+                    //ELIMIAR TAREA (REVISAR)
+                    TextView noteTitleItem = findViewById(R.id.item_title);
+                    String taskContent = noteTitleItem.getText().toString();
+                    int position = listNotesTitle.indexOf(taskContent);
+
+                    db.collection("Notes").document(listNotesId.get(position)).delete();
+
+                    toastOk(getString(R.string.event_deleted));
+                }
+            })
+            .create();
         dialog.show();
     }
 
-    //Método para poder borrar la tarea ya realizada
-    /*
-    public void deleteNote(View view) {
-        View parent = (View) view.getParent();
-        TextView taskTv = parent.findViewById(R.id.item_title);
-        String taskContent = taskTv.getText().toString();
-        int position = listNotes.indexOf(taskContent);
-
-        db.collection("Tasks").document(listNotesId.get(position)).delete();
-
-        toastOk(getString(R.string.event_deleted));
-    }
-    */
     //Método para incluir un toast personalizado de confirmación.
     public void toastOk(String msg) {
         LayoutInflater layoutInflater = getLayoutInflater();
