@@ -12,7 +12,7 @@
         android:theme="@style/Theme.Reminder"
         tools:context=".AddNote">
 
-        <!--ID DEL USUARIO-->
+        <!--USER ID-->
         <TextView
             android:id="@+id/Userid_User"
             android:layout_width="wrap_content"
@@ -27,7 +27,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <!--FECHA Y HORA DEL SISTEMA-->
+        <!--SYSTEM TIME AND DATE-->
         <TextView
             android:id="@+id/Current_Date_time"
             android:layout_width="wrap_content"
@@ -43,7 +43,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/Userid_User" />
 
-        <!--TITULO DE LA NOTA-->
+        <!--NOTE TITLE-->
         <EditText
             android:id="@+id/Title"
             android:layout_width="match_parent"
@@ -60,7 +60,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/Current_Date_time" />
 
-        <!--DESCRIPCION DE LA NOTA-->
+            <!--NOTE DESCRIPTION-->
         <EditText
             android:id="@+id/Description"
             android:layout_width="match_parent"
@@ -78,7 +78,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/Title" />
 
-        <!--BOTON DE CALENDARIO-->
+        <!--CALENDAR BUTTON-->
         <Button
             android:id="@+id/Calendar_btn"
             android:layout_width="wrap_content"
@@ -94,7 +94,7 @@
             app:layout_constraintTop_toBottomOf="@+id/Description"
             tools:ignore="TextContrastCheck" />
 
-        <!--FECHA SELECCIONADA-->
+        <!--DATE SELECTED-->
         <TextView
             android:id="@+id/Date"
             android:layout_width="wrap_content"
@@ -112,7 +112,7 @@
             app:layout_constraintTop_toBottomOf="@+id/Description"
             app:layout_constraintVertical_bias="0.0" />
 
-        <!--BOTON DE HORA-->
+        <!--TIME BUTTON-->
         <Button
             android:id="@+id/Hour_btn"
             android:layout_width="wrap_content"
@@ -129,7 +129,7 @@
             app:layout_constraintVertical_bias="0.051"
             tools:ignore="TextContrastCheck" />
 
-        <!--HORA SELECCIONADA-->
+        <!--TIME SELECTED-->
         <TextView
             android:id="@+id/Hour"
             android:layout_width="wrap_content"
@@ -147,7 +147,7 @@
             app:layout_constraintTop_toBottomOf="@+id/Date"
             app:layout_constraintVertical_bias="0.091" />
 
-        <!--ESTADO DE LA NOTA-->
+        <!--NOTE STATUS-->
         <TextView
             android:id="@+id/Status"
             android:layout_width="wrap_content"
