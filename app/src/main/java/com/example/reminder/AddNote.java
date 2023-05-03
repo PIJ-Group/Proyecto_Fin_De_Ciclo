@@ -42,6 +42,7 @@ public class AddNote extends AppCompatActivity {
     Button Calendar_btn, Hour_btn;
 
     int day, month, year, hour, minutes;
+    String userMail;
 
     FirebaseFirestore db;
     FirebaseAuth nAuth;
@@ -183,6 +184,9 @@ public class AddNote extends AppCompatActivity {
         //Gets the date sent in the MainActivity intent.
         dateRecover = getIntent().getStringExtra("calendarDate");
 
+        //Get the user mail from authentication
+        userMail = nAuth.getCurrentUser().getEmail();
+
         Date.setText(dateRecover);
 
     }
@@ -200,6 +204,7 @@ public class AddNote extends AppCompatActivity {
 
         //Get data
         String userId = Userid_User.getText().toString();
+        String mail = userMail;
         String dateTimeCurrent = Current_Date_time.getText().toString();
         String title = Title.getText().toString();
         String description = Description.getText().toString();
@@ -212,8 +217,8 @@ public class AddNote extends AppCompatActivity {
                 !description.equals("") && !date.equals("") &&
                 !hour.equals("") && !status.equals("")) {
 
-            Note note = new Note(userId + "/" + dateTimeCurrent, userId,
-                    dateTimeCurrent, title, description, date, hour, status);
+            Note note = new Note(mail + "/" + dateTimeCurrent, userId,
+                    mail, dateTimeCurrent, title, description, date, hour, status);
 
             db.collection("Notes").add(note);
 
