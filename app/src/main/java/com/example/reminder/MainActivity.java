@@ -241,6 +241,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         mAuth.signOut();
+        FirebaseAuth.getInstance().signOut();
+
 
         mGoogleSignInClient.signOut().addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override

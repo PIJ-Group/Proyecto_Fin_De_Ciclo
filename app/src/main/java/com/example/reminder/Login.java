@@ -30,7 +30,7 @@ public class Login extends AppCompatActivity {
 
     static final int RC_SIGN_IN = 1;
     GoogleSignInClient mGoogleSignInClient;
-    Button botonGoogle;
+    Button botonGoogle,btnTwitter;
     Button botonLogin;
     TextView botonRegistro;
     EditText emailText, passText;
@@ -74,6 +74,7 @@ public class Login extends AppCompatActivity {
         emailText = findViewById(R.id.cajaCorreo); //Texto del correo
         passText = findViewById(R.id.cajaPass); //Texto de la password
 
+        btnTwitter = findViewById(R.id.twitterButton);
         botonGoogle = findViewById(R.id.googleButton);
         botonLogin = findViewById(R.id.botonLogin);
         botonLogin.setOnClickListener(view -> {
@@ -123,6 +124,17 @@ public class Login extends AppCompatActivity {
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
         botonGoogle.setOnClickListener(view -> signIn());
         // [END config_signin]
+
+        //-------------------Twitter------------------------//
+        //Configuración del inicio de sesión en Twitter
+        btnTwitter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Login.this,TwitterActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                startActivity(intent);
+            }
+        });
     }
     //Método para inciar sesión
     public void signIn() {
