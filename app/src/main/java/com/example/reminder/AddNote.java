@@ -42,6 +42,7 @@ public class AddNote extends AppCompatActivity {
     Button Calendar_btn, Hour_btn;
 
     int day, month, year, hour, minutes;
+    String userMail;
 
     FirebaseFirestore db;
     FirebaseAuth nAuth;
@@ -80,14 +81,14 @@ public class AddNote extends AppCompatActivity {
 
                         String dayFormatted, monthFormatted;
 
-                        //Get day
+                        //Format day
                         if (daySelected < 10) {
                             dayFormatted = "0" + daySelected;
                         } else {
                             dayFormatted = String.valueOf(daySelected);
                         }
-                        //Get month
 
+                        //Format month
                         int Month = monthSelected + 1;
 
                         if (Month < 10) {
@@ -119,22 +120,21 @@ public class AddNote extends AppCompatActivity {
 
                         String hourFormatted, minutesFormatted;
 
-                        //Get hour
+                        //Format hour
                         if (hourOfDay < 10) {
                             hourFormatted = "0" + hourOfDay;
                         } else {
                             hourFormatted = String.valueOf(hourOfDay);
                         }
-                        //Get minute
 
-                       // int Month = monthSelected + 1;
-
+                        //Format minutes
                         if (minute < 10) {
                             minutesFormatted = "0" + minute;
                         } else {
                             minutesFormatted = String.valueOf(minute);
                         }
 
+                        // Set Time on TextView
                         Hour.setText(hourFormatted + ":" + minutesFormatted);
                     }
                 },hour,minutes,false);
@@ -145,7 +145,7 @@ public class AddNote extends AppCompatActivity {
     }
 
 
-    //Inicializa variables
+    //Inicialize variables
     private void VarInit() {
         Userid_User = findViewById(R.id.Userid_User);
         Current_Date_time = findViewById(R.id.Current_Date_time);
@@ -163,8 +163,10 @@ public class AddNote extends AppCompatActivity {
         nAuth = FirebaseAuth.getInstance();
     }
 
-    //Obtiene los datos del menú ppal y del registro de usuario
+    //Gets the data from the main menu and from the Users collection in Firestore Database.
     private void DataObtent() {
+
+        //Gets the user name from Users collection.
         FirebaseUser user = nAuth.getCurrentUser();
         if (user != null) {
             userId = user.getUid();
@@ -179,23 +181,30 @@ public class AddNote extends AppCompatActivity {
             }
         });
 
+        //Gets the date sent in the MainActivity intent.
         dateRecover = getIntent().getStringExtra("calendarDate");
+
+        //Get the user mail from authentication
+        userMail = nAuth.getCurrentUser().getEmail();
 
         Date.setText(dateRecover);
 
     }
 
-    //Obtiene la fecha y hora del sistema
+    //Gets the system date and time
     private void CurrentDateTimeObtent() {
         String DateTimeReg = new SimpleDateFormat("dd-MM-yyyy/HH:mm:ss a",
                 Locale.getDefault()).format(System.currentTimeMillis());
         Current_Date_time.setText(DateTimeReg);
     }
 
+
+    //Add a note in Notes collection in Firebase Database
     private void AddNoteFireBase() {
 
         //Get data
         String userId = Userid_User.getText().toString();
+        String mail = userMail;
         String dateTimeCurrent = Current_Date_time.getText().toString();
         String title = Title.getText().toString();
         String description = Description.getText().toString();
@@ -208,8 +217,8 @@ public class AddNote extends AppCompatActivity {
                 !description.equals("") && !date.equals("") &&
                 !hour.equals("") && !status.equals("")) {
 
-            Note note = new Note(userId + "/" + dateTimeCurrent, userId,
-                    dateTimeCurrent, title, description, date, hour, status);
+            Note note = new Note(mail + "/" + dateTimeCurrent, userId,
+                    mail, dateTimeCurrent, title, description, date, hour, status);
 
             db.collection("Notes").add(note);
 
