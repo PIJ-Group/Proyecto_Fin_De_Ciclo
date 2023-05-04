@@ -13,11 +13,7 @@
         android:theme="@style/Theme.Reminder"
         tools:targetApi="31">
         <activity
-
             android:name=".TwitterActivity"
-=======
-            android:name=".UpdateNote"
-
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"

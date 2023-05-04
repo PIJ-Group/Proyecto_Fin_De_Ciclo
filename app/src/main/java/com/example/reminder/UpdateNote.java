@@ -29,7 +29,7 @@ public class UpdateNote extends AppCompatActivity {
 
     //Initialize Views
     private void VarInit(){
-        Id_Note_Update = findViewById(R.id.Id_Update_Note);
+        Id_Note_Update = findViewById(R.id.Id_Note_Update);
         Userid_User_Update = findViewById(R.id.Userid_User_Update);
         Registration_Date_Update = findViewById(R.id.Registration_Date_Update);
         Date_Update = findViewById(R.id.Date_Update);
