@@ -1,8 +1,11 @@
 package com.example.reminder;
 
+import static android.content.ContentValues.TAG;
+
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,17 +14,28 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.facebook.AccessToken;
+import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.login.LoginManager;
+import com.facebook.login.LoginResult;
+import com.facebook.login.widget.LoginButton;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
@@ -30,7 +44,8 @@ public class Login extends AppCompatActivity {
 
     static final int RC_SIGN_IN = 1;
     GoogleSignInClient mGoogleSignInClient;
-    Button botonGoogle,btnTwitter;
+
+    Button botonGoogle,btnTwitter,btnFacebook;
     Button botonLogin;
     TextView botonRegistro;
     EditText emailText, passText;
@@ -74,6 +89,8 @@ public class Login extends AppCompatActivity {
         emailText = findViewById(R.id.cajaCorreo); //Texto del correo
         passText = findViewById(R.id.cajaPass); //Texto de la password
 
+
+        btnFacebook = findViewById(R.id.facebookButton);
         btnTwitter = findViewById(R.id.twitterButton);
         botonGoogle = findViewById(R.id.googleButton);
         botonLogin = findViewById(R.id.botonLogin);
@@ -114,8 +131,7 @@ public class Login extends AppCompatActivity {
         });
 
 
-
-        //-------------------Google------------------------//
+        //-------------------GOOGLE------------------------//
         //Configuración del inicio de sesión en Google
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))
@@ -124,6 +140,17 @@ public class Login extends AppCompatActivity {
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
         botonGoogle.setOnClickListener(view -> signIn());
         // [END config_signin]
+
+        //-------------------FACEBOOK------------------------//
+        // Initialize Facebook Login button
+        btnFacebook.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Login.this,FacebookActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                startActivity(intent);
+            }
+        });
 
         //-------------------Twitter------------------------//
         //Configuración del inicio de sesión en Twitter
@@ -135,7 +162,11 @@ public class Login extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+
     }
+
+    //-------------------Google------------------------//
     //Método para inciar sesión
     public void signIn() {
         Intent signInIntent = mGoogleSignInClient.getSignInIntent();
@@ -145,7 +176,7 @@ public class Login extends AppCompatActivity {
 
     //Método para verificar el resultado de la actividad de loguearse
     @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
         // Result returned from launching the Intent from GoogleSignInApi.getSignInIntent(...);

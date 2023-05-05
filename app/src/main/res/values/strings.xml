@@ -19,6 +19,10 @@
     <string name="confirm_password">Confirm password</string>
     <string name="user_registration">User registration</string>
     <string name="i_have_account">I already have an account</string>
+    <string name="facebook_app_id">1717808215341319</string>
+    <string name="fb_login_protocol_scheme">fb1717808215341319</string>
+    <string name="facebook_client_token">71746e3d95ec0e24602a3908c3fbe702</string>
+
 
     <!---Add Note-->
     <string name="Userid_User">User id</string>
