@@ -64,6 +64,7 @@
     <string name="already_user_registered">Usuario existente</string>
     <string name="invalid_password">contraseña muy corta</string>
     <string name="not_match">Las contraseñas no coinciden</string>
+    <string name="Update_Note">Update Note</string>
 
 
 </resources>

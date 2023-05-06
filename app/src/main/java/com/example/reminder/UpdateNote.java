@@ -1,12 +1,27 @@
 package com.example.reminder;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
+import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.os.Bundle;
+import android.view.Gravity;
+import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.TimePicker;
+import android.widget.Toast;
+
+import java.util.Calendar;
 
 public class UpdateNote extends AppCompatActivity {
 
@@ -17,6 +32,8 @@ public class UpdateNote extends AppCompatActivity {
 
     //Declare strings to store the data of the main activity
     String id_note_R, user_id_R, registration_date_R, title_R, description_R, date_R, hour_R, status_R;
+
+    int year, month, day, hour,minutes;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +50,8 @@ public class UpdateNote extends AppCompatActivity {
         VarInit();
         GetData();
         SetData();
+        Calendar_btn_Update.setOnClickListener(v -> dateSelect());
+        Hour_btn_Update.setOnClickListener(v -> selectHour());
     }
 
     //Initialize Views
@@ -73,5 +92,111 @@ public class UpdateNote extends AppCompatActivity {
         Status_Update.setText(status_R);
         Title_Update.setText(title_R);
         Description_Update.setText(description_R);
+    }
+
+    //method to select a date
+    private void dateSelect(){
+        final Calendar calendar = Calendar.getInstance();
+        day = calendar.get(Calendar.DAY_OF_MONTH);
+        month = calendar.get(Calendar.MONTH);
+        year = calendar.get(Calendar.YEAR);
+
+        DatePickerDialog datePickerDialog = new DatePickerDialog(UpdateNote.this, new DatePickerDialog.OnDateSetListener() {
+            @SuppressLint("SetTextI18n")
+            @Override
+            public void onDateSet(DatePicker view, int yearSelected, int monthSelected, int daySelected) {
+
+                String dayFormatted, monthFormatted;
+
+                //Format day
+                if (daySelected < 10) {
+                    dayFormatted = "0" + daySelected;
+                } else {
+                    dayFormatted = String.valueOf(daySelected);
+                }
+
+                //Format month
+                int Month = monthSelected + 1;
+
+                if (Month < 10) {
+                    monthFormatted = "0" + Month;
+                } else {
+                    monthFormatted = String.valueOf(Month);
+                }
+
+                // Set Date on TextView
+                Date_Update.setText(dayFormatted + "/" + monthFormatted + "/" + yearSelected);
+            }
+        }
+                , year, month, day);
+        datePickerDialog.show();
+    }
+
+    //method to select an hour
+    private void selectHour(){
+        final Calendar clock = Calendar.getInstance();
+        hour = clock.get(Calendar.HOUR_OF_DAY);
+        minutes = clock.get(Calendar.MINUTE);
+
+        TimePickerDialog timePickerDialog = new TimePickerDialog(UpdateNote.this, new TimePickerDialog.OnTimeSetListener() {
+            @SuppressLint("SetTextI18n")
+            @Override
+            public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+
+                String hourFormatted, minutesFormatted;
+
+                //Format hour
+                if (hourOfDay < 10) {
+                    hourFormatted = "0" + hourOfDay;
+                } else {
+                    hourFormatted = String.valueOf(hourOfDay);
+                }
+
+                //Format minutes
+                if (minute < 10) {
+                    minutesFormatted = "0" + minute;
+                } else {
+                    minutesFormatted = String.valueOf(minute);
+                }
+
+                // Set Time on TextView
+                Hour_Update.setText(hourFormatted + ":" + minutesFormatted);
+            }
+        },hour,minutes,false);
+        timePickerDialog.show();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.menu_update_note, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == R.id.Update_Note) {
+            toastOk("Updated Note");
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return super.onSupportNavigateUp();
+    }
+
+    public void toastOk(String msg) {
+        LayoutInflater layoutInflater = getLayoutInflater();
+        View view = layoutInflater.inflate(R.layout.toast_ok, findViewById(R.id.custom_ok));
+        TextView txtMensaje = view.findViewById(R.id.text_ok);
+        txtMensaje.setText(msg);
+
+        Toast toast = new Toast(getApplicationContext());
+        toast.setGravity(Gravity.CENTER_VERTICAL | Gravity.BOTTOM, 0, 200);
+        toast.setDuration(Toast.LENGTH_LONG);
+        toast.setView(view);
+        toast.show();
     }
 }
