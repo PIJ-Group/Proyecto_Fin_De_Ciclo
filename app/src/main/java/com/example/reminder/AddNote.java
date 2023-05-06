@@ -65,85 +65,10 @@ public class AddNote extends AppCompatActivity {
         VarInit();
         DataObtent();
         CurrentDateTimeObtent();
-
-        Calendar_btn.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                final Calendar calendar = Calendar.getInstance();
-                day = calendar.get(Calendar.DAY_OF_MONTH);
-                month = calendar.get(Calendar.MONTH);
-                year = calendar.get(Calendar.YEAR);
-
-                DatePickerDialog datePickerDialog = new DatePickerDialog(AddNote.this, new DatePickerDialog.OnDateSetListener() {
-                    @SuppressLint("SetTextI18n")
-                    @Override
-                    public void onDateSet(DatePicker view, int yearSelected, int monthSelected, int daySelected) {
-
-                        String dayFormatted, monthFormatted;
-
-                        //Format day
-                        if (daySelected < 10) {
-                            dayFormatted = "0" + daySelected;
-                        } else {
-                            dayFormatted = String.valueOf(daySelected);
-                        }
-
-                        //Format month
-                        int Month = monthSelected + 1;
-
-                        if (Month < 10) {
-                            monthFormatted = "0" + Month;
-                        } else {
-                            monthFormatted = String.valueOf(Month);
-                        }
-
-                        // Set Date on TextView
-                        Date.setText(dayFormatted + "/" + monthFormatted + "/" + yearSelected);
-                    }
-                }
-                        , year, month, day);
-                datePickerDialog.show();
-            }
-        });
-
-        Hour_btn.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                final Calendar clock = Calendar.getInstance();
-                hour = clock.get(Calendar.HOUR_OF_DAY);
-                minutes = clock.get(Calendar.MINUTE);
-
-                TimePickerDialog timePickerDialog = new TimePickerDialog(AddNote.this, new TimePickerDialog.OnTimeSetListener() {
-                    @SuppressLint("SetTextI18n")
-                    @Override
-                    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-
-                        String hourFormatted, minutesFormatted;
-
-                        //Format hour
-                        if (hourOfDay < 10) {
-                            hourFormatted = "0" + hourOfDay;
-                        } else {
-                            hourFormatted = String.valueOf(hourOfDay);
-                        }
-
-                        //Format minutes
-                        if (minute < 10) {
-                            minutesFormatted = "0" + minute;
-                        } else {
-                            minutesFormatted = String.valueOf(minute);
-                        }
-
-                        // Set Time on TextView
-                        Hour.setText(hourFormatted + ":" + minutesFormatted);
-                    }
-                },hour,minutes,false);
-                timePickerDialog.show();
-            }
-        });
+        Calendar_btn.setOnClickListener(v -> dateSelect());
+        Hour_btn.setOnClickListener(v -> hourSelect());
 
     }
-
 
     //Inicialize variables
     private void VarInit() {
@@ -196,6 +121,78 @@ public class AddNote extends AppCompatActivity {
         String DateTimeReg = new SimpleDateFormat("dd-MM-yyyy/HH:mm:ss a",
                 Locale.getDefault()).format(System.currentTimeMillis());
         Current_Date_time.setText(DateTimeReg);
+    }
+
+    //method to select a date
+    private void dateSelect(){
+        final Calendar calendar = Calendar.getInstance();
+        day = calendar.get(Calendar.DAY_OF_MONTH);
+        month = calendar.get(Calendar.MONTH);
+        year = calendar.get(Calendar.YEAR);
+
+        DatePickerDialog datePickerDialog = new DatePickerDialog(AddNote.this, new DatePickerDialog.OnDateSetListener() {
+            @SuppressLint("SetTextI18n")
+            @Override
+            public void onDateSet(DatePicker view, int yearSelected, int monthSelected, int daySelected) {
+
+                String dayFormatted, monthFormatted;
+
+                //Format day
+                if (daySelected < 10) {
+                    dayFormatted = "0" + daySelected;
+                } else {
+                    dayFormatted = String.valueOf(daySelected);
+                }
+
+                //Format month
+                int Month = monthSelected + 1;
+
+                if (Month < 10) {
+                    monthFormatted = "0" + Month;
+                } else {
+                    monthFormatted = String.valueOf(Month);
+                }
+
+                // Set Date on TextView
+                Date.setText(dayFormatted + "/" + monthFormatted + "/" + yearSelected);
+            }
+        }
+                , year, month, day);
+        datePickerDialog.show();
+    }
+
+    //method to select an hour
+    private void hourSelect(){
+        final Calendar clock = Calendar.getInstance();
+        hour = clock.get(Calendar.HOUR_OF_DAY);
+        minutes = clock.get(Calendar.MINUTE);
+
+        TimePickerDialog timePickerDialog = new TimePickerDialog(AddNote.this, new TimePickerDialog.OnTimeSetListener() {
+            @SuppressLint("SetTextI18n")
+            @Override
+            public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+
+                String hourFormatted, minutesFormatted;
+
+                //Format hour
+                if (hourOfDay < 10) {
+                    hourFormatted = "0" + hourOfDay;
+                } else {
+                    hourFormatted = String.valueOf(hourOfDay);
+                }
+
+                //Format minutes
+                if (minute < 10) {
+                    minutesFormatted = "0" + minute;
+                } else {
+                    minutesFormatted = String.valueOf(minute);
+                }
+
+                // Set Time on TextView
+                Hour.setText(hourFormatted + ":" + minutesFormatted);
+            }
+        },hour,minutes,false);
+        timePickerDialog.show();
     }
 
 
