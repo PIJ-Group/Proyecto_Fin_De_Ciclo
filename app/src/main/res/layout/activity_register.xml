@@ -8,7 +8,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         tools:context=".Register">
 
         <com.airbnb.lottie.LottieAnimationView
@@ -68,7 +68,8 @@
                     android:fontFamily="@font/vanilla"
                     android:hint="@string/name"
                     android:inputType="textPersonName|textCapWords"
-                    android:padding="20dp" />
+                    android:padding="20dp"
+                    android:autofillHints="Name" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -88,11 +89,13 @@
                     android:fontFamily="@font/vanilla"
                     android:hint="@string/email"
                     android:inputType="textEmailAddress"
-                    android:padding="20dp" />
+                    android:padding="20dp"
+                    android:autofillHints="Email" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/p"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
@@ -110,12 +113,14 @@
                     android:fontFamily="@font/vanilla"
                     android:hint="@string/hintPass"
                     android:inputType="textPassword"
-                    android:padding="20dp" />
+                    android:padding="20dp"
+                    android:autofillHints="Pass" />
 
 
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/cp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
@@ -133,7 +138,8 @@
                     android:fontFamily="@font/vanilla"
                     android:hint="@string/confirm_password"
                     android:inputType="textPassword"
-                    android:padding="20dp" />
+                    android:padding="20dp"
+                    android:autofillHints="ConfirmedPass" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
