@@ -7,7 +7,7 @@
     android:layout_height="match_parent">
 <androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     tools:context=".Login">
 
     <com.airbnb.lottie.LottieAnimationView
@@ -106,7 +106,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.428"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/botonLogin" />
+        app:layout_constraintTop_toBottomOf="@+id/botonLogin"
+        tools:ignore="TextViewEdits" />
 
     <TextView
         android:id="@+id/signUpWith"
@@ -136,7 +137,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.187"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/signUpWith" />
+        app:layout_constraintTop_toBottomOf="@+id/signUpWith"
+        tools:ignore="RtlHardcoded" />
 
     <Button
         android:id="@+id/facebookButton"
@@ -151,7 +153,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/signUpWith" />
+        app:layout_constraintTop_toBottomOf="@+id/signUpWith"
+        tools:ignore="RtlHardcoded" />
 
     <Button
         android:id="@+id/twitterButton"
@@ -166,7 +169,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.797"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/signUpWith" />
+        app:layout_constraintTop_toBottomOf="@+id/signUpWith"
+        tools:ignore="RtlHardcoded" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

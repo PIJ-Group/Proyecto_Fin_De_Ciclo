@@ -2,7 +2,6 @@ package com.example.reminder;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Looper;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -12,9 +11,6 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
@@ -22,6 +18,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
@@ -35,7 +32,6 @@ public class Register extends AppCompatActivity {
     EditText inputUserName,inputEmailText, inputPassText, inputConfirmedPassText;
     TextView haveAndAccount;
     private FirebaseAuth mAuth;
-    FirebaseAuth firebaseAuth;
     FirebaseFirestore db;
     ProgressBar loading;
 
@@ -79,6 +75,7 @@ public class Register extends AppCompatActivity {
                 inputPassText.setError(getString(R.string.invalid_password));
             } else if (!confirmedPassword.equals(password) || confirmedPassword.isEmpty()) {
                 inputConfirmedPassText.setError(getString(R.string.not_match));
+
             } else {
 
                 mAuth.createUserWithEmailAndPassword(email, password)
@@ -86,7 +83,8 @@ public class Register extends AppCompatActivity {
                             if (task.isSuccessful()) {
                                 loading.setVisibility(View.VISIBLE);
                             FirebaseUser user = mAuth.getCurrentUser();
-                            String userId = user.getUid();
+                                assert user != null;
+                                String userId = user.getUid();
                             DocumentReference documentReference = db.collection("Users").document(userId);
                             Map<String,Object> dataUser = new HashMap<>();
                             dataUser.put("user_name",userName);

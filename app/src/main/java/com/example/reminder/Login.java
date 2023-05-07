@@ -13,7 +13,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -73,10 +72,7 @@ public class Login extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        ActionBar actionBar = getSupportActionBar();
 
-
-        //Objects.requireNonNull(getSupportActionBar()).hide();
 
         // Initialize Firebase Auth
         mAuth = FirebaseAuth.getInstance();
@@ -196,6 +192,7 @@ public class Login extends AppCompatActivity {
                             if (task.isSuccessful()) {
                                 // Sign in success, update UI with the signed-in user's information
                                 FirebaseUser user = mAuth.getCurrentUser();
+                                assert user != null;
                                 String userId = user.getUid();
                                 String name, email;
                                 FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -222,17 +219,17 @@ public class Login extends AppCompatActivity {
                                 });
                                 goHome();
                                 //No cierro
-                                updateUI(user);
+                                updateUI();
 
                             }else {
                         // If sign in fails, display a message to the user.
-                        updateUI(null);
+                        updateUI();
                     }
                 });
     }
     //Método para verificar el estado del usuario actual y movernos entre actividades
-    private void updateUI(FirebaseUser user) {
-        user = mAuth.getCurrentUser();
+    private void updateUI() {
+        FirebaseUser user = mAuth.getCurrentUser();
         if (user != null) {
             goHome();
         }

@@ -61,6 +61,7 @@ public class TwitterActivity extends Login {
                                 @Override
                                 public void onSuccess(AuthResult authResult) {
                                     FirebaseUser user = firebaseAuth.getCurrentUser();
+                                    assert user != null;
                                     String userId = user.getUid();
                                     String name, email;
                                     FirebaseFirestore db = FirebaseFirestore.getInstance();
