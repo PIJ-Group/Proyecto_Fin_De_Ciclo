@@ -1,9 +1,5 @@
 package com.example.reminder;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
@@ -21,7 +17,18 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+
 import java.util.Calendar;
+import java.util.Map;
 
 public class UpdateNote extends AppCompatActivity {
 
@@ -32,6 +39,12 @@ public class UpdateNote extends AppCompatActivity {
 
     //Declare strings to store the data of the main activity
     String id_note_R, user_id_R, registration_date_R, title_R, description_R, date_R, hour_R, status_R;
+
+    //Declare strings to get data for update the note in firebase
+    String titleUpdate, descriptionUpdate, dateUpdate, hourUpdate, statusUpdate;
+
+    FirebaseFirestore db;
+    FirebaseAuth nAuth;
 
     int year, month, day, hour,minutes;
 
@@ -66,6 +79,9 @@ public class UpdateNote extends AppCompatActivity {
         Description_Update = findViewById(R.id.Description_Update);
         Calendar_btn_Update = findViewById(R.id.Calendar_btn_Update);
         Hour_btn_Update = findViewById(R.id.Hour_btn_Update);
+
+        db = FirebaseFirestore.getInstance();
+        nAuth = FirebaseAuth.getInstance();
 
     }
 
@@ -166,6 +182,41 @@ public class UpdateNote extends AppCompatActivity {
         timePickerDialog.show();
     }
 
+    private void updateNoteFirebase(){
+
+        String userMail = nAuth.getCurrentUser().getEmail();
+        titleUpdate = Title_Update.getText().toString();
+        descriptionUpdate = Description_Update.getText().toString();
+        dateUpdate = Date_Update.getText().toString();
+        hourUpdate = Hour_Update.getText().toString();
+        statusUpdate = Status_Update.getText().toString();
+        String userId = Userid_User_Update.getText().toString();
+
+
+        Note note = new Note(userMail + "/" + registration_date_R , userId,
+                userMail, registration_date_R, titleUpdate, descriptionUpdate, dateUpdate, hourUpdate, statusUpdate);
+
+        DocumentReference documentReference = db.collection("Notes").document("noteId");
+
+        documentReference
+                .update((Map<String, Object>) note)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        toastOk("Updated Note");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        toastWarning("Failure to update note");
+                    }
+                });
+
+
+
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater menuInflater = getMenuInflater();
@@ -176,7 +227,7 @@ public class UpdateNote extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == R.id.Update_Note) {
-            toastOk("Updated Note");
+            updateNoteFirebase();
         }
         return super.onOptionsItemSelected(item);
     }
@@ -191,6 +242,19 @@ public class UpdateNote extends AppCompatActivity {
         LayoutInflater layoutInflater = getLayoutInflater();
         View view = layoutInflater.inflate(R.layout.toast_ok, findViewById(R.id.custom_ok));
         TextView txtMensaje = view.findViewById(R.id.text_ok);
+        txtMensaje.setText(msg);
+
+        Toast toast = new Toast(getApplicationContext());
+        toast.setGravity(Gravity.CENTER_VERTICAL | Gravity.BOTTOM, 0, 200);
+        toast.setDuration(Toast.LENGTH_LONG);
+        toast.setView(view);
+        toast.show();
+    }
+
+    public void toastWarning(String msg) {
+        LayoutInflater layoutInflater = getLayoutInflater();
+        View view = layoutInflater.inflate(R.layout.toast_warning, findViewById(R.id.custom_warning));
+        TextView txtMensaje = view.findViewById(R.id.text_warning);
         txtMensaje.setText(msg);
 
         Toast toast = new Toast(getApplicationContext());
