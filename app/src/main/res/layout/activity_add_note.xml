@@ -85,12 +85,10 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginTop="16dp"
-            android:layout_marginEnd="16dp"
             android:backgroundTint="@color/pink_principal"
             android:text="@string/Calendar_btn"
             app:cornerRadius="32sp"
             app:icon="@drawable/icon_calendar"
-            app:layout_constraintEnd_toStartOf="@+id/Date"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/Description"
             tools:ignore="TextContrastCheck" />
@@ -100,14 +98,16 @@
             android:id="@+id/Date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
             android:layout_marginTop="24dp"
-            android:layout_marginEnd="131dp"
+            android:layout_marginEnd="90dp"
             android:fontFamily="@font/vanilla"
             android:hint="@string/Date"
             android:textColorHint="#78909C"
             android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/Calendar_btn"
             app:layout_constraintTop_toBottomOf="@+id/Description"
             app:layout_constraintVertical_bias="0.0" />
 
@@ -129,11 +129,13 @@
             tools:ignore="TextContrastCheck" />
 
         <!--TIME SELECTED-->
+
+        <!--NOTE STATUS-->
         <TextView
             android:id="@+id/Hour"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="24dp"
             android:layout_marginEnd="8dp"
             android:fontFamily="@font/vanilla"
             android:hint="@string/Hour"
@@ -141,12 +143,11 @@
             android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.448"
+            app:layout_constraintHorizontal_bias="0.56"
             app:layout_constraintStart_toEndOf="@+id/Hour_btn"
             app:layout_constraintTop_toBottomOf="@+id/Date"
-            app:layout_constraintVertical_bias="0.091" />
+            app:layout_constraintVertical_bias="0.083" />
 
-        <!--NOTE STATUS-->
         <TextView
             android:id="@+id/Status"
             android:layout_width="wrap_content"
