@@ -95,9 +95,8 @@ public class AddNote extends AppCompatActivity {
         FirebaseUser user = nAuth.getCurrentUser();
         if (user != null) {
             userId = user.getUid();
-        }else if(user.equals("")){
-            getUserIdGoogle();
         }
+
         DocumentReference documentReference = db.collection("Users").document(userId);
         documentReference.addSnapshotListener(this, new EventListener<DocumentSnapshot>() {
             @Override
@@ -114,22 +113,18 @@ public class AddNote extends AppCompatActivity {
 
         //Get the user mail from authentication
         userMail = nAuth.getCurrentUser().getEmail();
+        if(userMail == null){
+            userMail = user.getProviderData().get(1).getEmail();
+        }
+        if(userMail == null){
+            userMail = user.getProviderData().get(1).getUid();
+        }
+        if(userMail == null){
+            userMail = user.getProviderData().get(1).getPhoneNumber();
+        }
 
         Date.setText(dateRecover);
 
-    }
-
-    //Get user
-    private void getUserIdGoogle(){
-        DocumentReference documentReferenceG = db.collection("Connect_Users").document(userId);
-        documentReferenceG.addSnapshotListener(this, new EventListener<DocumentSnapshot>() {
-            @Override
-            public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException error) {
-                if (documentSnapshot != null) {
-                    Userid_User.setText(documentSnapshot.getString("user_name"));
-                }
-            }
-        });
     }
 
     //Gets the system date and time

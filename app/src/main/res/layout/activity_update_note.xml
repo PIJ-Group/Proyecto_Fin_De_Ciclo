@@ -57,13 +57,50 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/Id_Note_Update" />
 
+        <!--NOTE FINISHED-->
+        <ImageView
+            android:id="@+id/Note_finished"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:background="#16A085"
+            android:visibility="gone"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <!--NOTE NOT FINISHED-->
+        <ImageView
+            android:id="@+id/Note_not_finished"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:background="#E74C3C"
+            android:visibility="gone"
+            app:layout_constraintStart_toEndOf="@+id/Note_finished"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <!--NOTE STATUS-->
+        <TextView
+            android:id="@+id/Status_Update"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            android:fontFamily="@font/vanilla"
+            android:text="@string/Status_Update"
+            android:textSize="20sp"
+            app:layout_constraintStart_toEndOf="@+id/Note_not_finished"
+            app:layout_constraintTop_toTopOf="parent" />
+
         <!--NOTE TITLE-->
         <EditText
             android:id="@+id/Title_Update"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="32dp"
+            android:layout_marginTop="64dp"
             android:layout_marginEnd="8dp"
             android:fontFamily="@font/vanilla"
             android:hint="@string/Title_Update"
@@ -169,22 +206,29 @@
             app:layout_constraintTop_toBottomOf="@+id/Date_Update"
             app:layout_constraintVertical_bias="0.285" />
 
-        <!--NOTE STATUS-->
+        <Spinner
+            android:id="@+id/Spinner_Status"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/Hour_btn_Update" />
+
         <TextView
-            android:id="@+id/Status_Update"
+            android:id="@+id/New_Status"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:layout_marginBottom="28dp"
-            android:fontFamily="@font/vanilla"
-            android:text="@string/Status_Update"
-            android:textSize="20sp"
+            android:layout_marginStart="64dp"
+            android:layout_marginTop="8dp"
+            android:text="@string/New_Status"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.028"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/Hour_btn_Update"
-            app:layout_constraintVertical_bias="1.0" />
+            app:layout_constraintStart_toEndOf="@+id/Spinner_Status"
+            app:layout_constraintTop_toBottomOf="@+id/Hour_btn_Update" />
+
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

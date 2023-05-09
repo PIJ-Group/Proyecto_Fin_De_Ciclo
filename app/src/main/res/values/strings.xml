@@ -46,10 +46,11 @@
     <string name="Calendar_btn_Update">Calendar</string>
     <string name="Date_Update">00/00/0000</string>
     <string name="Status_Update">Not finished</string>
+    <string name="New_Status"> -- </string>
     <string name="Hour_btn_Update">Hour</string>
     <string name="Hour_Update">00:00</string>
 
-    <!---Menu-->
+    <!--Menu-->
     <string name="Add_Note">Add Note</string>
     <string name="Add_btn">add</string>
     <string name="Edit_btn">edit</string>
@@ -65,6 +66,12 @@
     <string name="invalid_password">contraseña muy corta</string>
     <string name="not_match">Las contraseñas no coinciden</string>
     <string name="Update_Note">Update Note</string>
+
+    <!--Spinner-->
+    <string-array name="Note_Status">
+        <item>"Finished"</item>
+        <item>"Not finished</item>
+    </string-array>
 
 
 </resources>

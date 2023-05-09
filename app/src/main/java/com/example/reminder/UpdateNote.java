@@ -10,9 +10,13 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -30,18 +34,23 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.Calendar;
 import java.util.Map;
 
-public class UpdateNote extends AppCompatActivity {
+public class UpdateNote extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
     TextView Id_Note_Update, Userid_User_Update, Registration_Date_Update, Date_Update,
-            Hour_Update, Status_Update;
+            Hour_Update, Status_Update, New_Status;
     EditText Title_Update, Description_Update;
     Button Calendar_btn_Update, Hour_btn_Update;
+    ImageView Note_finished, Note_not_finished;
+    Spinner Spinner_Status;
 
     //Declare strings to store the data of the main activity
     String id_note_R, user_id_R, registration_date_R, title_R, description_R, date_R, hour_R, status_R;
 
     //Declare strings to get data for update the note in firebase
     String titleUpdate, descriptionUpdate, dateUpdate, hourUpdate, statusUpdate;
+
+    //Declare String for noteStatus
+    String note_Status;
 
     FirebaseFirestore db;
     FirebaseAuth nAuth;
@@ -63,6 +72,8 @@ public class UpdateNote extends AppCompatActivity {
         VarInit();
         GetData();
         SetData();
+        checkNoteStatus();
+        spinner_Status();
         Calendar_btn_Update.setOnClickListener(v -> dateSelect());
         Hour_btn_Update.setOnClickListener(v -> selectHour());
     }
@@ -79,6 +90,10 @@ public class UpdateNote extends AppCompatActivity {
         Description_Update = findViewById(R.id.Description_Update);
         Calendar_btn_Update = findViewById(R.id.Calendar_btn_Update);
         Hour_btn_Update = findViewById(R.id.Hour_btn_Update);
+        Note_finished = findViewById(R.id.Note_finished);
+        Note_not_finished = findViewById(R.id.Note_not_finished);
+        Spinner_Status = findViewById(R.id.Spinner_Status);
+        New_Status = findViewById(R.id.New_Status);
 
         db = FirebaseFirestore.getInstance();
         nAuth = FirebaseAuth.getInstance();
@@ -212,8 +227,36 @@ public class UpdateNote extends AppCompatActivity {
                         toastWarning("Failure to update note");
                     }
                 });
+    }
 
+    //Check note status
+    private void checkNoteStatus(){
+        note_Status = Status_Update.getText().toString();
 
+        if(note_Status.equals("Not finished")){
+            Note_not_finished.setVisibility(View.VISIBLE);
+        }
+        if(note_Status.equals("Finished")){
+            Note_finished.setVisibility(View.VISIBLE);
+        }
+    }
+
+    private void spinner_Status(){
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+                R.array.Note_Status, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        Spinner_Status.setAdapter(adapter);
+        Spinner_Status.setOnItemSelectedListener(this);
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
+        String status_Selected = adapterView.getItemAtPosition(position).toString();
+        New_Status.setText(status_Selected);
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
 
     }
 
@@ -263,4 +306,6 @@ public class UpdateNote extends AppCompatActivity {
         toast.setView(view);
         toast.show();
     }
+
+
 }
