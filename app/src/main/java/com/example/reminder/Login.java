@@ -198,12 +198,11 @@ public class Login extends AppCompatActivity {
                                 FirebaseFirestore db = FirebaseFirestore.getInstance();
 
                                 name = user.getDisplayName();
-                                email = user.getEmail();
-
-                                DocumentReference documentReference = db.collection("Connect_Users").document(userId);
+                                email = user.getProviderData().get(0).getUid();
+                                DocumentReference documentReference = db.collection("Users").document(userId);
                                 Map<String, Object> dataUser = new HashMap<>();
-                                dataUser.put("user_name", name);
                                 dataUser.put("email_user", email);
+                                dataUser.put("user_name", name);
                                 documentReference.set(dataUser).addOnSuccessListener(new OnSuccessListener<Void>() {
                                     @Override
                                     public void onSuccess(Void aVoid) {
