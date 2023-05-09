@@ -108,13 +108,13 @@ public class MainActivity extends AppCompatActivity {
                 .build();
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
 
-
         //Actualizar la UI con las tareas del usuario logueado
-        updateNotes();
+        //updateNotes();
     }
 
     //Insertar item en listview
     //FALTA POR IMPLEMENTAR COMPLETAMENTE
+    /*
     private void updateNotes() {
         user = mAuth.getCurrentUser();
 
@@ -134,28 +134,30 @@ public class MainActivity extends AppCompatActivity {
                         }
 
                         listNotesTitle.clear();
-                        //listNotesHour.clear();
+                        listNotesHour.clear();
                         listNotesId.clear();
 
                         for (QueryDocumentSnapshot doc : value) {
                             listNotesId.add(doc.getId());
                             listNotesTitle.add(doc.getString("title"));
-                            //listNotesHour.add(doc.getString("noteHour"));
+                            listNotesHour.add(doc.getString("noteHour"));
                         }
 
                         if(listNotesTitle.size() == 0){
                             listViewNotes.setAdapter(null);
                         }else{
                             AdapterNotesTitle = new ArrayAdapter<String>(MainActivity.this, R.layout.item_note, R.id.item_title, listNotesTitle);
-                            //AdapterNotesHour = new ArrayAdapter<String>(MainActivity.this, R.layout.item_note, R.id.item_hour, listNotesHour);
+                            AdapterNotesHour = new ArrayAdapter<String>(MainActivity.this, R.layout.item_note, R.id.item_hour, listNotesHour);
                             listViewNotes.setAdapter(AdapterNotesTitle);
-                            //listViewNotes.setAdapter(AdapterNotesHour);
+                            listViewNotes.setAdapter(AdapterNotesHour);
 
                         }
 
                     }
                 });
     }
+
+    */
 
     //Creación del menú superior del activity main
     @Override
