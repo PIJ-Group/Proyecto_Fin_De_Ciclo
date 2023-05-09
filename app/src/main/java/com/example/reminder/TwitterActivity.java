@@ -34,6 +34,7 @@ public class TwitterActivity extends Login {
 
         provider.addCustomParameter("lang", "es");
 
+
         Task<AuthResult> pendingResultTask = firebaseAuth.getPendingAuthResult();
         if (pendingResultTask != null) {
             // There's something already here! Finish the sign-in for your user.
@@ -55,7 +56,7 @@ public class TwitterActivity extends Login {
                             });
         } else {
             firebaseAuth
-                    .startActivityForSignInWithProvider(/* activity= */ this, provider.build())
+                    .startActivityForSignInWithProvider(TwitterActivity.this, provider.build())
                     .addOnSuccessListener(
                             new OnSuccessListener<AuthResult>() {
                                 @Override
@@ -67,12 +68,15 @@ public class TwitterActivity extends Login {
                                     FirebaseFirestore db = FirebaseFirestore.getInstance();
 
                                     name = user.getDisplayName();
-                                    email = user.getEmail();
+                                    email = user.getProviderData().get(1).getEmail();
 
-                                    DocumentReference documentReference = db.collection("Connect_Users").document(userId);
+
+
+                                    DocumentReference documentReference = db.collection("Users").document(userId);
                                     Map<String, Object> dataUser = new HashMap<>();
-                                    dataUser.put("user_name", name);
+
                                     dataUser.put("email_user", email);
+                                    dataUser.put("user_name", name);
 
                                     documentReference.set(dataUser).addOnSuccessListener(new OnSuccessListener<Void>() {
                                         @Override
@@ -100,8 +104,6 @@ public class TwitterActivity extends Login {
                             });
         }
 
-
     }
-
 
 }
