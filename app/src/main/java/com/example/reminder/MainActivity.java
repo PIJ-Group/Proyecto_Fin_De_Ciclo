@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -27,13 +28,17 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.core.View;
@@ -54,6 +59,7 @@ public class MainActivity extends AppCompatActivity {
     List<String> listNotesHour = new ArrayList<>();
     List<String> listNotesId = new ArrayList<>();
     ArrayAdapter<String> AdapterNotesTitle, AdapterNotesHour;
+    ArrayList<DataModal> dataModalArrayList;
 
     CalendarView calendarView;
     String calendarDate;
@@ -70,6 +76,7 @@ public class MainActivity extends AppCompatActivity {
         db = FirebaseFirestore.getInstance();
         mAuth = FirebaseAuth.getInstance();
         listViewNotes = findViewById(R.id.listView);
+        dataModalArrayList = new ArrayList<>();
 
         calendarView = (CalendarView) findViewById(R.id.calendar);
 
@@ -97,6 +104,9 @@ public class MainActivity extends AppCompatActivity {
                 }
 
                 calendarDate = dayFormatted + "/" + monthFormatted + "/" + year;
+
+                //Actualizar la UI con las tareas del usuario logueado
+                updateNotes();
             }
         });
 
@@ -107,14 +117,43 @@ public class MainActivity extends AppCompatActivity {
                 .requestEmail()
                 .build();
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
-
-        //Actualizar la UI con las tareas del usuario logueado
-        //updateNotes();
     }
+
+    /*
+    //PRUEBA
+    private void updateNotes(){
+        db.collection("Notes")
+                .whereEqualTo("noteDate", calendarDate)
+                .whereEqualTo("userMail", emailUser)
+                .get()
+                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                    @Override
+                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                        if (!queryDocumentSnapshots.isEmpty()){
+                            List<DocumentSnapshot> list = queryDocumentSnapshots.getDocuments();
+                            for(DocumentSnapshot d: list) {
+                                DataModal datamodal = d.toObject(DataModal.class);
+                                dataModalArrayList.add(datamodal);
+                            }
+                            AdapterListView adapter = new AdapterListView(MainActivity.this, dataModalArrayList);
+                            listViewNotes.setAdapter(adapter);
+                        } else {
+                            toastWarning("No hay datos en la base de datos");
+                        }
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        toastWarning("Fallo al cargar los datos");
+                    }
+                });
+    }
+    */
+
 
     //Insertar item en listview
     //FALTA POR IMPLEMENTAR COMPLETAMENTE
-    /*
+
     private void updateNotes() {
         user = mAuth.getCurrentUser();
 
@@ -157,8 +196,6 @@ public class MainActivity extends AppCompatActivity {
                 });
     }
 
-    */
-
     //Creación del menú superior del activity main
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -199,16 +236,16 @@ public class MainActivity extends AppCompatActivity {
             @Override
                 public void onClick(DialogInterface dialog, int i) {
                     //PASAR A ACTIVITY DE DETALLES (REVISAR)
-                    Intent intent = new Intent(MainActivity.this, ArchivedNotes.class);
-                    startActivity(intent);
+                    //Intent intent = new Intent(MainActivity.this, ArchivedNotes.class);
+                    //startActivity(intent);
                 }
             })
             .setNeutralButton(R.string.dialog_item_edit, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int i) {
                     //PASAR A ACTIVITY DE EDITAR (REVISAR)
-                    Intent intent = new Intent(MainActivity.this, ListNotes.class);
-                    startActivity(intent);
+                    //Intent intent = new Intent(MainActivity.this, ListNotes.class);
+                    //startActivity(intent);
                 }
             })
             .setNegativeButton(R.string.dialog_item_delete, new DialogInterface.OnClickListener() {
@@ -233,6 +270,20 @@ public class MainActivity extends AppCompatActivity {
         LayoutInflater layoutInflater = getLayoutInflater();
         android.view.View view = layoutInflater.inflate(R.layout.toast_ok, (ViewGroup) findViewById(R.id.custom_ok));
         TextView txtMensaje = view.findViewById(R.id.text_ok);
+        txtMensaje.setText(msg);
+
+        Toast toast = new Toast(getApplicationContext());
+        toast.setGravity(Gravity.CENTER_VERTICAL | Gravity.BOTTOM, 0, 200);
+        toast.setDuration(Toast.LENGTH_LONG);
+        toast.setView(view);
+        toast.show();
+    }
+
+    //Método para incluir un toast personalizado de advertencia.
+    public void toastWarning(String msg) {
+        LayoutInflater layoutInflater = getLayoutInflater();
+        android.view.View view = layoutInflater.inflate(R.layout.toast_warning, findViewById(R.id.custom_warning));
+        TextView txtMensaje = view.findViewById(R.id.text_warning);
         txtMensaje.setText(msg);
 
         Toast toast = new Toast(getApplicationContext());
