@@ -39,14 +39,14 @@ public class Login extends AppCompatActivity {
     static final int RC_SIGN_IN = 1;
     GoogleSignInClient mGoogleSignInClient;
 
-    Button botonGoogle,btnTwitter,btnFacebook;
+    Button botonGoogle, btnTwitter, btnFacebook;
     Button botonLogin;
     TextView botonRegistro;
     EditText emailText, passText;
     private FirebaseAuth mAuth;
 
     @Override
-    public void onBackPressed(){
+    public void onBackPressed() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage("¿Do you want to exit?")
                 .setPositiveButton("YES", new DialogInterface.OnClickListener() {
@@ -71,7 +71,6 @@ public class Login extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
 
 
         // Initialize Firebase Auth
@@ -137,7 +136,7 @@ public class Login extends AppCompatActivity {
         btnFacebook.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Login.this,FacebookActivity.class);
+                Intent intent = new Intent(Login.this, FacebookActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                 startActivity(intent);
             }
@@ -148,7 +147,7 @@ public class Login extends AppCompatActivity {
         btnTwitter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Login.this,TwitterActivity.class);
+                Intent intent = new Intent(Login.this, TwitterActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                 startActivity(intent);
             }
@@ -189,43 +188,41 @@ public class Login extends AppCompatActivity {
         AuthCredential credential = GoogleAuthProvider.getCredential(idToken, null);
         mAuth.signInWithCredential(credential)
                 .addOnCompleteListener(this, task -> {
-                            if (task.isSuccessful()) {
-                                // Sign in success, update UI with the signed-in user's information
-                                FirebaseUser user = mAuth.getCurrentUser();
-                                assert user != null;
-                                String userId = user.getUid();
-                                String name, email;
-                                FirebaseFirestore db = FirebaseFirestore.getInstance();
+                    if (task.isSuccessful()) {
+                        // Sign in success, update UI with the signed-in user's information
+                        FirebaseUser user = mAuth.getCurrentUser();
+                        assert user != null;
+                        String userId = user.getUid();
+                        String name, email;
+                        FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-                                name = user.getDisplayName();
-                                email = user.getProviderData().get(0).getUid();
-                                DocumentReference documentReference = db.collection("Users").document(userId);
-                                Map<String, Object> dataUser = new HashMap<>();
-                                dataUser.put("email_user", email);
-                                dataUser.put("user_name", name);
-                                documentReference.set(dataUser).addOnSuccessListener(new OnSuccessListener<Void>() {
-                                    @Override
-                                    public void onSuccess(Void aVoid) {
-                                        Log.d("register", "Datos de usuario creados");
-                                        toastWarning(getString(R.string.created_user));
+                        name = user.getDisplayName();
+                        email = user.getProviderData().get(0).getUid();
+                        DocumentReference documentReference = db.collection("Users").document(userId);
+                        Map<String, Object> dataUser = new HashMap<>();
+                        dataUser.put("email_user", email);
+                        dataUser.put("user_name", name);
+                        documentReference.set(dataUser).addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+                                Log.d("register", "Datos de usuario creados");
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Log.d("register", "Error al crear documento");
+                            }
+                        });
+                        goHome();
+                        updateUI();
 
-                                    }
-                                }).addOnFailureListener(new OnFailureListener() {
-                                    @Override
-                                    public void onFailure(@NonNull Exception e) {
-                                        Log.d("register", "Error al crear documento");
-                                    }
-                                });
-                                goHome();
-                                //No cierro
-                                updateUI();
-
-                            }else {
+                    } else {
                         // If sign in fails, display a message to the user.
                         updateUI();
                     }
                 });
     }
+
     //Método para verificar el estado del usuario actual y movernos entre actividades
     private void updateUI() {
         FirebaseUser user = mAuth.getCurrentUser();

@@ -43,7 +43,7 @@ public class TwitterActivity extends Login {
                             new OnSuccessListener<AuthResult>() {
                                 @Override
                                 public void onSuccess(AuthResult authResult) {
-                                    startActivity(new Intent(TwitterActivity.this,MainActivity.class));
+                                    startActivity(new Intent(TwitterActivity.this, MainActivity.class));
                                     Toast.makeText(TwitterActivity.this, "", Toast.LENGTH_LONG).show();
                                 }
                             })
@@ -51,7 +51,7 @@ public class TwitterActivity extends Login {
                             new OnFailureListener() {
                                 @Override
                                 public void onFailure(@NonNull Exception e) {
-                                    Toast.makeText(TwitterActivity.this, ""+e.getMessage(), Toast.LENGTH_LONG).show();
+                                    Toast.makeText(TwitterActivity.this, "" + e.getMessage(), Toast.LENGTH_LONG).show();
                                 }
                             });
         } else {
@@ -71,10 +71,9 @@ public class TwitterActivity extends Login {
                                     email = user.getProviderData().get(1).getEmail();
 
 
-                                    if(email == null){
+                                    if (email == null) {
                                         email = user.getProviderData().get(1).getUid();
                                     }
-
 
 
                                     DocumentReference documentReference = db.collection("Users").document(userId);
@@ -87,8 +86,6 @@ public class TwitterActivity extends Login {
                                         @Override
                                         public void onSuccess(Void aVoid) {
                                             Log.d("register", "Datos de usuario creados");
-                                            toastWarning(getString(R.string.created_user));
-
                                         }
                                     }).addOnFailureListener(new OnFailureListener() {
                                         @Override
@@ -96,15 +93,14 @@ public class TwitterActivity extends Login {
                                             Log.d("register", "Error al crear documento");
                                         }
                                     });
-                                    startActivity(new Intent(TwitterActivity.this,MainActivity.class));
-                                    Toast.makeText(TwitterActivity.this, "", Toast.LENGTH_LONG).show();
+                                    startActivity(new Intent(TwitterActivity.this, MainActivity.class));
                                 }
                             })
                     .addOnFailureListener(
                             new OnFailureListener() {
                                 @Override
                                 public void onFailure(@NonNull Exception e) {
-                                    Toast.makeText(TwitterActivity.this, ""+e.getMessage(), Toast.LENGTH_LONG).show();
+                                    Toast.makeText(TwitterActivity.this, "" + e.getMessage(), Toast.LENGTH_LONG).show();
                                 }
                             });
         }

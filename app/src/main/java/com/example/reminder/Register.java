@@ -29,12 +29,11 @@ import java.util.Map;
 
 public class Register extends AppCompatActivity {
     Button btnRegister;
-    EditText inputUserName,inputEmailText, inputPassText, inputConfirmedPassText;
+    EditText inputUserName, inputEmailText, inputPassText, inputConfirmedPassText;
     TextView haveAndAccount;
     private FirebaseAuth mAuth;
     FirebaseFirestore db;
     ProgressBar loading;
-
 
 
     @Override
@@ -82,30 +81,29 @@ public class Register extends AppCompatActivity {
                         .addOnCompleteListener(task -> {
                             if (task.isSuccessful()) {
                                 loading.setVisibility(View.VISIBLE);
-                            FirebaseUser user = mAuth.getCurrentUser();
+                                FirebaseUser user = mAuth.getCurrentUser();
                                 assert user != null;
                                 String userId = user.getUid();
-                            DocumentReference documentReference = db.collection("Users").document(userId);
-                            Map<String,Object> dataUser = new HashMap<>();
-                            dataUser.put("user_name",userName);
-                            dataUser.put("email_user",email);
-                            documentReference.set(dataUser).addOnSuccessListener(new OnSuccessListener<Void>() {
-                                @Override
-                                public void onSuccess(Void aVoid) {
-                                    Log.d("register", "Datos de usuario creados");
-                                    toastOk(getString(R.string.created_user));
-                                    Intent intent = new Intent(Register.this, MainActivity.class);
-                                    startActivity(intent);
-                                    Register.this.finish();
+                                DocumentReference documentReference = db.collection("Users").document(userId);
+                                Map<String, Object> dataUser = new HashMap<>();
+                                dataUser.put("user_name", userName);
+                                dataUser.put("email_user", email);
+                                documentReference.set(dataUser).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void aVoid) {
+                                        Log.d("register", "Datos de usuario creados");
+                                        toastOk(getString(R.string.created_user));
+                                        Intent intent = new Intent(Register.this, MainActivity.class);
+                                        startActivity(intent);
+                                        Register.this.finish();
 
-                                }
-                            }).addOnFailureListener(new OnFailureListener() {
-                                @Override
-                                public void onFailure(@NonNull Exception e) {
-                                    Log.d("register", "Error al crear documento");
-                                }
-                            });
-
+                                    }
+                                }).addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        Log.d("register", "Error al crear documento");
+                                    }
+                                });
 
 
                             } else {
@@ -117,15 +115,12 @@ public class Register extends AppCompatActivity {
                         });
             }
         });
-        haveAndAccount.setOnClickListener(view ->{
-            startActivity(new Intent(Register.this,Login.class));
+        haveAndAccount.setOnClickListener(view -> {
+            startActivity(new Intent(Register.this, Login.class));
             Register.this.finish();
 
         });
     }
-
-
-
 
 
     public void toastOk(String msg) {
