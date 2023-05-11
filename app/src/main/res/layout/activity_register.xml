@@ -62,14 +62,14 @@
                     android:id="@+id/completeName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:autofillHints="Name"
                     android:backgroundTint="@color/white"
                     android:drawableStart="@drawable/name_icon"
                     android:drawablePadding="10dp"
                     android:fontFamily="@font/vanilla"
                     android:hint="@string/name"
                     android:inputType="textPersonName|textCapWords"
-                    android:padding="20dp"
-                    android:autofillHints="Name" />
+                    android:padding="20dp" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -83,14 +83,14 @@
                     android:id="@+id/emailBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:autofillHints="Email"
                     android:backgroundTint="@color/white"
                     android:drawableStart="@drawable/email_icon"
                     android:drawablePadding="10dp"
                     android:fontFamily="@font/vanilla"
                     android:hint="@string/email"
                     android:inputType="textEmailAddress"
-                    android:padding="20dp"
-                    android:autofillHints="Email" />
+                    android:padding="20dp" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -107,14 +107,14 @@
                     android:id="@+id/passBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:autofillHints="Pass"
                     android:backgroundTint="@color/white"
                     android:drawableStart="@drawable/ic_baseline_lock_24"
                     android:drawablePadding="10dp"
                     android:fontFamily="@font/vanilla"
                     android:hint="@string/hintPass"
                     android:inputType="textPassword"
-                    android:padding="20dp"
-                    android:autofillHints="Pass" />
+                    android:padding="20dp" />
 
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -132,14 +132,14 @@
                     android:id="@+id/confirmedPassBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:autofillHints="ConfirmedPass"
                     android:backgroundTint="@color/white"
                     android:drawableStart="@drawable/ic_baseline_lock_24"
                     android:drawablePadding="10dp"
                     android:fontFamily="@font/vanilla"
                     android:hint="@string/confirm_password"
                     android:inputType="textPassword"
-                    android:padding="20dp"
-                    android:autofillHints="ConfirmedPass" />
+                    android:padding="20dp" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -171,7 +171,7 @@
                 android:layout_height="match_parent"
                 android:layout_centerHorizontal="true"
                 android:layout_margin="20dp"
-                android:visibility="gone"/>
+                android:visibility="gone" />
 
 
         </androidx.appcompat.widget.LinearLayoutCompat>
