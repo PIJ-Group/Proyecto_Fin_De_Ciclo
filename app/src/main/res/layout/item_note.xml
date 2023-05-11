@@ -10,7 +10,7 @@
         android:layout_width="234dp"
         android:layout_height="20dp"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="12dp"
         android:text="@string/item_title"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -20,19 +20,19 @@
         android:layout_width="51dp"
         android:layout_height="19dp"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="12dp"
         android:text="@string/item_hour"
         app:layout_constraintStart_toEndOf="@+id/item_title"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
         android:id="@+id/item_elipsis"
-        android:onClick="otherOptions"
         android:layout_width="35dp"
         android:layout_height="37dp"
         android:layout_marginStart="25dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="24dp"
+        android:layout_marginTop="3dp"
+        android:layout_marginEnd="32dp"
+        android:onClick="otherOptions"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/item_hour"
         app:layout_constraintTop_toTopOf="parent"

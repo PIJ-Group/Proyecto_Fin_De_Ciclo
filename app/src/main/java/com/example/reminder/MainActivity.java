@@ -50,16 +50,13 @@ public class MainActivity extends AppCompatActivity {
     FirebaseUser user;
     FirebaseAuth mAuth;
     FirebaseFirestore db;
-    String emailUser, noteTitle, noteHour;
-    TextView itemTitle, itemHour;
-    View item;
+    String emailUser;
+    DataModal dataModal;
 
     ListView listViewNotes;
     List<String> listNotesTitle = new ArrayList<>();
-    List<String> listNotesHour = new ArrayList<>();
     List<String> listNotesId = new ArrayList<>();
-    ArrayAdapter<String> AdapterNotesTitle, AdapterNotesHour;
-    ArrayList<DataModal> dataModalArrayList;
+    ArrayList<DataModal> listNotesComplete = new ArrayList<>();
 
     CalendarView calendarView;
     String calendarDate;
@@ -76,38 +73,33 @@ public class MainActivity extends AppCompatActivity {
         db = FirebaseFirestore.getInstance();
         mAuth = FirebaseAuth.getInstance();
         listViewNotes = findViewById(R.id.listView);
-        dataModalArrayList = new ArrayList<>();
-
-        calendarView = (CalendarView) findViewById(R.id.calendar);
+        calendarView = findViewById(R.id.calendar);
 
         //Recoger fecha del calendario
-        calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
-            @Override
-            public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
+        calendarView.setOnDateChangeListener((view, year, month, dayOfMonth) -> {
 
-                String dayFormatted, monthFormatted;
+            String dayFormatted, monthFormatted;
 
-                //Get formatted day
-                if (dayOfMonth < 10) {
-                    dayFormatted = "0" + dayOfMonth;
-                } else {
-                    dayFormatted = String.valueOf(dayOfMonth);
-                }
-
-                //Get formatted month
-                int Month = month + 1;
-
-                if (Month < 10) {
-                    monthFormatted = "0" + Month;
-                } else {
-                    monthFormatted = String.valueOf(Month);
-                }
-
-                calendarDate = dayFormatted + "/" + monthFormatted + "/" + year;
-
-                //Actualizar la UI con las tareas del usuario logueado
-                updateNotes();
+            //Get formatted day
+            if (dayOfMonth < 10) {
+                dayFormatted = "0" + dayOfMonth;
+            } else {
+                dayFormatted = String.valueOf(dayOfMonth);
             }
+
+            //Get formatted month
+            int Month = month + 1;
+
+            if (Month < 10) {
+                monthFormatted = "0" + Month;
+            } else {
+                monthFormatted = String.valueOf(Month);
+            }
+
+            calendarDate = dayFormatted + "/" + monthFormatted + "/" + year;
+
+            //Actualizar la UI con las tareas del usuario logueado
+            updateNotes();
         });
 
         /*Inicializamos la variable gso que recogerá los elementos necesarios para que el usuario
@@ -120,7 +112,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /*
-    //PRUEBA
+    //Prueba de item en listview ¡PARA BORRAR!
     private void updateNotes(){
         db.collection("Notes")
                 .whereEqualTo("noteDate", calendarDate)
@@ -138,7 +130,7 @@ public class MainActivity extends AppCompatActivity {
                             AdapterListView adapter = new AdapterListView(MainActivity.this, dataModalArrayList);
                             listViewNotes.setAdapter(adapter);
                         } else {
-                            toastWarning("No hay datos en la base de datos");
+                            toastWarning("No hay eventos");
                         }
                     }
                 }).addOnFailureListener(new OnFailureListener() {
@@ -150,11 +142,8 @@ public class MainActivity extends AppCompatActivity {
     }
     */
 
-
-    //Insertar item en listview
-    //FALTA POR IMPLEMENTAR COMPLETAMENTE
-
-    private void updateNotes() {
+    //Insertar item en listView
+    private void updateNotes(){
         user = mAuth.getCurrentUser();
 
         if (user != null) {
@@ -164,35 +153,29 @@ public class MainActivity extends AppCompatActivity {
         db.collection("Notes")
                 .whereEqualTo("noteDate", calendarDate)
                 .whereEqualTo("userMail", emailUser)
-                .addSnapshotListener(new EventListener<QuerySnapshot>() {
-                    @Override
-                    public void onEvent(@Nullable QuerySnapshot value,
-                                        @Nullable FirebaseFirestoreException e) {
-                        if (e != null) {
-                            return;
-                        }
-
-                        listNotesTitle.clear();
-                        listNotesHour.clear();
-                        listNotesId.clear();
-
-                        for (QueryDocumentSnapshot doc : value) {
-                            listNotesId.add(doc.getId());
-                            listNotesTitle.add(doc.getString("title"));
-                            listNotesHour.add(doc.getString("noteHour"));
-                        }
-
-                        if(listNotesTitle.size() == 0){
-                            listViewNotes.setAdapter(null);
-                        }else{
-                            AdapterNotesTitle = new ArrayAdapter<String>(MainActivity.this, R.layout.item_note, R.id.item_title, listNotesTitle);
-                            AdapterNotesHour = new ArrayAdapter<String>(MainActivity.this, R.layout.item_note, R.id.item_hour, listNotesHour);
-                            listViewNotes.setAdapter(AdapterNotesTitle);
-                            listViewNotes.setAdapter(AdapterNotesHour);
-
-                        }
-
+                .addSnapshotListener((value, error) -> {
+                    if (error != null) {
+                        return;
                     }
+
+                    listNotesId.clear();
+                    listNotesComplete.clear();
+
+                    for(QueryDocumentSnapshot doc: value) {
+                        listNotesId.add(doc.getId());
+                        dataModal = new DataModal(doc.getString("title"),doc.getString("noteHour"));
+                        listNotesComplete.add(dataModal);
+                    }
+
+                    if(listNotesComplete.size() == 0){
+                        listViewNotes.setAdapter(null);
+                        toastWarning("No hay eventos");
+
+                    }else{
+                        AdapterListView adapter = new AdapterListView(MainActivity.this, listNotesComplete);
+                        listViewNotes.setAdapter(adapter);
+                    }
+
                 });
     }
 
@@ -232,34 +215,25 @@ public class MainActivity extends AppCompatActivity {
     public void otherOptions(View view) {
         AlertDialog dialog = new AlertDialog.Builder(this)
 
-            .setPositiveButton(R.string.dialog_item_details, new DialogInterface.OnClickListener() {
-            @Override
-                public void onClick(DialogInterface dialog, int i) {
+            .setPositiveButton(R.string.dialog_item_details, (dialog1, i) -> {
                     //PASAR A ACTIVITY DE DETALLES (REVISAR)
                     //Intent intent = new Intent(MainActivity.this, ArchivedNotes.class);
                     //startActivity(intent);
-                }
+                })
+            .setNeutralButton(R.string.dialog_item_edit, (dialog12, i) -> {
+                //PASAR A ACTIVITY DE EDITAR (REVISAR)
+                //Intent intent = new Intent(MainActivity.this, ListNotes.class);
+                //startActivity(intent);
             })
-            .setNeutralButton(R.string.dialog_item_edit, new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int i) {
-                    //PASAR A ACTIVITY DE EDITAR (REVISAR)
-                    //Intent intent = new Intent(MainActivity.this, ListNotes.class);
-                    //startActivity(intent);
-                }
-            })
-            .setNegativeButton(R.string.dialog_item_delete, new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int i) {
-                    //ELIMIAR TAREA (REVISAR)
-                    TextView noteTitleItem = findViewById(R.id.item_title);
-                    String taskContent = noteTitleItem.getText().toString();
-                    int position = listNotesTitle.indexOf(taskContent);
+            .setNegativeButton(R.string.dialog_item_delete, (dialog13, i) -> {
+                //ELIMIAR TAREA (REVISAR)
+                TextView noteTitleItem = findViewById(R.id.item_title);
+                String taskContent = noteTitleItem.getText().toString();
+                int position = listNotesTitle.indexOf(taskContent);
 
-                    db.collection("Notes").document(listNotesId.get(position)).delete();
+                db.collection("Notes").document(listNotesId.get(position)).delete();
 
-                    toastOk(getString(R.string.event_deleted));
-                }
+                toastOk(getString(R.string.event_deleted));
             })
             .create();
         dialog.show();
@@ -288,7 +262,7 @@ public class MainActivity extends AppCompatActivity {
 
         Toast toast = new Toast(getApplicationContext());
         toast.setGravity(Gravity.CENTER_VERTICAL | Gravity.BOTTOM, 0, 200);
-        toast.setDuration(Toast.LENGTH_LONG);
+        toast.setDuration(Toast.LENGTH_SHORT);
         toast.setView(view);
         toast.show();
     }
