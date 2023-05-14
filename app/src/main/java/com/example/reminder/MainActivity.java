@@ -143,41 +143,74 @@ public class MainActivity extends AppCompatActivity {
     */
 
     //Insertar item en listView
-    private void updateNotes(){
+    private void updateNotes() {
         user = mAuth.getCurrentUser();
 
         if (user != null) {
             emailUser = user.getEmail();
+
+            // Verifica si el usuario ha iniciado sesión con Google
+            if (user.getProviderData().size() > 1) {
+                String provider = user.getProviderData().get(1).getEmail();
+                db.collection("Notes")
+                        .whereEqualTo("noteDate", calendarDate)
+                        .whereEqualTo("userMail", provider)
+                        .addSnapshotListener((value, error) -> {
+                            if (error != null) {
+                                return;
+                            }
+
+                            listNotesId.clear();
+                            listNotesComplete.clear();
+
+                            for (QueryDocumentSnapshot doc : value) {
+                                listNotesId.add(doc.getId());
+                                dataModal = new DataModal(doc.getString("title"), doc.getString("noteHour"));
+                                listNotesComplete.add(dataModal);
+                            }
+
+                            if (listNotesComplete.size() == 0) {
+                                listViewNotes.setAdapter(null);
+                                toastWarning("No hay eventos");
+
+                            } else {
+                                AdapterListView adapter = new AdapterListView(MainActivity.this, listNotesComplete);
+                                listViewNotes.setAdapter(adapter);
+                            }
+
+                        });
+            } else { // Si el usuario no ha iniciado sesión con Google, utiliza el userMail
+                db.collection("Notes")
+                        .whereEqualTo("noteDate", calendarDate)
+                        .whereEqualTo("userMail", emailUser)
+                        .addSnapshotListener((value, error) -> {
+                            if (error != null) {
+                                return;
+                            }
+
+                            listNotesId.clear();
+                            listNotesComplete.clear();
+
+                            for (QueryDocumentSnapshot doc : value) {
+                                listNotesId.add(doc.getId());
+                                dataModal = new DataModal(doc.getString("title"), doc.getString("noteHour"));
+                                listNotesComplete.add(dataModal);
+                            }
+
+                            if (listNotesComplete.size() == 0) {
+                                listViewNotes.setAdapter(null);
+                                toastWarning("No hay eventos");
+
+                            } else {
+                                AdapterListView adapter = new AdapterListView(MainActivity.this, listNotesComplete);
+                                listViewNotes.setAdapter(adapter);
+                            }
+
+                        });
+            }
         }
-
-        db.collection("Notes")
-                .whereEqualTo("noteDate", calendarDate)
-                .whereEqualTo("userMail", emailUser)
-                .addSnapshotListener((value, error) -> {
-                    if (error != null) {
-                        return;
-                    }
-
-                    listNotesId.clear();
-                    listNotesComplete.clear();
-
-                    for(QueryDocumentSnapshot doc: value) {
-                        listNotesId.add(doc.getId());
-                        dataModal = new DataModal(doc.getString("title"),doc.getString("noteHour"));
-                        listNotesComplete.add(dataModal);
-                    }
-
-                    if(listNotesComplete.size() == 0){
-                        listViewNotes.setAdapter(null);
-                        toastWarning("No hay eventos");
-
-                    }else{
-                        AdapterListView adapter = new AdapterListView(MainActivity.this, listNotesComplete);
-                        listViewNotes.setAdapter(adapter);
-                    }
-
-                });
     }
+
 
     //Creación del menú superior del activity main
     @Override
@@ -215,27 +248,27 @@ public class MainActivity extends AppCompatActivity {
     public void otherOptions(View view) {
         AlertDialog dialog = new AlertDialog.Builder(this)
 
-            .setPositiveButton(R.string.dialog_item_details, (dialog1, i) -> {
+                .setPositiveButton(R.string.dialog_item_details, (dialog1, i) -> {
                     //PASAR A ACTIVITY DE DETALLES (REVISAR)
                     //Intent intent = new Intent(MainActivity.this, ArchivedNotes.class);
                     //startActivity(intent);
                 })
-            .setNeutralButton(R.string.dialog_item_edit, (dialog12, i) -> {
-                //PASAR A ACTIVITY DE EDITAR (REVISAR)
-                //Intent intent = new Intent(MainActivity.this, ListNotes.class);
-                //startActivity(intent);
-            })
-            .setNegativeButton(R.string.dialog_item_delete, (dialog13, i) -> {
-                //ELIMIAR TAREA (REVISAR)
-                TextView noteTitleItem = findViewById(R.id.item_title);
-                String taskContent = noteTitleItem.getText().toString();
-                int position = listNotesTitle.indexOf(taskContent);
+                .setNeutralButton(R.string.dialog_item_edit, (dialog12, i) -> {
+                    //PASAR A ACTIVITY DE EDITAR (REVISAR)
+                    //Intent intent = new Intent(MainActivity.this, ListNotes.class);
+                    //startActivity(intent);
+                })
+                .setNegativeButton(R.string.dialog_item_delete, (dialog13, i) -> {
+                    //ELIMIAR TAREA (REVISAR)
+                    TextView noteTitleItem = findViewById(R.id.item_title);
+                    String taskContent = noteTitleItem.getText().toString();
+                    int position = listNotesTitle.indexOf(taskContent);
 
-                db.collection("Notes").document(listNotesId.get(position)).delete();
+                    db.collection("Notes").document(listNotesId.get(position)).delete();
 
-                toastOk(getString(R.string.event_deleted));
-            })
-            .create();
+                    toastOk(getString(R.string.event_deleted));
+                })
+                .create();
         dialog.show();
     }
 
