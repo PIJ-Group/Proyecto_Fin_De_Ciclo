@@ -64,17 +64,11 @@ public class TwitterActivity extends Login {
                                     FirebaseUser user = firebaseAuth.getCurrentUser();
                                     assert user != null;
                                     String userId = user.getUid();
-                                    String name, email, identifier;
+                                    String name, email;
                                     FirebaseFirestore db = FirebaseFirestore.getInstance();
 
                                     name = user.getDisplayName();
                                     email = user.getProviderData().get(1).getEmail();
-
-
-                                    if (email == null) {
-                                        email = user.getProviderData().get(1).getUid();
-                                    }
-
 
                                     DocumentReference documentReference = db.collection("Users").document(userId);
                                     Map<String, Object> dataUser = new HashMap<>();
