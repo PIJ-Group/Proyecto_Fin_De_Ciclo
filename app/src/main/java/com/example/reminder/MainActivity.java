@@ -2,9 +2,9 @@ package com.example.reminder;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,9 +13,12 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.CalendarView;
+import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -41,7 +44,6 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
-import com.google.firebase.firestore.core.View;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -179,6 +181,7 @@ public class MainActivity extends AppCompatActivity {
                             }
 
                         });
+
             } else { // Si el usuario no ha iniciado sesión con Google, utiliza el userMail
                 db.collection("Notes")
                         .whereEqualTo("noteDate", calendarDate)
@@ -246,23 +249,28 @@ public class MainActivity extends AppCompatActivity {
 
     //Dialog del botón elipsis del item con funcionalidad
     public void otherOptions(View view) {
+        //View parent = (View) view.getParent();
+        //TextView itemTitle = parent.findViewById(R.id.item_title);
+        //String titleContent = itemTitle.getText().toString();
+
         AlertDialog dialog = new AlertDialog.Builder(this)
 
                 .setPositiveButton(R.string.dialog_item_details, (dialog1, i) -> {
                     //PASAR A ACTIVITY DE DETALLES (REVISAR)
-                    //Intent intent = new Intent(MainActivity.this, ArchivedNotes.class);
-                    //startActivity(intent);
+                    Intent intent = new Intent(MainActivity.this, ArchivedNotes.class);
+                    startActivity(intent);
                 })
                 .setNeutralButton(R.string.dialog_item_edit, (dialog12, i) -> {
                     //PASAR A ACTIVITY DE EDITAR (REVISAR)
-                    //Intent intent = new Intent(MainActivity.this, ListNotes.class);
-                    //startActivity(intent);
+                    Intent intent = new Intent(MainActivity.this, ListNotes.class);
+                    startActivity(intent);
                 })
                 .setNegativeButton(R.string.dialog_item_delete, (dialog13, i) -> {
                     //ELIMIAR TAREA (REVISAR)
-                    TextView noteTitleItem = findViewById(R.id.item_title);
-                    String taskContent = noteTitleItem.getText().toString();
-                    int position = listNotesTitle.indexOf(taskContent);
+                    View parentDelete = (View) view.getParent();
+                    TextView noteTitleItem = parentDelete.findViewById(R.id.item_title);
+                    String noteContent = noteTitleItem.getText().toString();
+                    int position = listNotesTitle.indexOf(noteContent);
 
                     db.collection("Notes").document(listNotesId.get(position)).delete();
 
