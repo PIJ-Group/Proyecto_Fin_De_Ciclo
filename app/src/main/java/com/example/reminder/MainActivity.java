@@ -49,7 +49,6 @@ public class MainActivity extends AppCompatActivity {
     private GoogleSignInOptions gso;
     private GoogleSignInClient mGoogleSignInClient;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,6 +58,14 @@ public class MainActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         listViewNotes = findViewById(R.id.listView);
         calendarView = findViewById(R.id.calendar);
+
+        /*Inicializamos la variable gso que recogerá los elementos necesarios para que el usuario
+          inicie sesion*/
+        gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken(getString(R.string.default_web_client_id))
+                .requestEmail()
+                .build();
+        mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
 
         //Recoger fecha del calendario
         calendarView.setOnDateChangeListener((view, year, month, dayOfMonth) -> {
@@ -87,13 +94,6 @@ public class MainActivity extends AppCompatActivity {
             updateNotes();
         });
 
-        /*Inicializamos la variable gso que recogerá los elementos necesarios para que el usuario
-          inicie sesion*/
-        gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestIdToken(getString(R.string.default_web_client_id))
-                .requestEmail()
-                .build();
-        mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
     }
 
     //Insertar item en listView
@@ -232,6 +232,30 @@ public class MainActivity extends AppCompatActivity {
         dialog.show();
     }
 
+    //Cierre de sesión de google a través del método signOut y transición al login
+    @Override
+    public void onBackPressed() {
+        mAuth.signOut();
+        FirebaseAuth.getInstance().signOut();
+
+
+        mGoogleSignInClient.signOut().addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if (task.isSuccessful()) {
+                    Intent loginActivity = new Intent(getApplicationContext(), Login.class);
+                    startActivity(loginActivity);
+                    MainActivity.this.finish();
+
+                } else {
+                    Toast.makeText(getApplicationContext(), "No se pudo cerrar sesion con Google"
+                            , Toast.LENGTH_LONG).show();
+                }
+            }
+        });
+
+    }
+
     //Método para incluir un toast personalizado de confirmación.
     public void toastOk(String msg) {
         LayoutInflater layoutInflater = getLayoutInflater();
@@ -258,29 +282,5 @@ public class MainActivity extends AppCompatActivity {
         toast.setDuration(Toast.LENGTH_SHORT);
         toast.setView(view);
         toast.show();
-    }
-
-    //Cierre de sesión de google a través del método signOut y transición al login
-    @Override
-    public void onBackPressed() {
-        mAuth.signOut();
-        FirebaseAuth.getInstance().signOut();
-
-
-        mGoogleSignInClient.signOut().addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                if (task.isSuccessful()) {
-                    Intent loginActivity = new Intent(getApplicationContext(), Login.class);
-                    startActivity(loginActivity);
-                    MainActivity.this.finish();
-
-                } else {
-                    Toast.makeText(getApplicationContext(), "No se pudo cerrar sesion con Google"
-                            , Toast.LENGTH_LONG).show();
-                }
-            }
-        });
-
     }
 }

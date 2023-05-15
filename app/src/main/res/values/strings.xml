@@ -23,7 +23,6 @@
     <string name="fb_login_protocol_scheme">fb1717808215341319</string>
     <string name="facebook_client_token">71746e3d95ec0e24602a3908c3fbe702</string>
 
-
     <!---Add Note-->
     <string name="Userid_User">User id</string>
     <string name="User_mail">User e-mail</string>
@@ -66,6 +65,10 @@
     <string name="invalid_password">contraseña muy corta</string>
     <string name="not_match">Las contraseñas no coinciden</string>
     <string name="Update_Note">Update Note</string>
+    <string name="info_google">Google</string>
+    <string name="info_facebook">Facebook</string>
+    <string name="info_twitter">Twitter</string>
+    <string name="aditional_options">Opciones adicionales</string>
 
     <!--Spinner-->
     <string-array name="Note_Status">

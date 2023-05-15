@@ -36,7 +36,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/item_hour"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/elipsis" />
+        app:srcCompat="@drawable/elipsis"
+        android:contentDescription="@string/aditional_options"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

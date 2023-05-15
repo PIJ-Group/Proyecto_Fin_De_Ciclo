@@ -139,7 +139,8 @@
             app:layout_constraintHorizontal_bias="0.187"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/signUpWith"
-            tools:ignore="RtlHardcoded" />
+            tools:ignore="RtlHardcoded"
+            android:contentDescription="@string/info_google" />
 
         <Button
             android:id="@+id/facebookButton"
@@ -155,7 +156,8 @@
             app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/signUpWith"
-            tools:ignore="RtlHardcoded" />
+            tools:ignore="RtlHardcoded"
+            android:contentDescription="@string/info_facebook" />
 
         <Button
             android:id="@+id/twitterButton"
@@ -171,7 +173,8 @@
             app:layout_constraintHorizontal_bias="0.797"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/signUpWith"
-            tools:ignore="RtlHardcoded" />
+            tools:ignore="RtlHardcoded"
+            android:contentDescription="@string/info_twitter" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>
