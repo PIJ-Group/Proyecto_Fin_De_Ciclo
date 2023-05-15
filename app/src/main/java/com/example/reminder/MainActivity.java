@@ -22,9 +22,12 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
@@ -37,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
     FirebaseFirestore db;
     String emailUser;
     DataModal dataModal;
+    Note note;
 
     ListView listViewNotes;
     List<String> listNotesTitle = new ArrayList<>();
@@ -209,12 +213,48 @@ public class MainActivity extends AppCompatActivity {
 
                 .setPositiveButton(R.string.dialog_item_details, (dialog1, i) -> {
                     //PASAR A ACTIVITY DE DETALLES (REVISAR)
+                    View parentDelete = (View) view.getParent();
+                    TextView noteTitleItem = parentDelete.findViewById(R.id.item_title);
+                    String noteContent = noteTitleItem.getText().toString();
+                    int position = listNotesTitle.indexOf(noteContent);
+
+                    DocumentReference docRef = db.collection("Notes").document(listNotesId.get(position));
+                    docRef.get().addOnSuccessListener(documentSnapshot -> note = documentSnapshot.toObject(Note.class));
+
                     Intent intent = new Intent(MainActivity.this, ListNotes.class);
+                    intent.putExtra("currentDate", note.getCurrentDate());
+                    intent.putExtra("description", note.getDescription());
+                    intent.putExtra("noteDate", note.getNoteDate());
+                    intent.putExtra("noteHour", note.getNoteHour());
+                    intent.putExtra("noteId", note.getNoteId());
+                    intent.putExtra("status", note.getStatus());
+                    intent.putExtra("title", note.getTitle());
+                    intent.putExtra("userId", note.getUserId());
+                    intent.putExtra("userMail", note.getUserMail());
                     startActivity(intent);
                 })
                 .setNeutralButton(R.string.dialog_item_edit, (dialog12, i) -> {
                     //PASAR A ACTIVITY DE EDITAR (REVISAR)
+                    View parentDelete = (View) view.getParent();
+                    TextView noteTitleItem = parentDelete.findViewById(R.id.item_title);
+                    String noteContent = noteTitleItem.getText().toString();
+                    int position = listNotesTitle.indexOf(noteContent);
+
+                    DocumentReference docRef = db.collection("Notes").document(listNotesId.get(position));
+                    docRef.get().addOnSuccessListener(documentSnapshot -> note = documentSnapshot.toObject(Note.class));
+
+                    db.collection("Notes").document(listNotesId.get(position));
+
                     Intent intent = new Intent(MainActivity.this, UpdateNote.class);
+                    intent.putExtra("currentDate", note.getCurrentDate());
+                    intent.putExtra("description", note.getDescription());
+                    intent.putExtra("noteDate", note.getNoteDate());
+                    intent.putExtra("noteHour", note.getNoteHour());
+                    intent.putExtra("noteId", note.getNoteId());
+                    intent.putExtra("status", note.getStatus());
+                    intent.putExtra("title", note.getTitle());
+                    intent.putExtra("userId", note.getUserId());
+                    intent.putExtra("userMail", note.getUserMail());
                     startActivity(intent);
                 })
                 .setNegativeButton(R.string.dialog_item_delete, (dialog13, i) -> {
