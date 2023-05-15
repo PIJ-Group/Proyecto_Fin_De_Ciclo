@@ -1,49 +1,32 @@
 package com.example.reminder;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.CalendarView;
-import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.reminder.ArchivedNotes.ArchivedNotes;
 import com.example.reminder.ListNotes.ListNotes;
-
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.FirebaseFirestoreException;
-import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -113,37 +96,6 @@ public class MainActivity extends AppCompatActivity {
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
     }
 
-    /*
-    //Prueba de item en listview ¡PARA BORRAR!
-    private void updateNotes(){
-        db.collection("Notes")
-                .whereEqualTo("noteDate", calendarDate)
-                .whereEqualTo("userMail", emailUser)
-                .get()
-                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-                    @Override
-                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                        if (!queryDocumentSnapshots.isEmpty()){
-                            List<DocumentSnapshot> list = queryDocumentSnapshots.getDocuments();
-                            for(DocumentSnapshot d: list) {
-                                DataModal datamodal = d.toObject(DataModal.class);
-                                dataModalArrayList.add(datamodal);
-                            }
-                            AdapterListView adapter = new AdapterListView(MainActivity.this, dataModalArrayList);
-                            listViewNotes.setAdapter(adapter);
-                        } else {
-                            toastWarning("No hay eventos");
-                        }
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        toastWarning("Fallo al cargar los datos");
-                    }
-                });
-    }
-    */
-
     //Insertar item en listView
     private void updateNotes() {
         user = mAuth.getCurrentUser();
@@ -164,10 +116,12 @@ public class MainActivity extends AppCompatActivity {
 
                             listNotesId.clear();
                             listNotesComplete.clear();
+                            listNotesTitle.clear();
 
                             for (QueryDocumentSnapshot doc : value) {
                                 listNotesId.add(doc.getId());
                                 dataModal = new DataModal(doc.getString("title"), doc.getString("noteHour"));
+                                listNotesTitle.add(doc.getString("title"));
                                 listNotesComplete.add(dataModal);
                             }
 
@@ -193,10 +147,12 @@ public class MainActivity extends AppCompatActivity {
 
                             listNotesId.clear();
                             listNotesComplete.clear();
+                            listNotesTitle.clear();
 
                             for (QueryDocumentSnapshot doc : value) {
                                 listNotesId.add(doc.getId());
                                 dataModal = new DataModal(doc.getString("title"), doc.getString("noteHour"));
+                                listNotesTitle.add(doc.getString("title"));
                                 listNotesComplete.add(dataModal);
                             }
 
@@ -213,7 +169,6 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }
-
 
     //Creación del menú superior del activity main
     @Override
@@ -249,20 +204,17 @@ public class MainActivity extends AppCompatActivity {
 
     //Dialog del botón elipsis del item con funcionalidad
     public void otherOptions(View view) {
-        //View parent = (View) view.getParent();
-        //TextView itemTitle = parent.findViewById(R.id.item_title);
-        //String titleContent = itemTitle.getText().toString();
 
         AlertDialog dialog = new AlertDialog.Builder(this)
 
                 .setPositiveButton(R.string.dialog_item_details, (dialog1, i) -> {
                     //PASAR A ACTIVITY DE DETALLES (REVISAR)
-                    Intent intent = new Intent(MainActivity.this, ArchivedNotes.class);
+                    Intent intent = new Intent(MainActivity.this, ListNotes.class);
                     startActivity(intent);
                 })
                 .setNeutralButton(R.string.dialog_item_edit, (dialog12, i) -> {
                     //PASAR A ACTIVITY DE EDITAR (REVISAR)
-                    Intent intent = new Intent(MainActivity.this, ListNotes.class);
+                    Intent intent = new Intent(MainActivity.this, UpdateNote.class);
                     startActivity(intent);
                 })
                 .setNegativeButton(R.string.dialog_item_delete, (dialog13, i) -> {
