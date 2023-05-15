@@ -220,17 +220,17 @@ public class MainActivity extends AppCompatActivity {
 
                     DocumentReference docRef = db.collection("Notes").document(listNotesId.get(position));
                     docRef.get().addOnSuccessListener(documentSnapshot -> note = documentSnapshot.toObject(Note.class));
-
+                    //DEJO ESTO COMENTADO QUE SI NO NO FUNCIONA EL PASAR A ESA ACTIVITY
                     Intent intent = new Intent(MainActivity.this, ListNotes.class);
-                    intent.putExtra("currentDate", note.getCurrentDate());
-                    intent.putExtra("description", note.getDescription());
-                    intent.putExtra("noteDate", note.getNoteDate());
-                    intent.putExtra("noteHour", note.getNoteHour());
-                    intent.putExtra("noteId", note.getNoteId());
-                    intent.putExtra("status", note.getStatus());
-                    intent.putExtra("title", note.getTitle());
-                    intent.putExtra("userId", note.getUserId());
-                    intent.putExtra("userMail", note.getUserMail());
+//                    intent.putExtra("currentDate", note.getCurrentDate());
+//                    intent.putExtra("description", note.getDescription());
+//                    intent.putExtra("noteDate", note.getNoteDate());
+//                    intent.putExtra("noteHour", note.getNoteHour());
+//                    intent.putExtra("noteId", note.getNoteId());
+//                    intent.putExtra("status", note.getStatus());
+//                    intent.putExtra("title", note.getTitle());
+//                    intent.putExtra("userId", note.getUserId());
+//                    intent.putExtra("userMail", note.getUserMail());
                     startActivity(intent);
                 })
                 .setNeutralButton(R.string.dialog_item_edit, (dialog12, i) -> {
