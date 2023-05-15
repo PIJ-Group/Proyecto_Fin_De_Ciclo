@@ -1,9 +1,169 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/addScrollView"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ListNotes.ListNotes">
+    android:layout_height="match_parent">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/Theme.Reminder"
+        tools:context=".AddNote">
+
+        <!--USER ID-->
+        <TextView
+            android:id="@+id/Userid_User"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:fontFamily="@font/vanilla"
+            android:hint="@string/Userid_User"
+            android:textColorHint="#757575"
+            android:textSize="18sp"
+            android:visibility="gone"
+            app:layout_constraintBottom_toTopOf="@+id/Current_Date_time"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <!--SYSTEM TIME AND DATE-->
+        <TextView
+            android:id="@+id/Current_Date_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:fontFamily="@font/vanilla"
+            android:hint="@string/Current_Date_time"
+            android:textColorHint="#757575"
+            android:textSize="18sp"
+            android:visibility="gone"
+            app:layout_constraintBottom_toTopOf="@+id/Title"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.497"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/Userid_User" />
+
+        <!--NOTE TITLE-->
+        <EditText
+            android:id="@+id/Title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:fontFamily="@font/vanilla"
+            android:hint="@string/Title"
+            android:textColorHint="#78909C"
+            android:textSize="25sp"
+            app:layout_constraintBottom_toTopOf="@+id/Description"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/Current_Date_time" />
+
+        <!--NOTE DESCRIPTION-->
+        <EditText
+            android:id="@+id/Description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="8dp"
+            android:gravity="start"
+            android:hint="@string/Description"
+            android:minHeight="150dp"
+            android:textColorHint="#78909C"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toTopOf="@+id/Calendar_btn"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/Title" />
+
+        <!--CALENDAR BUTTON-->
+        <Button
+            android:id="@+id/Calendar_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            android:backgroundTint="@color/pink_principal"
+            android:text="@string/Calendar_btn"
+            app:cornerRadius="32sp"
+            app:icon="@drawable/icon_calendar"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/Description"
+            tools:ignore="TextContrastCheck" />
+
+        <!--DATE SELECTED-->
+        <TextView
+            android:id="@+id/Date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="90dp"
+            android:fontFamily="@font/vanilla"
+            android:hint="@string/Date"
+            android:textColorHint="#78909C"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/Calendar_btn"
+            app:layout_constraintTop_toBottomOf="@+id/Description"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <!--TIME BUTTON-->
+        <Button
+            android:id="@+id/Hour_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/pink_principal"
+            android:text="@string/Hour_btn"
+            app:cornerRadius="32sp"
+            app:icon="@drawable/icon_hour"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.036"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/Calendar_btn"
+            app:layout_constraintVertical_bias="0.051"
+            tools:ignore="TextContrastCheck" />
+
+        <!--TIME SELECTED-->
+
+        <!--NOTE STATUS-->
+        <TextView
+            android:id="@+id/Hour"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="8dp"
+            android:fontFamily="@font/vanilla"
+            android:hint="@string/Hour"
+            android:textColorHint="#78909C"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.56"
+            app:layout_constraintStart_toEndOf="@+id/Hour_btn"
+            app:layout_constraintTop_toBottomOf="@+id/Date"
+            app:layout_constraintVertical_bias="0.083" />
+
+        <TextView
+            android:id="@+id/Status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:fontFamily="@font/vanilla"
+            android:text="@string/Status"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.034"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/Hour_btn"
+            app:layout_constraintVertical_bias="0.037" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

@@ -44,7 +44,7 @@ public class UpdateNote extends AppCompatActivity implements AdapterView.OnItemS
     Spinner Spinner_Status;
 
     //Declare strings to store the data of the main activity
-    String id_note_R, user_id_R, registration_date_R, title_R, description_R, date_R, hour_R, status_R;
+    String id_note_R, user_id_R, registration_date_R, title_R, description_R, date_R, hour_R, status_R, user_mail_R;
 
     //Declare strings to get data for update the note in firebase
     String titleUpdate, descriptionUpdate, dateUpdate, hourUpdate, statusUpdate;
@@ -102,15 +102,26 @@ public class UpdateNote extends AppCompatActivity implements AdapterView.OnItemS
 
     //Get data from intent in Main Activity
     private void GetData(){
-        Bundle intent = getIntent().getExtras();
-        id_note_R = intent.getString("nombre de la clave usada en main");
-        user_id_R = intent.getString("nombre la clave usada en main");
-        registration_date_R = intent.getString("nombre la clave usada en main");
-        title_R = intent.getString("nombre la clave usada en main");
-        description_R = intent.getString("nombre de la clave usada en main");
-        date_R = intent.getString("nombre de la clave usada en main");
-        hour_R = intent.getString("nombre de la clave usada en main");
-        status_R = intent.getString("nombre de la clave usada en main");
+        id_note_R = getIntent().getStringExtra("noteId");
+        user_id_R = getIntent().getStringExtra("userId");
+        registration_date_R = getIntent().getStringExtra("currentDate");
+        title_R = getIntent().getStringExtra("title");
+        description_R = getIntent().getStringExtra("description");
+        date_R = getIntent().getStringExtra("noteDate");
+        hour_R = getIntent().getStringExtra("noteHour");
+        status_R = getIntent().getStringExtra("status");
+        user_mail_R = getIntent().getStringExtra("userMail");
+
+//        Bundle intent = getIntent().getExtras();
+//        id_note_R = intent.getString("noteId");
+//        user_id_R = intent.getString("userId");
+//        registration_date_R = intent.getString("currentDate");
+//        title_R = intent.getString("title");
+//        description_R = intent.getString("description");
+//        date_R = intent.getString("noteDate");
+//        hour_R = intent.getString("noteHour");
+//        status_R = intent.getString("status");
+//        user_mail_R = intent.getString("userMail");
     }
 
     //Setting Data
@@ -196,7 +207,7 @@ public class UpdateNote extends AppCompatActivity implements AdapterView.OnItemS
         },hour,minutes,false);
         timePickerDialog.show();
     }
-
+    //Update a Note in firebase
     private void updateNoteFirebase(){
 
         String userMail = nAuth.getCurrentUser().getEmail();
