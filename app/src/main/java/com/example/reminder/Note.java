@@ -1,6 +1,8 @@
 package com.example.reminder;
 
-public class Note {
+import java.io.Serializable;
+
+public class Note implements Serializable {
 
     //Class attributes
     String noteId, userId, userMail, currentDate, title, description, noteDate, noteHour, status;
