@@ -10,160 +10,88 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:theme="@style/Theme.Reminder"
-        tools:context=".AddNote">
+        tools:context=".ListNotes.ListNotes">
 
-        <!--USER ID-->
-        <TextView
-            android:id="@+id/Userid_User"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:fontFamily="@font/vanilla"
-            android:hint="@string/Userid_User"
-            android:textColorHint="#757575"
-            android:textSize="18sp"
-            android:visibility="gone"
-            app:layout_constraintBottom_toTopOf="@+id/Current_Date_time"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <!--SYSTEM TIME AND DATE-->
-        <TextView
-            android:id="@+id/Current_Date_time"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:fontFamily="@font/vanilla"
-            android:hint="@string/Current_Date_time"
-            android:textColorHint="#757575"
-            android:textSize="18sp"
-            android:visibility="gone"
-            app:layout_constraintBottom_toTopOf="@+id/Title"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.497"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/Userid_User" />
 
         <!--NOTE TITLE-->
         <EditText
-            android:id="@+id/Title"
+            android:id="@+id/Title_Detail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="16dp"
             android:layout_marginEnd="8dp"
             android:fontFamily="@font/vanilla"
-            android:hint="@string/Title"
+            android:hint="@string/Title_Detail"
             android:textColorHint="#78909C"
             android:textSize="25sp"
-            app:layout_constraintBottom_toTopOf="@+id/Description"
+            android:focusable="false"
+            app:layout_constraintBottom_toTopOf="@+id/Description_Detail"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/Current_Date_time" />
+            app:layout_constraintTop_toBottomOf="@+id/Hour_Detail" />
 
         <!--NOTE DESCRIPTION-->
         <EditText
-            android:id="@+id/Description"
+            android:id="@+id/Description_Detail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="8dp"
             android:gravity="start"
-            android:hint="@string/Description"
+            android:hint="@string/Description_Detail"
             android:minHeight="150dp"
             android:textColorHint="#78909C"
             android:textSize="20sp"
-            app:layout_constraintBottom_toTopOf="@+id/Calendar_btn"
+            android:focusable="false"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/Title" />
+            app:layout_constraintTop_toBottomOf="@+id/Title_Detail" />
 
-        <!--CALENDAR BUTTON-->
-        <Button
-            android:id="@+id/Calendar_btn"
+
+
+        <!--DATE SELECTED-->
+        <TextView
+            android:id="@+id/Date_Detail"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginTop="16dp"
-            android:backgroundTint="@color/pink_principal"
-            android:text="@string/Calendar_btn"
-            app:cornerRadius="32sp"
-            app:icon="@drawable/icon_calendar"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/Description"
-            tools:ignore="TextContrastCheck" />
-
-        <!--DATE SELECTED-->
-        <TextView
-            android:id="@+id/Date"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="24dp"
-            android:layout_marginEnd="90dp"
             android:fontFamily="@font/vanilla"
-            android:hint="@string/Date"
+            android:hint="@string/Date_Detail"
             android:textColorHint="#78909C"
             android:textSize="20sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/Calendar_btn"
-            app:layout_constraintTop_toBottomOf="@+id/Description"
-            app:layout_constraintVertical_bias="0.0" />
-
-        <!--TIME BUTTON-->
-        <Button
-            android:id="@+id/Hour_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:backgroundTint="@color/pink_principal"
-            android:text="@string/Hour_btn"
-            app:cornerRadius="32sp"
-            app:icon="@drawable/icon_hour"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.036"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/Calendar_btn"
-            app:layout_constraintVertical_bias="0.051"
-            tools:ignore="TextContrastCheck" />
+            app:layout_constraintTop_toTopOf="parent" />
+
 
         <!--TIME SELECTED-->
+        <TextView
+            android:id="@+id/Hour_Detail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:fontFamily="@font/vanilla"
+            android:hint="@string/Hour_Detail"
+            android:textColorHint="#78909C"
+            android:textSize="20sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/Date_Detail" />
 
         <!--NOTE STATUS-->
         <TextView
-            android:id="@+id/Hour"
+            android:id="@+id/Status_Detail"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
             android:fontFamily="@font/vanilla"
-            android:hint="@string/Hour"
-            android:textColorHint="#78909C"
+            android:text="@string/Status_Detail"
             android:textSize="20sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.56"
-            app:layout_constraintStart_toEndOf="@+id/Hour_btn"
-            app:layout_constraintTop_toBottomOf="@+id/Date"
-            app:layout_constraintVertical_bias="0.083" />
-
-        <TextView
-            android:id="@+id/Status"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:fontFamily="@font/vanilla"
-            android:text="@string/Status"
-            android:textSize="20sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.034"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/Hour_btn"
-            app:layout_constraintVertical_bias="0.037" />
+            app:layout_constraintTop_toBottomOf="@+id/Description_Detail" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

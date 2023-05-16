@@ -49,6 +49,13 @@
     <string name="Hour_btn_Update">Hour</string>
     <string name="Hour_Update">00:00</string>
 
+    <!--Note Detail-->
+    <string name="Title_Detail">Title</string>
+    <string name="Description_Detail">Description</string>
+    <string name="Date_Detail">00/00/0000</string>
+    <string name="Status_Detail">Not finished</string>
+    <string name="Hour_Detail">00:00</string>
+
     <!--Menu-->
     <string name="Add_Note">Add Note</string>
     <string name="Add_btn">add</string>
