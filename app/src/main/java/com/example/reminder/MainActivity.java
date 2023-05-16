@@ -3,6 +3,7 @@ package com.example.reminder;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -32,6 +33,11 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
@@ -49,6 +55,7 @@ public class MainActivity extends AppCompatActivity {
 
     CalendarView calendarView;
     String calendarDate;
+
 
     private GoogleSignInOptions gso;
     private GoogleSignInClient mGoogleSignInClient;
@@ -70,6 +77,9 @@ public class MainActivity extends AppCompatActivity {
                 .requestEmail()
                 .build();
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
+
+        //Llamada al método para obtener la fecha actual.
+        actualDate();
 
         //Recoger fecha del calendario
         calendarView.setOnDateChangeListener((view, year, month, dayOfMonth) -> {
@@ -100,9 +110,42 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    //Recoger fecha acutal
+    private String actualDate(){
+        int actualDay, actualMonth, actualYear;
+        String actualDayFormatted, actualMonthFormatted;
+
+        Calendar calendario = Calendar.getInstance();
+
+        //Obtener día completo
+        actualDay = calendario.get(Calendar.DAY_OF_MONTH);
+        if (actualDay < 10) {
+            actualDayFormatted = "0" + actualDay;
+        } else {
+            actualDayFormatted = String.valueOf(actualDay);
+        }
+
+        //Obtener mes completo
+        actualMonth = calendario.get(Calendar.MONTH) + 1;
+        if (actualMonth < 10) {
+            actualMonthFormatted = "0" + actualMonth;
+        } else {
+            actualMonthFormatted = String.valueOf(actualMonth);
+        }
+
+        //Obtener año
+        actualYear = calendario.get(Calendar.YEAR);
+
+        calendarDate = actualDayFormatted + "/" + actualMonthFormatted + "/" + actualYear;
+
+        return calendarDate;
+    }
+
     //Insertar item en listView
     private void updateNotes() {
         user = mAuth.getCurrentUser();
+        //Objeto utilizado para poder ordenar el array de eventos
+        Comparator<DataModal> hoursComparator = Comparator.comparing(DataModal::getNoteHour);
 
         if (user != null) {
             emailUser = user.getEmail();
@@ -127,6 +170,8 @@ public class MainActivity extends AppCompatActivity {
                                 dataModal = new DataModal(doc.getString("title"), doc.getString("noteHour"));
                                 listNotesTitle.add(doc.getString("title"));
                                 listNotesComplete.add(dataModal);
+                                //Ordenación del array de eventos por horas
+                                Collections.sort(listNotesComplete, hoursComparator);
                             }
 
                             if (listNotesComplete.size() == 0) {
@@ -217,20 +262,21 @@ public class MainActivity extends AppCompatActivity {
                     TextView noteTitleItem = parentDelete.findViewById(R.id.item_title);
                     String noteContent = noteTitleItem.getText().toString();
                     int position = listNotesTitle.indexOf(noteContent);
+                    note = new Note();
 
                     DocumentReference docRef = db.collection("Notes").document(listNotesId.get(position));
                     docRef.get().addOnSuccessListener(documentSnapshot -> note = documentSnapshot.toObject(Note.class));
                     //DEJO ESTO COMENTADO QUE SI NO NO FUNCIONA EL PASAR A ESA ACTIVITY
                     Intent intent = new Intent(MainActivity.this, ListNotes.class);
-//                    intent.putExtra("currentDate", note.getCurrentDate());
-//                    intent.putExtra("description", note.getDescription());
-//                    intent.putExtra("noteDate", note.getNoteDate());
-//                    intent.putExtra("noteHour", note.getNoteHour());
-//                    intent.putExtra("noteId", note.getNoteId());
-//                    intent.putExtra("status", note.getStatus());
-//                    intent.putExtra("title", note.getTitle());
-//                    intent.putExtra("userId", note.getUserId());
-//                    intent.putExtra("userMail", note.getUserMail());
+                    intent.putExtra("currentDate", note.getCurrentDate()).toString();
+                    intent.putExtra("description", note.getDescription()).toString();
+                    intent.putExtra("noteDate", note.getNoteDate()).toString();
+                    intent.putExtra("noteHour", note.getNoteHour()).toString();
+                    intent.putExtra("noteId", note.getNoteId()).toString();
+                    intent.putExtra("status", note.getStatus()).toString();
+                    intent.putExtra("title", note.getTitle()).toString();
+                    intent.putExtra("userId", note.getUserId()).toString();
+                    intent.putExtra("userMail", note.getUserMail()).toString();
                     startActivity(intent);
                 })
                 .setNeutralButton(R.string.dialog_item_edit, (dialog12, i) -> {
@@ -239,6 +285,7 @@ public class MainActivity extends AppCompatActivity {
                     TextView noteTitleItem = parentDelete.findViewById(R.id.item_title);
                     String noteContent = noteTitleItem.getText().toString();
                     int position = listNotesTitle.indexOf(noteContent);
+                    note = new Note();
 
                     DocumentReference docRef = db.collection("Notes").document(listNotesId.get(position));
                     docRef.get().addOnSuccessListener(documentSnapshot -> note = documentSnapshot.toObject(Note.class));
@@ -246,15 +293,15 @@ public class MainActivity extends AppCompatActivity {
                     db.collection("Notes").document(listNotesId.get(position));
 
                     Intent intent = new Intent(MainActivity.this, UpdateNote.class);
-                    intent.putExtra("currentDate", note.getCurrentDate());
-                    intent.putExtra("description", note.getDescription());
-                    intent.putExtra("noteDate", note.getNoteDate());
-                    intent.putExtra("noteHour", note.getNoteHour());
-                    intent.putExtra("noteId", note.getNoteId());
-                    intent.putExtra("status", note.getStatus());
-                    intent.putExtra("title", note.getTitle());
-                    intent.putExtra("userId", note.getUserId());
-                    intent.putExtra("userMail", note.getUserMail());
+                    intent.putExtra("currentDate", note.getCurrentDate()).toString();
+                    intent.putExtra("description", note.getDescription()).toString();
+                    intent.putExtra("noteDate", note.getNoteDate()).toString();
+                    intent.putExtra("noteHour", note.getNoteHour()).toString();
+                    intent.putExtra("noteId", note.getNoteId()).toString();
+                    intent.putExtra("status", note.getStatus()).toString();
+                    intent.putExtra("title", note.getTitle()).toString();
+                    intent.putExtra("userId", note.getUserId()).toString();
+                    intent.putExtra("userMail", note.getUserMail()).toString();
                     startActivity(intent);
                 })
                 .setNegativeButton(R.string.dialog_item_delete, (dialog13, i) -> {
