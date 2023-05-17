@@ -149,70 +149,49 @@ public class MainActivity extends AppCompatActivity {
             // Verifica si el usuario ha iniciado sesión con Google
             if (user.getProviderData().size() > 1) {
                 String provider = user.getProviderData().get(1).getEmail();
-                db.collection("Notes")
-                        .whereEqualTo("noteDate", calendarDate)
-                        .whereEqualTo("userMail", provider)
-                        .addSnapshotListener((value, error) -> {
-                            if (error != null) {
-                                return;
-                            }
-
-                            listNotesId.clear();
-                            listNotesComplete.clear();
-                            listNotesTitle.clear();
-
-                            for (QueryDocumentSnapshot doc : value) {
-                                listNotesId.add(doc.getId());
-                                dataModal = new DataModal(doc.getString("title"), doc.getString("noteHour"));
-                                listNotesTitle.add(doc.getString("title"));
-                                listNotesComplete.add(dataModal);
-                                //Ordenación del array de eventos por horas
-                                Collections.sort(listNotesComplete, hoursComparator);
-                            }
-
-                            if (listNotesComplete.size() == 0) {
-                                listViewNotes.setAdapter(null);
-                                toastWarning("No hay eventos");
-
-                            } else {
-                                AdapterListView adapter = new AdapterListView(MainActivity.this, listNotesComplete);
-                                listViewNotes.setAdapter(adapter);
-                            }
-
-                        });
-
+                getItemData(provider);
             } else { // Si el usuario no ha iniciado sesión con Google, utiliza el userMail
-                db.collection("Notes")
-                        .whereEqualTo("noteDate", calendarDate)
-                        .whereEqualTo("userMail", emailUser)
-                        .addSnapshotListener((value, error) -> {
-                            if (error != null) {
-                                return;
-                            }
-
-                            listNotesId.clear();
-                            listNotesComplete.clear();
-                            listNotesTitle.clear();
-
-                            for (QueryDocumentSnapshot doc : value) {
-                                listNotesId.add(doc.getId());
-                                dataModal = new DataModal(doc.getString("title"), doc.getString("noteHour"));
-                                listNotesTitle.add(doc.getString("title"));
-                                listNotesComplete.add(dataModal);
-                            }
-
-                            if (listNotesComplete.size() == 0) {
-                                listViewNotes.setAdapter(null);
-                                toastWarning("No hay eventos");
-
-                            } else {
-                                AdapterListView adapter = new AdapterListView(MainActivity.this, listNotesComplete);
-                                listViewNotes.setAdapter(adapter);
-                            }
-
-                        });
+                getItemData(emailUser);
             }
         }
+    }
+
+    //Obtener datos de la base de datos para mostrar en Item
+    public void getItemData(String userRegisterType){
+        //Objeto utilizado para poder ordenar el array de eventos
+        Comparator<DataModal> hoursComparator = Comparator.comparing(DataModal::getNoteHour);
+
+        db.collection("Notes")
+                .whereEqualTo("noteDate", calendarDate)
+                .whereEqualTo("userMail", userRegisterType)
+                .addSnapshotListener((value, error) -> {
+                    if (error != null) {
+                        return;
+                    }
+
+                    listNotesId.clear();
+                    listNotesComplete.clear();
+                    listNotesTitle.clear();
+
+                    for (QueryDocumentSnapshot doc : value) {
+                        listNotesId.add(doc.getId());
+                        dataModal = new DataModal(doc.getString("title"), doc.getString("noteHour"));
+                        listNotesTitle.add(doc.getString("title"));
+                        listNotesComplete.add(dataModal);
+                        //Ordenación del array de eventos por horas
+                        Collections.sort(listNotesComplete, hoursComparator);
+                    }
+
+                    if (listNotesComplete.size() == 0) {
+                        listViewNotes.setAdapter(null);
+                        toastWarning("No hay eventos");
+
+                    } else {
+                        AdapterListView adapter = new AdapterListView(MainActivity.this, listNotesComplete);
+                        listViewNotes.setAdapter(adapter);
+                    }
+
+                });
     }
 
     //Creación del menú superior del activity main
@@ -254,61 +233,15 @@ public class MainActivity extends AppCompatActivity {
 
                 .setPositiveButton(R.string.dialog_item_details, (dialog1, i) -> {
                     //PASAR A ACTIVITY DE DETALLES
-                    View parentDelete = (View) view.getParent();
-                    TextView noteTitleItem = parentDelete.findViewById(R.id.item_title);
-                    String noteContent = noteTitleItem.getText().toString();
-                    int position = listNotesTitle.indexOf(noteContent);
-                    note = new Note();
-
-                    DocumentReference docRef = db.collection("Notes").document(listNotesId.get(position));
-                    docRef.get().addOnSuccessListener(documentSnapshot -> {
-                        note = documentSnapshot.toObject(Note.class);
-
-                        Intent intent = new Intent(MainActivity.this, ListNotes.class);
-                        intent.putExtra("currentDate", note.getCurrentDate());
-                        intent.putExtra("description", note.getDescription());
-                        intent.putExtra("noteDate", note.getNoteDate());
-                        intent.putExtra("noteHour", note.getNoteHour());
-                        intent.putExtra("noteId", note.getNoteId());
-                        intent.putExtra("status", note.getStatus());
-                        intent.putExtra("title", note.getTitle());
-                        intent.putExtra("userId", note.getUserId());
-                        intent.putExtra("userMail", note.getUserMail());
-                        startActivity(intent);
-                    });
+                    getAndSendObject(view, ListNotes.class);
                 })
                 .setNeutralButton(R.string.dialog_item_edit, (dialog12, i) -> {
                     //PASAR A ACTIVITY DE EDITAR
-                    View parentDelete = (View) view.getParent();
-                    TextView noteTitleItem = parentDelete.findViewById(R.id.item_title);
-                    String noteContent = noteTitleItem.getText().toString();
-                    int position = listNotesTitle.indexOf(noteContent);
-                    note = new Note();
-
-                    DocumentReference docRef = db.collection("Notes").document(listNotesId.get(position));
-                    docRef.get().addOnSuccessListener(documentSnapshot -> {
-                        note = documentSnapshot.toObject(Note.class);
-
-                        Intent intent = new Intent(MainActivity.this, UpdateNote.class);
-                        intent.putExtra("currentDate", note.getCurrentDate());
-                        intent.putExtra("description", note.getDescription());
-                        intent.putExtra("noteDate", note.getNoteDate());
-                        intent.putExtra("noteHour", note.getNoteHour());
-                        intent.putExtra("noteId", note.getNoteId());
-                        intent.putExtra("status", note.getStatus());
-                        intent.putExtra("title", note.getTitle());
-                        intent.putExtra("userId", note.getUserId());
-                        intent.putExtra("userMail", note.getUserMail());
-                        startActivity(intent);
-                    });
+                    getAndSendObject(view, UpdateNote.class);
                 })
                 .setNegativeButton(R.string.dialog_item_delete, (dialog13, i) -> {
                     //ELIMIAR TAREA (REVISAR)
-                    View parentDelete = (View) view.getParent();
-                    TextView noteTitleItem = parentDelete.findViewById(R.id.item_title);
-                    String noteContent = noteTitleItem.getText().toString();
-                    int position = listNotesTitle.indexOf(noteContent);
-
+                    int position = listPosition(view);
                     db.collection("Notes").document(listNotesId.get(position)).delete();
 
                     toastOk(getString(R.string.event_deleted));
@@ -317,20 +250,16 @@ public class MainActivity extends AppCompatActivity {
         dialog.show();
     }
 
-    /*SE INTENTA REFACTORIZAR LA RECOGIDA Y ENVIO DEL OBJETO, PROBAR DE NUEVO
     //Método para recoger el objeto y enviarlo a otra activity.
-    public void getAndSendObject(View view, Activity activity){
-        View parentDelete = (View) view.getParent();
-        TextView noteTitleItem = parentDelete.findViewById(R.id.item_title);
-        String noteContent = noteTitleItem.getText().toString();
-        int position = listNotesTitle.indexOf(noteContent);
+    public void getAndSendObject(View view, Class activity){
+        int position = listPosition(view);
         note = new Note();
 
         DocumentReference docRef = db.collection("Notes").document(listNotesId.get(position));
         docRef.get().addOnSuccessListener(documentSnapshot -> {
             note = documentSnapshot.toObject(Note.class);
 
-            Intent intent = new Intent(MainActivity.this, ListNotes.class);
+            Intent intent = new Intent(MainActivity.this, activity);
             intent.putExtra("currentDate", note.getCurrentDate());
             intent.putExtra("description", note.getDescription());
             intent.putExtra("noteDate", note.getNoteDate());
@@ -343,7 +272,14 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
         });
     }
-    */
+
+    public int listPosition(View view){
+        View parentDelete = (View) view.getParent();
+        TextView noteTitleItem = parentDelete.findViewById(R.id.item_title);
+        String noteContent = noteTitleItem.getText().toString();
+        int position = listNotesTitle.indexOf(noteContent);
+        return position;
+    }
 
     //Cierre de sesión de google a través del método signOut y transición al login
     @Override
@@ -352,21 +288,17 @@ public class MainActivity extends AppCompatActivity {
         FirebaseAuth.getInstance().signOut();
 
 
-        mGoogleSignInClient.signOut().addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                if (task.isSuccessful()) {
-                    Intent loginActivity = new Intent(getApplicationContext(), Login.class);
-                    startActivity(loginActivity);
-                    MainActivity.this.finish();
+        mGoogleSignInClient.signOut().addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                Intent loginActivity = new Intent(getApplicationContext(), Login.class);
+                startActivity(loginActivity);
+                MainActivity.this.finish();
 
-                } else {
-                    Toast.makeText(getApplicationContext(), "No se pudo cerrar sesion con Google"
-                            , Toast.LENGTH_LONG).show();
-                }
+            } else {
+                Toast.makeText(getApplicationContext(), "No se pudo cerrar sesion con Google"
+                        , Toast.LENGTH_LONG).show();
             }
         });
-
     }
 
     //Método para incluir un toast personalizado de confirmación.
