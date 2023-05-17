@@ -76,6 +76,7 @@
     <string name="info_facebook">Facebook</string>
     <string name="info_twitter">Twitter</string>
     <string name="aditional_options">Opciones adicionales</string>
+    <string name="github_Login">GITHUB LOGIN</string>
 
     <!--Spinner-->
     <string-array name="Note_Status">
