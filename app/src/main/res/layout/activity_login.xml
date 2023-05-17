@@ -127,10 +127,11 @@
 
         <Button
             android:id="@+id/googleButton"
-            android:layout_width="70dp"
-            android:layout_height="70dp"
+            android:layout_width="82dp"
+            android:layout_height="68dp"
             android:layout_marginTop="56dp"
             android:background="#00FFFFFF"
+            android:contentDescription="@string/info_google"
             android:drawableLeft="@drawable/google"
             app:cornerRadius="30sp"
             app:iconTint="@color/pink_principal"
@@ -139,16 +140,16 @@
             app:layout_constraintHorizontal_bias="0.187"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/signUpWith"
-            tools:ignore="RtlHardcoded"
-            android:contentDescription="@string/info_google" />
+            tools:ignore="RtlHardcoded" />
 
         <Button
             android:id="@+id/githubButton"
-            android:layout_width="70dp"
-            android:layout_height="70dp"
+            android:layout_width="82dp"
+            android:layout_height="68dp"
             android:layout_marginTop="56dp"
             android:background="#00FFFFFF"
-            android:drawableLeft="@drawable/fb"
+            android:contentDescription="@string/info_facebook"
+            android:drawableLeft="@drawable/icon_github_login"
             app:cornerRadius="30sp"
             app:iconTint="@color/pink_principal"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -156,15 +157,15 @@
             app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/signUpWith"
-            tools:ignore="RtlHardcoded"
-            android:contentDescription="@string/info_facebook" />
+            tools:ignore="RtlHardcoded" />
 
         <Button
             android:id="@+id/twitterButton"
-            android:layout_width="70dp"
-            android:layout_height="70dp"
+            android:layout_width="82dp"
+            android:layout_height="68dp"
             android:layout_marginTop="56dp"
             android:background="#00FFFFFF"
+            android:contentDescription="@string/info_twitter"
             android:drawableLeft="@drawable/twitter"
             app:cornerRadius="30sp"
             app:iconTint="@color/pink_principal"
@@ -173,8 +174,7 @@
             app:layout_constraintHorizontal_bias="0.797"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/signUpWith"
-            tools:ignore="RtlHardcoded"
-            android:contentDescription="@string/info_twitter" />
+            tools:ignore="RtlHardcoded" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>
