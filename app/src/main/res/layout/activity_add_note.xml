@@ -58,7 +58,9 @@
             app:layout_constraintBottom_toTopOf="@+id/Description"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/Current_Date_time" />
+            app:layout_constraintTop_toBottomOf="@+id/Current_Date_time"
+            android:inputType="text"
+            android:autofillHints="" />
 
             <!--NOTE DESCRIPTION-->
         <EditText
@@ -76,7 +78,9 @@
             app:layout_constraintBottom_toTopOf="@+id/Calendar_btn"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/Title" />
+            app:layout_constraintTop_toBottomOf="@+id/Title"
+            android:inputType="text"
+            android:autofillHints="" />
 
         <!--CALENDAR BUTTON-->
         <Button
