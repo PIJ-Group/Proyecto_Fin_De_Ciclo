@@ -58,6 +58,8 @@ public class ListNotes extends AppCompatActivity {
         Hour_Detail.setText(hour_D);
         Status_Detail.setText(status_D);
         Title_Detail.setText(title_D);
+        //Te hemos añadido la descripción porque no estaba y no sabíamos qué pasaba, luego borra el comentario
+        Description_Detail.setText(description_D);
     }
     @Override
     public boolean onSupportNavigateUp() {

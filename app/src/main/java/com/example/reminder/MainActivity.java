@@ -1,9 +1,9 @@
 package com.example.reminder;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -23,19 +23,15 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -257,7 +253,7 @@ public class MainActivity extends AppCompatActivity {
         AlertDialog dialog = new AlertDialog.Builder(this)
 
                 .setPositiveButton(R.string.dialog_item_details, (dialog1, i) -> {
-                    //PASAR A ACTIVITY DE DETALLES (REVISAR)
+                    //PASAR A ACTIVITY DE DETALLES
                     View parentDelete = (View) view.getParent();
                     TextView noteTitleItem = parentDelete.findViewById(R.id.item_title);
                     String noteContent = noteTitleItem.getText().toString();
@@ -265,22 +261,24 @@ public class MainActivity extends AppCompatActivity {
                     note = new Note();
 
                     DocumentReference docRef = db.collection("Notes").document(listNotesId.get(position));
-                    docRef.get().addOnSuccessListener(documentSnapshot -> note = documentSnapshot.toObject(Note.class));
-                    //DEJO ESTO COMENTADO QUE SI NO NO FUNCIONA EL PASAR A ESA ACTIVITY
-                    Intent intent = new Intent(MainActivity.this, ListNotes.class);
-                    intent.putExtra("currentDate", note.getCurrentDate()).toString();
-                    intent.putExtra("description", note.getDescription()).toString();
-                    intent.putExtra("noteDate", note.getNoteDate()).toString();
-                    intent.putExtra("noteHour", note.getNoteHour()).toString();
-                    intent.putExtra("noteId", note.getNoteId()).toString();
-                    intent.putExtra("status", note.getStatus()).toString();
-                    intent.putExtra("title", note.getTitle()).toString();
-                    intent.putExtra("userId", note.getUserId()).toString();
-                    intent.putExtra("userMail", note.getUserMail()).toString();
-                    startActivity(intent);
+                    docRef.get().addOnSuccessListener(documentSnapshot -> {
+                        note = documentSnapshot.toObject(Note.class);
+
+                        Intent intent = new Intent(MainActivity.this, ListNotes.class);
+                        intent.putExtra("currentDate", note.getCurrentDate());
+                        intent.putExtra("description", note.getDescription());
+                        intent.putExtra("noteDate", note.getNoteDate());
+                        intent.putExtra("noteHour", note.getNoteHour());
+                        intent.putExtra("noteId", note.getNoteId());
+                        intent.putExtra("status", note.getStatus());
+                        intent.putExtra("title", note.getTitle());
+                        intent.putExtra("userId", note.getUserId());
+                        intent.putExtra("userMail", note.getUserMail());
+                        startActivity(intent);
+                    });
                 })
                 .setNeutralButton(R.string.dialog_item_edit, (dialog12, i) -> {
-                    //PASAR A ACTIVITY DE EDITAR (REVISAR)
+                    //PASAR A ACTIVITY DE EDITAR
                     View parentDelete = (View) view.getParent();
                     TextView noteTitleItem = parentDelete.findViewById(R.id.item_title);
                     String noteContent = noteTitleItem.getText().toString();
@@ -288,21 +286,21 @@ public class MainActivity extends AppCompatActivity {
                     note = new Note();
 
                     DocumentReference docRef = db.collection("Notes").document(listNotesId.get(position));
-                    docRef.get().addOnSuccessListener(documentSnapshot -> note = documentSnapshot.toObject(Note.class));
+                    docRef.get().addOnSuccessListener(documentSnapshot -> {
+                        note = documentSnapshot.toObject(Note.class);
 
-                    db.collection("Notes").document(listNotesId.get(position));
-
-                    Intent intent = new Intent(MainActivity.this, UpdateNote.class);
-                    intent.putExtra("currentDate", note.getCurrentDate()).toString();
-                    intent.putExtra("description", note.getDescription()).toString();
-                    intent.putExtra("noteDate", note.getNoteDate()).toString();
-                    intent.putExtra("noteHour", note.getNoteHour()).toString();
-                    intent.putExtra("noteId", note.getNoteId()).toString();
-                    intent.putExtra("status", note.getStatus()).toString();
-                    intent.putExtra("title", note.getTitle()).toString();
-                    intent.putExtra("userId", note.getUserId()).toString();
-                    intent.putExtra("userMail", note.getUserMail()).toString();
-                    startActivity(intent);
+                        Intent intent = new Intent(MainActivity.this, UpdateNote.class);
+                        intent.putExtra("currentDate", note.getCurrentDate());
+                        intent.putExtra("description", note.getDescription());
+                        intent.putExtra("noteDate", note.getNoteDate());
+                        intent.putExtra("noteHour", note.getNoteHour());
+                        intent.putExtra("noteId", note.getNoteId());
+                        intent.putExtra("status", note.getStatus());
+                        intent.putExtra("title", note.getTitle());
+                        intent.putExtra("userId", note.getUserId());
+                        intent.putExtra("userMail", note.getUserMail());
+                        startActivity(intent);
+                    });
                 })
                 .setNegativeButton(R.string.dialog_item_delete, (dialog13, i) -> {
                     //ELIMIAR TAREA (REVISAR)
@@ -318,6 +316,34 @@ public class MainActivity extends AppCompatActivity {
                 .create();
         dialog.show();
     }
+
+    /*SE INTENTA REFACTORIZAR LA RECOGIDA Y ENVIO DEL OBJETO, PROBAR DE NUEVO
+    //Método para recoger el objeto y enviarlo a otra activity.
+    public void getAndSendObject(View view, Activity activity){
+        View parentDelete = (View) view.getParent();
+        TextView noteTitleItem = parentDelete.findViewById(R.id.item_title);
+        String noteContent = noteTitleItem.getText().toString();
+        int position = listNotesTitle.indexOf(noteContent);
+        note = new Note();
+
+        DocumentReference docRef = db.collection("Notes").document(listNotesId.get(position));
+        docRef.get().addOnSuccessListener(documentSnapshot -> {
+            note = documentSnapshot.toObject(Note.class);
+
+            Intent intent = new Intent(MainActivity.this, ListNotes.class);
+            intent.putExtra("currentDate", note.getCurrentDate());
+            intent.putExtra("description", note.getDescription());
+            intent.putExtra("noteDate", note.getNoteDate());
+            intent.putExtra("noteHour", note.getNoteHour());
+            intent.putExtra("noteId", note.getNoteId());
+            intent.putExtra("status", note.getStatus());
+            intent.putExtra("title", note.getTitle());
+            intent.putExtra("userId", note.getUserId());
+            intent.putExtra("userMail", note.getUserMail());
+            startActivity(intent);
+        });
+    }
+    */
 
     //Cierre de sesión de google a través del método signOut y transición al login
     @Override
