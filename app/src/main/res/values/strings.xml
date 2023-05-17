@@ -48,6 +48,8 @@
     <string name="New_Status"> -- </string>
     <string name="Hour_btn_Update">Hour</string>
     <string name="Hour_Update">00:00</string>
+    <string name="Image_Note_finished">Image Finished</string>
+    <string name="Image_Note_Not_finished">Image Not Finished</string>
 
     <!--Note Detail-->
     <string name="Title_Detail">Title</string>

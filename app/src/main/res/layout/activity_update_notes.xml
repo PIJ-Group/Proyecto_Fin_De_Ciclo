@@ -68,7 +68,8 @@
             android:background="#16A085"
             android:visibility="gone"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            android:contentDescription="@string/Image_Note_finished" />
 
         <!--NOTE NOT FINISHED-->
         <ImageView
@@ -80,7 +81,8 @@
             android:background="#E74C3C"
             android:visibility="gone"
             app:layout_constraintStart_toEndOf="@+id/Note_finished"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            android:contentDescription="@string/Image_Note_Not_finished" />
 
         <!--NOTE STATUS-->
         <TextView
@@ -112,7 +114,9 @@
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/Registration_Date_Update"
-            app:layout_constraintVertical_bias="0.0" />
+            app:layout_constraintVertical_bias="0.0"
+            android:inputType="text"
+            android:autofillHints="" />
 
         <!--NOTE DESCRIPTION-->
         <EditText
@@ -132,7 +136,9 @@
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/Title_Update"
-            app:layout_constraintVertical_bias="0.066" />
+            app:layout_constraintVertical_bias="0.066"
+            android:inputType="text"
+            android:autofillHints="" />
 
         <!--CALENDAR BUTTON-->
         <Button
@@ -218,7 +224,8 @@
             android:minHeight="48dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/Hour_btn_Update" />
+            app:layout_constraintTop_toBottomOf="@+id/Hour_btn_Update"
+            tools:ignore="DuplicateSpeakableTextCheck" />
 
         <TextView
             android:id="@+id/New_Status"
@@ -226,7 +233,10 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="64dp"
             android:layout_marginTop="8dp"
+            android:fontFamily="@font/vanilla"
             android:text="@string/New_Status"
+            android:textSize="20sp"
+            android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/Spinner_Status"
             app:layout_constraintTop_toBottomOf="@+id/Hour_btn_Update" />
