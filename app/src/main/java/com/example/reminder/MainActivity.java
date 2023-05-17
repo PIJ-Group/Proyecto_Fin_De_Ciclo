@@ -1,6 +1,5 @@
 package com.example.reminder;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -22,8 +21,6 @@ import com.example.reminder.ListNotes.ListNotes;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
@@ -82,22 +79,14 @@ public class MainActivity extends AppCompatActivity {
 
             String dayFormatted, monthFormatted;
 
-            //Get formatted day
-            if (dayOfMonth < 10) {
-                dayFormatted = "0" + dayOfMonth;
-            } else {
-                dayFormatted = String.valueOf(dayOfMonth);
-            }
+            //Obtener día formateado
+            dayFormatted = createDayFormatted(dayOfMonth);
 
-            //Get formatted month
-            int Month = month + 1;
+            //Obtener mes formateado
+            month = month + 1;
+            monthFormatted = createMonthFormatted(month);
 
-            if (Month < 10) {
-                monthFormatted = "0" + Month;
-            } else {
-                monthFormatted = String.valueOf(Month);
-            }
-
+            //Obtener fecha completa formateada
             calendarDate = dayFormatted + "/" + monthFormatted + "/" + year;
 
             //Actualizar la UI con las tareas del usuario logueado
@@ -113,28 +102,43 @@ public class MainActivity extends AppCompatActivity {
 
         Calendar calendario = Calendar.getInstance();
 
-        //Obtener día completo
+        //Obtener día formateado
         actualDay = calendario.get(Calendar.DAY_OF_MONTH);
-        if (actualDay < 10) {
-            actualDayFormatted = "0" + actualDay;
-        } else {
-            actualDayFormatted = String.valueOf(actualDay);
-        }
+        actualDayFormatted = createDayFormatted(actualDay);
 
-        //Obtener mes completo
+        //Obtener mes formateado
         actualMonth = calendario.get(Calendar.MONTH) + 1;
-        if (actualMonth < 10) {
-            actualMonthFormatted = "0" + actualMonth;
-        } else {
-            actualMonthFormatted = String.valueOf(actualMonth);
-        }
+        actualMonthFormatted = createMonthFormatted(actualMonth);
 
         //Obtener año
         actualYear = calendario.get(Calendar.YEAR);
 
+        //Obtener fecha completa formateada
         calendarDate = actualDayFormatted + "/" + actualMonthFormatted + "/" + actualYear;
 
         return calendarDate;
+    }
+
+    //Método para formatear el día
+    private String createDayFormatted(int day){
+        String dayFormatted;
+        if (day < 10) {
+            dayFormatted = "0" + day;
+        } else {
+            dayFormatted = String.valueOf(day);
+        }
+        return dayFormatted;
+    }
+
+    //Método para formatear el mes
+    private String createMonthFormatted(int month){
+        String monthFormatted;
+        if (month < 10) {
+            monthFormatted = "0" + month;
+        } else {
+            monthFormatted = String.valueOf(month);
+        }
+        return monthFormatted;
     }
 
     //Insertar item en listView
