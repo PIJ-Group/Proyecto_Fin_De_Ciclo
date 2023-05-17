@@ -17,6 +17,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.reminder.UpdateNotes.UpdateNotes;
 import com.example.reminder.ListNotes.ListNotes;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -241,7 +242,7 @@ public class MainActivity extends AppCompatActivity {
                 })
                 .setNeutralButton(R.string.dialog_item_edit, (dialog12, i) -> {
                     //PASAR A ACTIVITY DE EDITAR
-                    getAndSendObject(view, UpdateNote.class);
+                    getAndSendObject(view, UpdateNotes.class);
                 })
                 .setNegativeButton(R.string.dialog_item_delete, (dialog13, i) -> {
                     //ELIMIAR TAREA (REVISAR)
