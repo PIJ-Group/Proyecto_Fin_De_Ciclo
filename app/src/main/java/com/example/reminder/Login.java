@@ -39,7 +39,7 @@ public class Login extends AppCompatActivity {
     static final int RC_SIGN_IN = 1;
     GoogleSignInClient mGoogleSignInClient;
 
-    Button botonGoogle, btnTwitter, btnFacebook;
+    Button botonGoogle, btnTwitter, btnGithub;
     Button botonLogin;
     TextView botonRegistro;
     EditText emailText, passText;
@@ -80,10 +80,10 @@ public class Login extends AppCompatActivity {
         passText = findViewById(R.id.cajaPass); //Texto de la password
 
 
-        btnFacebook = findViewById(R.id.facebookButton);
-        btnTwitter = findViewById(R.id.twitterButton);
-        botonGoogle = findViewById(R.id.googleButton);
-        botonLogin = findViewById(R.id.botonLogin);
+        btnGithub = findViewById(R.id.githubButton); //Botón de inicio de sesión en Github
+        btnTwitter = findViewById(R.id.twitterButton); //Botón de inicio de sesión en Twitter
+        botonGoogle = findViewById(R.id.googleButton); //Botón de inicio de sesión en Google
+        botonLogin = findViewById(R.id.botonLogin); //Botón de inicio de sesión
         botonLogin.setOnClickListener(view -> {
             //LOGIN EN FIREBASE
             String email = emailText.getText().toString();
@@ -133,10 +133,10 @@ public class Login extends AppCompatActivity {
 
         //-------------------FACEBOOK------------------------//
         // Initialize Facebook Login button
-        btnFacebook.setOnClickListener(new View.OnClickListener() {
+        btnGithub.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Login.this, FacebookActivity.class);
+                Intent intent = new Intent(Login.this, GithubActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                 startActivity(intent);
             }
