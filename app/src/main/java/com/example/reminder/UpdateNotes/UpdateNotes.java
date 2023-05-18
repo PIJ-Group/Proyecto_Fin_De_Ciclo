@@ -25,11 +25,20 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.example.reminder.Note;
 import com.example.reminder.R;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 
 import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
 
 public class UpdateNotes extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
@@ -121,6 +130,7 @@ public class UpdateNotes extends AppCompatActivity implements AdapterView.OnItem
         Status_Update.setText(status_R);
         Title_Update.setText(title_R);
         Description_Update.setText(description_R);
+
     }
 
     //method to select a date
@@ -194,39 +204,43 @@ public class UpdateNotes extends AppCompatActivity implements AdapterView.OnItem
         },hour,minutes,false);
         timePickerDialog.show();
     }
-//    //Update a Note in firebase
-//    private void updateNoteFirebase(){
-//
-//        String userMail = nAuth.getCurrentUser().getEmail();
-//        titleUpdate = Title_Update.getText().toString();
-//        descriptionUpdate = Description_Update.getText().toString();
-//        dateUpdate = Date_Update.getText().toString();
-//        hourUpdate = Hour_Update.getText().toString();
-//        statusUpdate = Status_Update.getText().toString();
-//        String userId = Userid_User_Update.getText().toString();
-//
-//
-//        Note note = new Note(userMail + "/" + registration_date_R , userId,
-//                userMail, registration_date_R, titleUpdate, descriptionUpdate, dateUpdate, hourUpdate, statusUpdate);
-//
-//        DocumentReference documentReference = db.collection("Notes").document("noteId");
-//
-//        documentReference
-//                .update((Map<String, Object>) note)
-//                .addOnSuccessListener(new OnSuccessListener<Void>() {
-//                    @Override
-//                    public void onSuccess(Void aVoid) {
-//                        toastOk("Updated Note");
-//                    }
-//                })
-//                .addOnFailureListener(new OnFailureListener() {
-//                    @Override
-//                    public void onFailure(@NonNull Exception e) {
-//                        toastWarning("Failure to update note");
-//                    }
-//                });
-//    }
-//
+    //Update a Note in firebase
+    private void updateNoteFirebase(){
+
+        String userMail = Objects.requireNonNull(nAuth.getCurrentUser()).getEmail();
+        titleUpdate = Title_Update.getText().toString();
+        descriptionUpdate = Description_Update.getText().toString();
+        dateUpdate = Date_Update.getText().toString();
+        hourUpdate = Hour_Update.getText().toString();
+        statusUpdate = Status_Update.getText().toString();
+        String userId = Userid_User_Update.getText().toString();
+
+
+        Note note = new Note(userMail + "/" + registration_date_R , userId,
+                userMail, registration_date_R, titleUpdate, descriptionUpdate, dateUpdate, hourUpdate, statusUpdate);
+
+
+
+
+        DocumentReference documentReference = db.collection("Notes").document(id_note_R);
+
+//        db.collection("Notes").document(id_note_R).update("title", titleUpdate);
+        documentReference
+                .update("title", titleUpdate)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        toastOk("Updated Note");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        toastWarning("Failure to update note");
+                    }
+                });
+  }
+
     //Check note status
     private void checkNoteStatus(){
         note_Status = Status_Update.getText().toString();
@@ -262,7 +276,7 @@ public class UpdateNotes extends AppCompatActivity implements AdapterView.OnItem
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == R.id.Update_Note) {
-            //updateNoteFirebase();
+            updateNoteFirebase();
         }
         return super.onOptionsItemSelected(item);
     }

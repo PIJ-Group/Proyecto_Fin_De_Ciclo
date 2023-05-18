@@ -89,13 +89,11 @@ public class AddNote extends AppCompatActivity {
 
     //Gets the data from the main menu and from the Users collection in Firestore Database.
     private void DataObtent() {
-
         //Gets the user name from Users collection.
         FirebaseUser user = nAuth.getCurrentUser();
         if (user != null) {
             userId = user.getUid();
         }
-
         DocumentReference documentReference = db.collection("Users").document(userId);
         documentReference.addSnapshotListener(this, new EventListener<DocumentSnapshot>() {
             @Override
@@ -105,7 +103,6 @@ public class AddNote extends AppCompatActivity {
                 }
             }
         });
-
 
         //Gets the date sent in the MainActivity intent.
         dateRecover = getIntent().getStringExtra("calendarDate");
