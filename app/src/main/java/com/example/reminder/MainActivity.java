@@ -64,63 +64,62 @@ public class MainActivity extends AppCompatActivity {
         listViewNotes = findViewById(R.id.listView);
         calendarView = findViewById(R.id.calendar);
 
-        /*Inicializamos la variable gso que recogerá los elementos necesarios para que el usuario
-          inicie sesion*/
+        //We initialize the gso variable that will get the necessary elements to the login user.
         gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))
                 .requestEmail()
                 .build();
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
 
-        //Llamada al método para obtener la fecha actual.
+        //Method called to obtain the current date.
         actualDate();
 
-        //Recoger fecha del calendario
+        //Get the calendar date.
         calendarView.setOnDateChangeListener((view, year, month, dayOfMonth) -> {
 
             String dayFormatted, monthFormatted;
 
-            //Obtener día formateado
+            //Get formatted date
             dayFormatted = createDayFormatted(dayOfMonth);
 
-            //Obtener mes formateado
+            //Get formatted month
             month = month + 1;
             monthFormatted = createMonthFormatted(month);
 
-            //Obtener fecha completa formateada
+            //Get formatted complete date.
             calendarDate = dayFormatted + "/" + monthFormatted + "/" + year;
 
-            //Actualizar la UI con las tareas del usuario logueado
+            //Method called to update the current user's tasks.
             updateNotes();
         });
 
     }
 
-    //Recoger fecha acutal
+    //Get current date.
     private String actualDate(){
         int actualDay, actualMonth, actualYear;
         String actualDayFormatted, actualMonthFormatted;
 
         Calendar calendario = Calendar.getInstance();
 
-        //Obtener día formateado
+        //Get formatted date
         actualDay = calendario.get(Calendar.DAY_OF_MONTH);
         actualDayFormatted = createDayFormatted(actualDay);
 
-        //Obtener mes formateado
+        //Get formatted month
         actualMonth = calendario.get(Calendar.MONTH) + 1;
         actualMonthFormatted = createMonthFormatted(actualMonth);
 
-        //Obtener año
+        //Get year
         actualYear = calendario.get(Calendar.YEAR);
 
-        //Obtener fecha completa formateada
+        //Get formatted complete date.
         calendarDate = actualDayFormatted + "/" + actualMonthFormatted + "/" + actualYear;
 
         return calendarDate;
     }
 
-    //Método para formatear el día
+    //Method to format the day.
     private String createDayFormatted(int day){
         String dayFormatted;
         if (day < 10) {
@@ -131,7 +130,7 @@ public class MainActivity extends AppCompatActivity {
         return dayFormatted;
     }
 
-    //Método para formatear el mes
+    //Method to format the month.
     private String createMonthFormatted(int month){
         String monthFormatted;
         if (month < 10) {
@@ -142,28 +141,26 @@ public class MainActivity extends AppCompatActivity {
         return monthFormatted;
     }
 
-    //Insertar item en listView
+    //Insert items in the listView.
     private void updateNotes() {
         user = mAuth.getCurrentUser();
-        //Objeto utilizado para poder ordenar el array de eventos
-        Comparator<DataModal> hoursComparator = Comparator.comparing(DataModal::getNoteHour);
 
         if (user != null) {
             emailUser = user.getEmail();
 
-            // Verifica si el usuario ha iniciado sesión con Google
+            //Verifies if the user is logged in with Google.
             if (user.getProviderData().size() > 1) {
                 String provider = user.getProviderData().get(1).getEmail();
                 getItemData(provider);
-            } else { // Si el usuario no ha iniciado sesión con Google, utiliza el userMail
+            } else { //If the user is not logged in with Google, uses the userMail variable.
                 getItemData(emailUser);
             }
         }
     }
 
-    //Obtener datos de la base de datos para mostrar en Item
+    //Obtain data of the database to show in the Item of the listView.
     public void getItemData(String userRegisterType){
-        //Objeto utilizado para poder ordenar el array de eventos
+        //Object used to sort the events array.
         Comparator<DataModal> hoursComparator = Comparator.comparing(DataModal::getNoteHour);
 
         db.collection("Notes")
@@ -183,7 +180,7 @@ public class MainActivity extends AppCompatActivity {
                         dataModal = new DataModal(doc.getString("title"), doc.getString("noteHour"));
                         listNotesTitle.add(doc.getString("title"));
                         listNotesComplete.add(dataModal);
-                        //Ordenación del array de eventos por horas
+                        //Sorting the events array by hours.
                         Collections.sort(listNotesComplete, hoursComparator);
                     }
 
@@ -199,28 +196,28 @@ public class MainActivity extends AppCompatActivity {
                 });
     }
 
-    //Creación del menú superior del activity main
+    //Creating the top menú of activity main.
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
-    //Funcionalidad de los botones del menú
+    //Functionality of the menu buttons.
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
-            //Pasamos a la activity de añadir nota
+            //Go to the add note activity.
             case R.id.Add:
                 Intent intent = new Intent(MainActivity.this, AddNote.class);
                 intent.putExtra("calendarDate", calendarDate);
                 startActivity(intent);
                 return true;
 
-            //Desconectamos el usuario y pasamos a la activity de login
+            //Disconnect the user and go to the login activity.
             case R.id.Logout:
                 mAuth.signOut();
-                //Cierre de sesión de google
+                //Log out of Google.
                 onBackPressed();
                 finish();
                 return true;
@@ -231,21 +228,21 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    //Dialog del botón elipsis del item con funcionalidad
+    //AlertDialog of item ellipsis button with functionality.
     public void otherOptions(View view) {
 
         AlertDialog dialog = new AlertDialog.Builder(this)
 
                 .setPositiveButton(R.string.dialog_item_details, (dialog1, i) -> {
-                    //PASAR A ACTIVITY DE DETALLES
+                    //Go to the note details activity.
                     getAndSendObject(view, ListNotes.class);
                 })
                 .setNeutralButton(R.string.dialog_item_edit, (dialog12, i) -> {
-                    //PASAR A ACTIVITY DE EDITAR
+                    //Go to edit note activity.
                     getAndSendObject(view, UpdateNotes.class);
                 })
                 .setNegativeButton(R.string.dialog_item_delete, (dialog13, i) -> {
-                    //ELIMIAR TAREA (REVISAR)
+                    //Delete note.
                     int position = listPosition(view);
                     db.collection("Notes").document(listNotesId.get(position)).delete();
 
@@ -255,7 +252,7 @@ public class MainActivity extends AppCompatActivity {
         dialog.show();
     }
 
-    //Método para recoger el objeto y enviarlo a otra activity.
+    //Method to get the object of the database and send it to other activity.
     public void getAndSendObject(View view, Class activity){
         int position = listPosition(view);
         note = new Note();
@@ -278,6 +275,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    //Obtain the position of the note in the database.
     public int listPosition(View view){
         View parentDelete = (View) view.getParent();
         TextView noteTitleItem = parentDelete.findViewById(R.id.item_title);
@@ -286,7 +284,7 @@ public class MainActivity extends AppCompatActivity {
         return position;
     }
 
-    //Cierre de sesión de google a través del método signOut y transición al login
+    //Session closing of Google through the signOut method and go back to login activity.
     @Override
     public void onBackPressed() {
         mAuth.signOut();
@@ -306,7 +304,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    //Método para incluir un toast personalizado de confirmación.
+    //Confirmation customized toast.
     public void toastOk(String msg) {
         LayoutInflater layoutInflater = getLayoutInflater();
         android.view.View view = layoutInflater.inflate(R.layout.toast_ok, (ViewGroup) findViewById(R.id.custom_ok));
@@ -320,7 +318,7 @@ public class MainActivity extends AppCompatActivity {
         toast.show();
     }
 
-    //Método para incluir un toast personalizado de advertencia.
+    //Warning customized toast.
     public void toastWarning(String msg) {
         LayoutInflater layoutInflater = getLayoutInflater();
         android.view.View view = layoutInflater.inflate(R.layout.toast_warning, findViewById(R.id.custom_warning));
