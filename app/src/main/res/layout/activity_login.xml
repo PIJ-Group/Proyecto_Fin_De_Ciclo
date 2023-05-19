@@ -40,7 +40,7 @@
                 android:layout_height="wrap_content"
                 android:backgroundTint="@color/white"
                 android:fontFamily="@font/modern"
-                android:hint="@string/hintCorreo"
+                android:hint="@string/hint_Correo"
                 android:textColorHint="@color/teal_700"
                 android:textSize="16sp"
                 tools:ignore="TextContrastCheck"
@@ -67,7 +67,7 @@
                 android:layout_height="wrap_content"
                 android:backgroundTint="@color/white"
                 android:fontFamily="@font/modern"
-                android:hint="@string/hintPass"
+                android:hint="@string/hint_Pass"
                 android:inputType="textPassword"
                 android:textColorHint="@color/teal_700"
                 android:textSize="16sp"
@@ -100,7 +100,7 @@
             android:cursorVisible="true"
             android:fontFamily="@font/modern"
             android:gravity="center|center_horizontal"
-            android:text="@string/createAccount"
+            android:text="@string/create_Account"
             android:textColor="@color/pink_dark"
             android:textSize="20sp"
             android:textStyle="bold"
@@ -116,7 +116,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="81dp"
             android:fontFamily="@font/modern"
-            android:text="@string/signUpWith"
+            android:text="@string/signUp_With"
             android:textColor="@color/pink_light"
             android:textSize="20sp"
 
@@ -136,10 +136,11 @@
             app:cornerRadius="30sp"
             app:iconTint="@color/pink_principal"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.187"
+            app:layout_constraintEnd_toStartOf="@+id/githubButton"
+            app:layout_constraintHorizontal_bias="0.621"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/signUpWith"
+            app:layout_constraintVertical_bias="0.0"
             tools:ignore="RtlHardcoded" />
 
         <Button
@@ -153,10 +154,11 @@
             app:cornerRadius="30sp"
             app:iconTint="@color/pink_principal"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintEnd_toStartOf="@+id/twitterButton"
+            app:layout_constraintHorizontal_bias="0.854"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/signUpWith"
+            app:layout_constraintVertical_bias="0.0"
             tools:ignore="RtlHardcoded" />
 
         <Button
@@ -171,9 +173,10 @@
             app:iconTint="@color/pink_principal"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.797"
+            app:layout_constraintHorizontal_bias="0.844"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/signUpWith"
+            app:layout_constraintVertical_bias="0.0"
             tools:ignore="RtlHardcoded" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

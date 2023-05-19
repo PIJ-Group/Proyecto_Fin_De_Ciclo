@@ -30,7 +30,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/vanilla"
             android:gravity="center"
-            android:text="@string/createNewAccount"
+            android:text="@string/create_New_Account"
             android:textSize="25sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
@@ -112,7 +112,7 @@
                     android:drawableStart="@drawable/ic_baseline_lock_24"
                     android:drawablePadding="10dp"
                     android:fontFamily="@font/vanilla"
-                    android:hint="@string/hintPass"
+                    android:hint="@string/hint_Pass"
                     android:inputType="textPassword"
                     android:padding="20dp" />
 
