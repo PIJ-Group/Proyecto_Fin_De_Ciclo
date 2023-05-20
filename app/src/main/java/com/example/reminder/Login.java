@@ -39,9 +39,8 @@ public class Login extends AppCompatActivity {
     static final int RC_SIGN_IN = 1;
     GoogleSignInClient mGoogleSignInClient;
 
-    Button botonGoogle, btnTwitter, btnGithub;
-    Button botonLogin;
-    TextView botonRegistro;
+    Button btnGoogle, btnTwitter, btnGithub, btnLogin;
+    TextView btnRegister;
     EditText emailText, passText;
     private FirebaseAuth mAuth;
 
@@ -76,15 +75,15 @@ public class Login extends AppCompatActivity {
         // Initialize Firebase Auth
         mAuth = FirebaseAuth.getInstance();
 
-        emailText = findViewById(R.id.cajaCorreo); //Texto del correo
-        passText = findViewById(R.id.cajaPass); //Texto de la password
+        emailText = findViewById(R.id.cajaCorreo); //Text email
+        passText = findViewById(R.id.cajaPass); //Text password
 
 
-        btnGithub = findViewById(R.id.githubButton); //Botón de inicio de sesión en Github
-        btnTwitter = findViewById(R.id.twitterButton); //Botón de inicio de sesión en Twitter
-        botonGoogle = findViewById(R.id.googleButton); //Botón de inicio de sesión en Google
-        botonLogin = findViewById(R.id.botonLogin); //Botón de inicio de sesión
-        botonLogin.setOnClickListener(view -> {
+        btnGithub = findViewById(R.id.githubButton); //Github login button
+        btnTwitter = findViewById(R.id.twitterButton); //Twitter login button
+        btnGoogle = findViewById(R.id.googleButton); //Google login button
+        btnLogin = findViewById(R.id.botonLogin); //User login button
+        btnLogin.setOnClickListener(view -> {
             //LOGIN EN FIREBASE
             String email = emailText.getText().toString();
             String password = passText.getText().toString();
@@ -103,7 +102,6 @@ public class Login extends AppCompatActivity {
                                 // Sign in success, update UI with the signed-in user's information
                                 Intent intent = new Intent(Login.this, MainActivity.class);
                                 startActivity(intent);
-                                //No cierro
                             } else {
                                 // If sign in fails, display a message to the user.
                                 toastWarning(getString(R.string.failed_authentication));
@@ -113,26 +111,26 @@ public class Login extends AppCompatActivity {
             }
 
         });
-        //Botón de registro de usuario
-        botonRegistro = findViewById(R.id.createAccount);
-        botonRegistro.setOnClickListener(view -> {
+        //User registration button
+        btnRegister = findViewById(R.id.createAccount);
+        btnRegister.setOnClickListener(view -> {
             startActivity(new Intent(Login.this, Register.class));
 
         });
 
 
         //-------------------GOOGLE------------------------//
-        //Configuración del inicio de sesión en Google
+        //Google login settings
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))
                 .requestEmail()
                 .build();
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
-        botonGoogle.setOnClickListener(view -> signIn());
+        btnGoogle.setOnClickListener(view -> signIn());
         // [END config_signin]
 
-        //-------------------FACEBOOK------------------------//
-        // Initialize Facebook Login button
+        //-------------------Github------------------------//
+        //GitHub login settings
         btnGithub.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -143,7 +141,7 @@ public class Login extends AppCompatActivity {
         });
 
         //-------------------Twitter------------------------//
-        //Configuración del inicio de sesión en Twitter
+        //GitHub Twitter settings
         btnTwitter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -152,19 +150,16 @@ public class Login extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
-
     }
 
     //-------------------Google------------------------//
-    //Método para inciar sesión
+    //Method for logging in
     public void signIn() {
         Intent signInIntent = mGoogleSignInClient.getSignInIntent();
         startActivityForResult(signInIntent, RC_SIGN_IN);
     }
 
-
-    //Método para verificar el resultado de la actividad de loguearse
+    //Method to verify the result of the log in activity
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -182,8 +177,7 @@ public class Login extends AppCompatActivity {
         }
     }
 
-
-    //Método para comprobar el token e iniciar sesión si este es válido
+    //Method to check the token and log in if the token is valid
     public void firebaseAuthWithGoogle(String idToken) {
         AuthCredential credential = GoogleAuthProvider.getCredential(idToken, null);
         mAuth.signInWithCredential(credential)
@@ -205,40 +199,35 @@ public class Login extends AppCompatActivity {
                         documentReference.set(dataUser).addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void aVoid) {
-                                Log.d("register", "Datos de usuario creados");
+                                Log.d("register", "Created user data");
                             }
                         }).addOnFailureListener(new OnFailureListener() {
                             @Override
                             public void onFailure(@NonNull Exception e) {
-                                Log.d("register", "Error al crear documento");
+                                Log.d("register", "Error creating document");
                             }
                         });
-                        goHome();
                         updateUI();
 
                     } else {
-                        // If sign in fails, display a message to the user.
+                        toastWarning("Authentication failed");
                         updateUI();
                     }
                 });
     }
 
-    //Método para verificar el estado del usuario actual y movernos entre actividades
+    //Method to check the status of the current user and move between activities
     private void updateUI() {
         FirebaseUser user = mAuth.getCurrentUser();
         if (user != null) {
-            goHome();
+            Intent intent = new Intent(Login.this, MainActivity.class);
+            startActivity(intent);
         }
 
     }
     // [END auth_with_google]
 
-    // Método para moverse entre actividades
-    private void goHome() {
-        Intent intent = new Intent(Login.this, MainActivity.class);
-        startActivity(intent);
-    }
-
+    //Notification toast
     public void toastWarning(String msg) {
         LayoutInflater layoutInflater = getLayoutInflater();
         View view = layoutInflater.inflate(R.layout.toast_warning, findViewById(R.id.custom_warning));
