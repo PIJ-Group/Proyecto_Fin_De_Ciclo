@@ -5,10 +5,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
-
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
@@ -28,77 +24,59 @@ public class TwitterActivity extends Login {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        firebaseAuth = FirebaseAuth.getInstance();
+        firebaseAuth = FirebaseAuth.getInstance();//Get a reference to the FirebaseAuth instance.
 
-        OAuthProvider.Builder provider = OAuthProvider.newBuilder("twitter.com");
+        OAuthProvider.Builder provider = OAuthProvider.newBuilder("twitter.com");// Set the provider name.
 
-        provider.addCustomParameter("lang", "es");
+        provider.addCustomParameter("lang", "en");//Language english.
 
 
         Task<AuthResult> pendingResultTask = firebaseAuth.getPendingAuthResult();
         if (pendingResultTask != null) {
-            // There's something already here! Finish the sign-in for your user.
+            //There's something already here! Finish the sign-in for your user.
             pendingResultTask
                     .addOnSuccessListener(
-                            new OnSuccessListener<AuthResult>() {
-                                @Override
-                                public void onSuccess(AuthResult authResult) {
-                                    startActivity(new Intent(TwitterActivity.this, MainActivity.class));
-                                    Toast.makeText(TwitterActivity.this, "", Toast.LENGTH_LONG).show();
-                                }
+                            authResult -> {
+                                openNextActivity();
+                                Toast.makeText(TwitterActivity.this, "", Toast.LENGTH_LONG).show();
                             })
                     .addOnFailureListener(
-                            new OnFailureListener() {
-                                @Override
-                                public void onFailure(@NonNull Exception e) {
-                                    Toast.makeText(TwitterActivity.this, "" + e.getMessage(), Toast.LENGTH_LONG).show();
-                                }
-                            });
+                            e -> Toast.makeText(TwitterActivity.this, "" + e.getMessage(), Toast.LENGTH_LONG).show());
         } else {
+            //Start the sign-in flow.
             firebaseAuth
                     .startActivityForSignInWithProvider(TwitterActivity.this, provider.build())
                     .addOnSuccessListener(
-                            new OnSuccessListener<AuthResult>() {
-                                @Override
-                                public void onSuccess(AuthResult authResult) {
-                                    FirebaseUser user = firebaseAuth.getCurrentUser();
-                                    assert user != null;
-                                    String userId = user.getUid();
-                                    String name, email;
-                                    FirebaseFirestore db = FirebaseFirestore.getInstance();
+                            authResult -> {
+                                FirebaseUser user = firebaseAuth.getCurrentUser();
+                                assert user != null;
+                                String userId = user.getUid();
+                                String name, email;
+                                FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-                                    name = user.getDisplayName();
-                                    email = user.getProviderData().get(1).getEmail();
+                                name = user.getDisplayName();
+                                email = user.getProviderData().get(1).getEmail();
 
-                                    DocumentReference documentReference = db.collection("Users").document(userId);
-                                    Map<String, Object> dataUser = new HashMap<>();
+                                DocumentReference documentReference = db.collection("Users").document(userId);
+                                Map<String, Object> dataUser = new HashMap<>();
 
-                                    dataUser.put("email_user", email);
-                                    dataUser.put("user_name", name);
+                                dataUser.put("email_user", email);
+                                dataUser.put("user_name", name);
 
-                                    documentReference.set(dataUser).addOnSuccessListener(new OnSuccessListener<Void>() {
-                                        @Override
-                                        public void onSuccess(Void aVoid) {
-                                            Log.d("register", "Datos de usuario creados");
-                                        }
-                                    }).addOnFailureListener(new OnFailureListener() {
-                                        @Override
-                                        public void onFailure(@NonNull Exception e) {
-                                            Log.d("register", "Error al crear documento");
-                                        }
-                                    });
-                                    startActivity(new Intent(TwitterActivity.this, MainActivity.class));
-                                }
+                                documentReference.set(dataUser).addOnSuccessListener(aVoid -> Log.d("registered", "User data created")).addOnFailureListener(e -> Log.d("register", "Error al crear documento"));
+                                openNextActivity();
                             })
                     .addOnFailureListener(
-                            new OnFailureListener() {
-                                @Override
-                                public void onFailure(@NonNull Exception e) {
-                                    Toast.makeText(TwitterActivity.this, "" + e.getMessage(), Toast.LENGTH_LONG).show();
-                                }
-                            });
+                            e -> Toast.makeText(TwitterActivity.this, "" + e.getMessage(), Toast.LENGTH_LONG).show());
         }
 
+    }
+    //Method to open the next activity.
+    private void openNextActivity() {
+        Intent intent = new Intent(TwitterActivity.this, MainActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+        finish();
     }
 
 }
