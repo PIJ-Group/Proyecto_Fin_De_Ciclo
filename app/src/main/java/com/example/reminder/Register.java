@@ -31,7 +31,7 @@ public class Register extends AppCompatActivity {
     Button btnRegister;
     EditText inputUserName, inputEmailText, inputPassText, inputConfirmedPassText;
     TextView haveAndAccount;
-    private FirebaseAuth mAuth;
+    FirebaseAuth mAuth;
     FirebaseFirestore db;
     ProgressBar loading;
 
@@ -48,22 +48,23 @@ public class Register extends AppCompatActivity {
 
         db = FirebaseFirestore.getInstance();
         mAuth = FirebaseAuth.getInstance();
-        inputEmailText = findViewById(R.id.emailBox); //Texto del correo
-        inputPassText = findViewById(R.id.passBox);
-        inputConfirmedPassText = findViewById(R.id.confirmedPassBox);
-        inputUserName = findViewById(R.id.completeName);
-        haveAndAccount = findViewById(R.id.haveAccount);
-        loading = findViewById(R.id.loading);
+        inputEmailText = findViewById(R.id.emailBox);//Text email
+        inputPassText = findViewById(R.id.passBox);//Text password
+        inputConfirmedPassText = findViewById(R.id.confirmedPassBox);//Text confirm password
+        inputUserName = findViewById(R.id.completeName);//Text name
+        haveAndAccount = findViewById(R.id.haveAccount);//Text have account
+        loading = findViewById(R.id.loading);//Animation loading
 
-
+        //Create user in firebase
         btnRegister = findViewById(R.id.userRegister);
         btnRegister.setOnClickListener(view -> {
-            //CREAR USUARIO EN FIREBASE
+            //Collection of the texts entered
             String email = inputEmailText.getText().toString();
             String password = inputPassText.getText().toString();
             String confirmedPassword = inputConfirmedPassText.getText().toString();
             String userName = inputUserName.getText().toString();
 
+            //Validations
             if (email.isEmpty()) {
                 inputEmailText.setError(getString(R.string.empty_field));
             } else if (!email.contains("@") || !email.contains(".") || email.contains(" ")) {

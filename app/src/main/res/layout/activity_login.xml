@@ -25,7 +25,7 @@
             app:lottie_loop="true" />
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/layoutCorreo"
+            android:id="@+id/mailLayout"
             android:layout_width="309dp"
             android:layout_height="50dp"
             android:layout_marginTop="112dp"
@@ -35,7 +35,7 @@
             app:startIconDrawable="@drawable/ic_baseline_email_24">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/cajaCorreo"
+                android:id="@+id/boxMail"
                 android:layout_width="314dp"
                 android:layout_height="wrap_content"
                 android:backgroundTint="@color/white"
@@ -58,11 +58,11 @@
             app:endIconMode="password_toggle"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/layoutCorreo"
+            app:layout_constraintTop_toBottomOf="@+id/mailLayout"
             app:startIconDrawable="@drawable/ic_baseline_lock_24">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/cajaPass"
+                android:id="@+id/boxPass"
                 android:layout_width="314dp"
                 android:layout_height="wrap_content"
                 android:backgroundTint="@color/white"
@@ -75,7 +75,7 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <Button
-            android:id="@+id/botonLogin"
+            android:id="@+id/btnLogin"
             android:layout_width="200dp"
             android:layout_height="52dp"
             android:layout_marginTop="32dp"
@@ -107,7 +107,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.428"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/botonLogin"
+            app:layout_constraintTop_toBottomOf="@+id/btnLogin"
             tools:ignore="TextViewEdits" />
 
         <TextView
@@ -149,7 +149,7 @@
             android:layout_height="68dp"
             android:layout_marginTop="56dp"
             android:background="#00FFFFFF"
-            android:contentDescription="@string/info_facebook"
+            android:contentDescription="@string/info_github"
             android:drawableLeft="@drawable/icon_github_login"
             app:cornerRadius="30sp"
             app:iconTint="@color/pink_principal"
