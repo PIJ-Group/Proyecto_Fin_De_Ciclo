@@ -2,26 +2,19 @@
     <string name="app_name">Reminder</string>
     <string name="made_by">Made By</string>
     <string name="todo">todo</string>
+    <string name="user_ok">user_ok</string>
+    <string name="user_warning">user_warning</string>
+
+    <!--Login-->
     <string name="hint_Correo">email</string>
     <string name="hint_Pass">password</string>
     <string name="login">Login</string>
     <string name="create_Account">Don\'t have an account yet? Sign up now!</string>
-    <string name="login_WithGoogle">Acceder con Google</string>
     <string name="signUp_With">or sign up with</string>
     <string name="empty_field">empty field</string>
     <string name="invalid_email">invalid email</string>
     <string name="failed_authentication">failed authentication</string>
-    <string name="user_ok">user_ok</string>
-    <string name="user_warning">user_warning</string>
     <string name="create_New_Account">Create a new account</string>
-    <string name="name">Complete name</string>
-    <string name="email">Email</string>
-    <string name="confirm_password">Confirm password</string>
-    <string name="user_registration">User registration</string>
-    <string name="i_have_account">I already have an account</string>
-    <string name="facebook_app_id">1717808215341319</string>
-    <string name="fb_login_protocol_scheme">fb1717808215341319</string>
-    <string name="facebook_client_token">71746e3d95ec0e24602a3908c3fbe702</string>
 
     <!---Add Note-->
     <string name="Userid_User">User id</string>
@@ -69,13 +62,20 @@
     <string name="dialog_item_edit">Editar</string>
     <string name="dialog_item_delete">Eliminar</string>
     <string name="event_deleted">Evento eliminado</string>
-    <string name="created_user">Usuario creado</string>
-    <string name="already_user_registered">Usuario existente</string>
-    <string name="invalid_password">contraseña muy corta</string>
-    <string name="not_match">Las contraseñas no coinciden</string>
+
+    <!--Register-->
+    <string name="name">Complete name</string>
+    <string name="email">Email</string>
+    <string name="confirm_password">Confirm password</string>
+    <string name="user_registration">User registration</string>
+    <string name="i_have_account">I already have an account</string>
+    <string name="created_user">User created</string>
+    <string name="already_user_registered">User already registered</string>
+    <string name="invalid_password">Too short password</string>
+    <string name="not_match">Passwords do not match</string>
     <string name="Update_Note">Update Note</string>
     <string name="info_google">Google</string>
-    <string name="info_facebook">Facebook</string>
+    <string name="info_github">Facebook</string>
     <string name="info_twitter">Twitter</string>
     <string name="aditional_options">Opciones adicionales</string>
     <string name="github_Login">GITHUB LOGIN</string>
