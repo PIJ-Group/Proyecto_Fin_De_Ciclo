@@ -34,7 +34,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
 
-public class AddNote extends AppCompatActivity {
+public class AddEvent extends AppCompatActivity {
 
     TextView Userid_User, Current_Date_time, Date, Hour, Status;
     EditText Title, Description;
@@ -51,11 +51,11 @@ public class AddNote extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_note);
+        setContentView(R.layout.activity_add_event);
 
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
-            actionBar.setTitle("Add Note");
+            actionBar.setTitle("Add Event");
             actionBar.setDisplayShowHomeEnabled(true);
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
@@ -138,7 +138,7 @@ public class AddNote extends AppCompatActivity {
         month = calendar.get(Calendar.MONTH);
         year = calendar.get(Calendar.YEAR);
 
-        DatePickerDialog datePickerDialog = new DatePickerDialog(AddNote.this, new DatePickerDialog.OnDateSetListener() {
+        DatePickerDialog datePickerDialog = new DatePickerDialog(AddEvent.this, new DatePickerDialog.OnDateSetListener() {
             @SuppressLint("SetTextI18n")
             @Override
             public void onDateSet(DatePicker view, int yearSelected, int monthSelected, int daySelected) {
@@ -175,7 +175,7 @@ public class AddNote extends AppCompatActivity {
         hour = clock.get(Calendar.HOUR_OF_DAY);
         minutes = clock.get(Calendar.MINUTE);
 
-        TimePickerDialog timePickerDialog = new TimePickerDialog(AddNote.this, new TimePickerDialog.OnTimeSetListener() {
+        TimePickerDialog timePickerDialog = new TimePickerDialog(AddEvent.this, new TimePickerDialog.OnTimeSetListener() {
             @SuppressLint("SetTextI18n")
             @Override
             public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
@@ -204,8 +204,8 @@ public class AddNote extends AppCompatActivity {
     }
 
 
-    //Add a note in Notes collection in Firebase Database
-    private void AddNoteFireBase() {
+    //Add a event in Notes collection in Firebase Database
+    private void AddEventFireBase() {
 
         //Get data
         String userId = Userid_User.getText().toString();
@@ -222,12 +222,12 @@ public class AddNote extends AppCompatActivity {
                 !description.equals("") && !date.equals("") &&
                 !hour.equals("") && !status.equals("")) {
 
-            Note note = new Note(mail + "/" + dateTimeCurrent, userId,
+            Event event = new Event(mail + "/" + dateTimeCurrent, userId,
                     mail, dateTimeCurrent, title, description, date, hour, status);
 
-            db.collection("Notes").add(note);
+            db.collection("Notes").add(event);
 
-            toastOk("Note successfully added");
+            toastOk("Event successfully added");
             onBackPressed();
 
         } else {
@@ -238,14 +238,14 @@ public class AddNote extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater menuInflater = getMenuInflater();
-        menuInflater.inflate(R.menu.menu_add_note, menu);
+        menuInflater.inflate(R.menu.menu_add_event, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == R.id.Add_Note_BD) {
-            AddNoteFireBase();
+            AddEventFireBase();
         }
         return super.onOptionsItemSelected(item);
     }

@@ -1,13 +1,12 @@
 package com.example.reminder.UpdateNotes;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
+import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
 
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -25,22 +24,21 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
-import com.example.reminder.Note;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.reminder.Event;
 import com.example.reminder.R;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.Query;
 
 import java.util.Calendar;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
-public class UpdateNotes extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
+public class UpdateEvents extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
 
     TextView Id_Note_Update, Userid_User_Update, Registration_Date_Update, Date_Update,
@@ -67,11 +65,11 @@ public class UpdateNotes extends AppCompatActivity implements AdapterView.OnItem
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_update_notes);
+        setContentView(R.layout.activity_update_events);
 
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
-            actionBar.setTitle("Update Note");
+            actionBar.setTitle("Update Event");
             actionBar.setDisplayShowHomeEnabled(true);
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
@@ -140,7 +138,7 @@ public class UpdateNotes extends AppCompatActivity implements AdapterView.OnItem
         month = calendar.get(Calendar.MONTH);
         year = calendar.get(Calendar.YEAR);
 
-        DatePickerDialog datePickerDialog = new DatePickerDialog(UpdateNotes.this, new DatePickerDialog.OnDateSetListener() {
+        DatePickerDialog datePickerDialog = new DatePickerDialog(UpdateEvents.this, new DatePickerDialog.OnDateSetListener() {
             @SuppressLint("SetTextI18n")
             @Override
             public void onDateSet(DatePicker view, int yearSelected, int monthSelected, int daySelected) {
@@ -177,7 +175,7 @@ public class UpdateNotes extends AppCompatActivity implements AdapterView.OnItem
         hour = clock.get(Calendar.HOUR_OF_DAY);
         minutes = clock.get(Calendar.MINUTE);
 
-        TimePickerDialog timePickerDialog = new TimePickerDialog(UpdateNotes.this, new TimePickerDialog.OnTimeSetListener() {
+        TimePickerDialog timePickerDialog = new TimePickerDialog(UpdateEvents.this, new TimePickerDialog.OnTimeSetListener() {
             @SuppressLint("SetTextI18n")
             @Override
             public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
@@ -204,7 +202,7 @@ public class UpdateNotes extends AppCompatActivity implements AdapterView.OnItem
         },hour,minutes,false);
         timePickerDialog.show();
     }
-    //Update a Note in firebase
+    //Update a Event in firebase
     private void updateNoteFirebase(){
 
         String userMail = Objects.requireNonNull(nAuth.getCurrentUser()).getEmail();
@@ -216,28 +214,46 @@ public class UpdateNotes extends AppCompatActivity implements AdapterView.OnItem
         String userId = Userid_User_Update.getText().toString();
 
 
-        Note note = new Note(userMail + "/" + registration_date_R , userId,
+        Event event = new Event(id_note_R, userId,
                 userMail, registration_date_R, titleUpdate, descriptionUpdate, dateUpdate, hourUpdate, statusUpdate);
 
 
+        DocumentReference documentReference = db.collection("Notes").document("noteId");
 
+        documentReference.get()
+                .addOnSuccessListener(documentSnapshot -> {
+                    if (documentSnapshot.exists()) {
+                        Map<String, Object> data = documentSnapshot.getData();
+                        data.put("title", titleUpdate);
+                        data.put("description", descriptionUpdate);
+                        data.put("date", dateUpdate);
+                        data.put("hour", hourUpdate);
+                        data.put("status", statusUpdate);
+                        data.put("user_id", userId);
+                        data.put("user_mail", userMail);
+                        data.put("note_id", id_note_R);
+                        data.put("note_date", dateUpdate);
+                        data.put("note_hour", hourUpdate);
+                        data.put("note_status", statusUpdate);
 
-        DocumentReference documentReference = db.collection("Notes").document(id_note_R);
+                        documentReference.set(data)
+                              .addOnSuccessListener(aVoid -> {
+                                  Log.d(TAG, "Document successfully modified.");
+                                  toastOk("Updated event");
+                              })
+                                .addOnFailureListener(e -> {
+                                    Log.e(TAG, "Error when modifying the document.", e);
+                                        toastWarning("Failure to update event");
 
-//        db.collection("Notes").document(id_note_R).update("title", titleUpdate);
-        documentReference
-                .update("title", titleUpdate)
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        toastOk("Updated Note");
+                                });
+                    }else {
+                        Log.d(TAG, "The document does not exist");
+                        toastWarning("Event does not exist");
                     }
                 })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        toastWarning("Failure to update note");
-                    }
+                .addOnFailureListener(e -> {
+                    Log.e(TAG, "Error obtaining the document", e);
+                    toastWarning("Event not found");
                 });
   }
 
@@ -284,7 +300,7 @@ public class UpdateNotes extends AppCompatActivity implements AdapterView.OnItem
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater menuInflater = getMenuInflater();
-        menuInflater.inflate(R.menu.menu_update_note, menu);
+        menuInflater.inflate(R.menu.menu_update_event, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
