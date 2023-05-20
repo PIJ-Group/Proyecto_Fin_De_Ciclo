@@ -50,7 +50,7 @@ public class Register extends AppCompatActivity {
         haveAndAccount = findViewById(R.id.haveAccount);//Text have account
         loading = findViewById(R.id.loading);//Animation loading
 
-        btnRegister = findViewById(R.id.userRegister);
+        btnRegister = findViewById(R.id.userRegister);//btn Register
         btnRegister.setOnClickListener(view -> {
             //Collection of the texts entered
             String email = inputEmailText.getText().toString();
