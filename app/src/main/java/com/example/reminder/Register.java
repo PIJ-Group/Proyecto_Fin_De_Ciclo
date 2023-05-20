@@ -12,13 +12,9 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
@@ -34,7 +30,6 @@ public class Register extends AppCompatActivity {
     FirebaseAuth mAuth;
     FirebaseFirestore db;
     ProgressBar loading;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,7 +50,6 @@ public class Register extends AppCompatActivity {
         haveAndAccount = findViewById(R.id.haveAccount);//Text have account
         loading = findViewById(R.id.loading);//Animation loading
 
-        //Create user in firebase
         btnRegister = findViewById(R.id.userRegister);
         btnRegister.setOnClickListener(view -> {
             //Collection of the texts entered
@@ -77,7 +71,7 @@ public class Register extends AppCompatActivity {
                 inputConfirmedPassText.setError(getString(R.string.not_match));
 
             } else {
-
+                //Create user in firebase
                 mAuth.createUserWithEmailAndPassword(email, password)
                         .addOnCompleteListener(task -> {
                             if (task.isSuccessful()) {
@@ -89,33 +83,23 @@ public class Register extends AppCompatActivity {
                                 Map<String, Object> dataUser = new HashMap<>();
                                 dataUser.put("user_name", userName);
                                 dataUser.put("email_user", email);
-                                documentReference.set(dataUser).addOnSuccessListener(new OnSuccessListener<Void>() {
-                                    @Override
-                                    public void onSuccess(Void aVoid) {
-                                        Log.d("register", "Datos de usuario creados");
-                                        toastOk(getString(R.string.created_user));
-                                        Intent intent = new Intent(Register.this, MainActivity.class);
-                                        startActivity(intent);
-                                        Register.this.finish();
+                                documentReference.set(dataUser).addOnSuccessListener(aVoid -> {
+                                    Log.d("register", "User data created");
+                                    toastOk(getString(R.string.created_user));
+                                    Intent intent = new Intent(Register.this, MainActivity.class);
+                                    startActivity(intent);
+                                    Register.this.finish();
 
-                                    }
-                                }).addOnFailureListener(new OnFailureListener() {
-                                    @Override
-                                    public void onFailure(@NonNull Exception e) {
-                                        Log.d("register", "Error al crear documento");
-                                    }
-                                });
-
+                                }).addOnFailureListener(e -> Log.d("register", "Error creating document"));
 
                             } else {
                                 // If sign in fails, display a message to the user.
-
                                 toastWarning(getString(R.string.already_user_registered));
-
                             }
                         });
             }
         });
+        //return to login
         haveAndAccount.setOnClickListener(view -> {
             startActivity(new Intent(Register.this, Login.class));
             Register.this.finish();
@@ -123,7 +107,7 @@ public class Register extends AppCompatActivity {
         });
     }
 
-
+    //Notification toast
     public void toastOk(String msg) {
         LayoutInflater layoutInflater = getLayoutInflater();
         View view = layoutInflater.inflate(R.layout.toast_ok, findViewById(R.id.custom_ok));
@@ -140,8 +124,8 @@ public class Register extends AppCompatActivity {
     public void toastWarning(String msg) {
         LayoutInflater layoutInflater = getLayoutInflater();
         View view = layoutInflater.inflate(R.layout.toast_warning, findViewById(R.id.custom_warning));
-        TextView txtMensaje = view.findViewById(R.id.text_warning);
-        txtMensaje.setText(msg);
+        TextView txtMessage = view.findViewById(R.id.text_warning);
+        txtMessage.setText(msg);
 
         Toast toast = new Toast(getApplicationContext());
         toast.setGravity(Gravity.CENTER_VERTICAL | Gravity.BOTTOM, 0, 200);
