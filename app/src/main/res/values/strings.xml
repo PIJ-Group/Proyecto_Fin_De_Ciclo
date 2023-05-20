@@ -16,7 +16,7 @@
     <string name="failed_authentication">failed authentication</string>
     <string name="create_New_Account">Create a new account</string>
 
-    <!---Add Note-->
+    <!---Add Event-->
     <string name="Userid_User">User id</string>
     <string name="User_mail">User e-mail</string>
     <string name="Current_Date_time">Current date and time</string>
@@ -28,7 +28,7 @@
     <string name="Hour_btn">Hour</string>
     <string name="Hour">00:00</string>
 
-    <!--Update Note-->
+    <!--Update Event-->
     <string name="Id_Note_Update">Note id</string>
     <string name="Userid_User_Update">User id</string>
     <string name="User_mail_Update">User e-mail</string>
@@ -44,7 +44,7 @@
     <string name="Image_Note_finished">Image Finished</string>
     <string name="Image_Note_Not_finished">Image Not Finished</string>
 
-    <!--Note Detail-->
+    <!--Event Detail-->
     <string name="Title_Detail">Title</string>
     <string name="Description_Detail">Description</string>
     <string name="Date_Detail">00/00/0000</string>

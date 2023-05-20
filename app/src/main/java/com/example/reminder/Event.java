@@ -2,15 +2,15 @@ package com.example.reminder;
 
 import java.io.Serializable;
 
-public class Note implements Serializable {
+public class Event implements Serializable {
 
     //Class attributes
     String noteId, userId, userMail, currentDate, title, description, noteDate, noteHour, status;
 
-    public Note() {
+    public Event() {
     }
 
-    public Note(String noteId, String userId, String userMail, String currentDate, String title, String description, String noteDate, String noteHour, String status) {
+    public Event(String noteId, String userId, String userMail, String currentDate, String title, String description, String noteDate, String noteHour, String status) {
         this.noteId = noteId;
         this.userId = userId;
         this.userMail= userMail;

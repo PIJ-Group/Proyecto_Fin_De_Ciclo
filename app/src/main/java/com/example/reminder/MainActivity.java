@@ -17,8 +17,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.reminder.UpdateNotes.UpdateNotes;
-import com.example.reminder.ListNotes.ListNotes;
+import com.example.reminder.UpdateNotes.UpdateEvents;
+import com.example.reminder.ListEvents.ListEvents;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
     FirebaseFirestore db;
     String emailUser;
     DataModal dataModal;
-    Note note;
+    Event event;
 
     ListView listViewNotes;
     List<String> listNotesTitle = new ArrayList<>();
@@ -207,9 +207,9 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
-            //Go to the add note activity.
+            //Go to the add event activity.
             case R.id.Add:
-                Intent intent = new Intent(MainActivity.this, AddNote.class);
+                Intent intent = new Intent(MainActivity.this, AddEvent.class);
                 intent.putExtra("calendarDate", calendarDate);
                 startActivity(intent);
                 return true;
@@ -234,15 +234,15 @@ public class MainActivity extends AppCompatActivity {
         AlertDialog dialog = new AlertDialog.Builder(this)
 
                 .setPositiveButton(R.string.dialog_item_details, (dialog1, i) -> {
-                    //Go to the note details activity.
-                    getAndSendObject(view, ListNotes.class);
+                    //Go to the event details activity.
+                    getAndSendObject(view, ListEvents.class);
                 })
                 .setNeutralButton(R.string.dialog_item_edit, (dialog12, i) -> {
-                    //Go to edit note activity.
-                    getAndSendObject(view, UpdateNotes.class);
+                    //Go to edit event activity.
+                    getAndSendObject(view, UpdateEvents.class);
                 })
                 .setNegativeButton(R.string.dialog_item_delete, (dialog13, i) -> {
-                    //Delete note.
+                    //Delete event.
                     int position = listPosition(view);
                     db.collection("Notes").document(listNotesId.get(position)).delete();
 
@@ -255,27 +255,27 @@ public class MainActivity extends AppCompatActivity {
     //Method to get the object of the database and send it to other activity.
     public void getAndSendObject(View view, Class activity){
         int position = listPosition(view);
-        note = new Note();
+        event = new Event();
 
         DocumentReference docRef = db.collection("Notes").document(listNotesId.get(position));
         docRef.get().addOnSuccessListener(documentSnapshot -> {
-            note = documentSnapshot.toObject(Note.class);
+            event = documentSnapshot.toObject(Event.class);
 
             Intent intent = new Intent(MainActivity.this, activity);
-            intent.putExtra("currentDate", note.getCurrentDate());
-            intent.putExtra("description", note.getDescription());
-            intent.putExtra("noteDate", note.getNoteDate());
-            intent.putExtra("noteHour", note.getNoteHour());
-            intent.putExtra("noteId", note.getNoteId());
-            intent.putExtra("status", note.getStatus());
-            intent.putExtra("title", note.getTitle());
-            intent.putExtra("userId", note.getUserId());
-            intent.putExtra("userMail", note.getUserMail());
+            intent.putExtra("currentDate", event.getCurrentDate());
+            intent.putExtra("description", event.getDescription());
+            intent.putExtra("noteDate", event.getNoteDate());
+            intent.putExtra("noteHour", event.getNoteHour());
+            intent.putExtra("noteId", event.getNoteId());
+            intent.putExtra("status", event.getStatus());
+            intent.putExtra("title", event.getTitle());
+            intent.putExtra("userId", event.getUserId());
+            intent.putExtra("userMail", event.getUserMail());
             startActivity(intent);
         });
     }
 
-    //Obtain the position of the note in the database.
+    //Obtain the position of the event in the database.
     public int listPosition(View view){
         View parentDelete = (View) view.getParent();
         TextView noteTitleItem = parentDelete.findViewById(R.id.item_title);

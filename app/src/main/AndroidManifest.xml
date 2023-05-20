@@ -36,21 +36,21 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".UpdateNotes.UpdateNotes"
+            android:name=".UpdateNotes.UpdateEvents"
             android:exported="false" >
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".ListNotes.ListNotes"
+            android:name=".ListEvents.ListEvents"
             android:exported="false" >
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".AddNote"
+            android:name=".AddEvent"
             android:exported="false" >
             <meta-data
                 android:name="android.app.lib_name"

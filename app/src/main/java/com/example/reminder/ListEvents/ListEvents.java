@@ -1,4 +1,4 @@
-package com.example.reminder.ListNotes;
+package com.example.reminder.ListEvents;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 import com.example.reminder.R;
 
-public class ListNotes extends AppCompatActivity {
+public class ListEvents extends AppCompatActivity {
 
     TextView Date_Detail, Hour_Detail, Status_Detail;
     EditText Title_Detail, Description_Detail;
@@ -17,7 +17,7 @@ public class ListNotes extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_list_notes);
+        setContentView(R.layout.activity_list_events);
 
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
