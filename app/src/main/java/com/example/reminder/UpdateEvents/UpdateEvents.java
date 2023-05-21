@@ -17,12 +17,10 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.TimePicker;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -145,32 +143,28 @@ public class UpdateEvents extends AppCompatActivity implements AdapterView.OnIte
         year = calendar.get(Calendar.YEAR);
 
         //Dialog with Calendar Picker
-        DatePickerDialog datePickerDialog = new DatePickerDialog(UpdateEvents.this, new DatePickerDialog.OnDateSetListener() {
-            @SuppressLint("SetTextI18n")
-            @Override
-            public void onDateSet(DatePicker view, int yearSelected, int monthSelected, int daySelected) {
+        @SuppressLint("SetTextI18n") DatePickerDialog datePickerDialog = new DatePickerDialog(UpdateEvents.this, (view, yearSelected, monthSelected, daySelected) -> {
 
-                String dayFormatted, monthFormatted;
+            String dayFormatted, monthFormatted;
 
-                //Format day
-                if (daySelected < 10) {
-                    dayFormatted = "0" + daySelected;
-                } else {
-                    dayFormatted = String.valueOf(daySelected);
-                }
-
-                //Format month
-                int Month = monthSelected + 1;
-
-                if (Month < 10) {
-                    monthFormatted = "0" + Month;
-                } else {
-                    monthFormatted = String.valueOf(Month);
-                }
-
-                // Set Date on TextView
-                Date_Update.setText(dayFormatted + "/" + monthFormatted + "/" + yearSelected);
+            //Format day
+            if (daySelected < 10) {
+                dayFormatted = "0" + daySelected;
+            } else {
+                dayFormatted = String.valueOf(daySelected);
             }
+
+            //Format month
+            int Month = monthSelected + 1;
+
+            if (Month < 10) {
+                monthFormatted = "0" + Month;
+            } else {
+                monthFormatted = String.valueOf(Month);
+            }
+
+            // Set Date on TextView
+            Date_Update.setText(dayFormatted + "/" + monthFormatted + "/" + yearSelected);
         }
                 , year, month, day);
         datePickerDialog.show();
@@ -182,30 +176,26 @@ public class UpdateEvents extends AppCompatActivity implements AdapterView.OnIte
         hour = clock.get(Calendar.HOUR_OF_DAY);
         minutes = clock.get(Calendar.MINUTE);
 
-        TimePickerDialog timePickerDialog = new TimePickerDialog(UpdateEvents.this, new TimePickerDialog.OnTimeSetListener() {
-            @SuppressLint("SetTextI18n")
-            @Override
-            public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+        @SuppressLint("SetTextI18n") TimePickerDialog timePickerDialog = new TimePickerDialog(UpdateEvents.this, (view, hourOfDay, minute) -> {
 
-                String hourFormatted, minutesFormatted;
+            String hourFormatted, minutesFormatted;
 
-                //Format hour
-                if (hourOfDay < 10) {
-                    hourFormatted = "0" + hourOfDay;
-                } else {
-                    hourFormatted = String.valueOf(hourOfDay);
-                }
-
-                //Format minutes
-                if (minute < 10) {
-                    minutesFormatted = "0" + minute;
-                } else {
-                    minutesFormatted = String.valueOf(minute);
-                }
-
-                // Set Time on TextView
-                Hour_Update.setText(hourFormatted + ":" + minutesFormatted);
+            //Format hour
+            if (hourOfDay < 10) {
+                hourFormatted = "0" + hourOfDay;
+            } else {
+                hourFormatted = String.valueOf(hourOfDay);
             }
+
+            //Format minutes
+            if (minute < 10) {
+                minutesFormatted = "0" + minute;
+            } else {
+                minutesFormatted = String.valueOf(minute);
+            }
+
+            // Set Time on TextView
+            Hour_Update.setText(hourFormatted + ":" + minutesFormatted);
         },hour,minutes,false);
         timePickerDialog.show();
     }

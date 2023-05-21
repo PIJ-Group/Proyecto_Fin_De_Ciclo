@@ -11,14 +11,11 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.TimePicker;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -27,10 +24,7 @@ import com.example.reminder.model.Event;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.FirebaseFirestoreException;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -97,12 +91,9 @@ public class AddEvent extends AppCompatActivity {
             userId = user.getUid();
         }
         DocumentReference documentReference = db.collection("Users").document(userId);
-        documentReference.addSnapshotListener(this, new EventListener<DocumentSnapshot>() {
-            @Override
-            public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException error) {
-                if (documentSnapshot != null) {
-                    Userid_User.setText(documentSnapshot.getString("user_name"));
-                }
+        documentReference.addSnapshotListener(this, (documentSnapshot, error) -> {
+            if (documentSnapshot != null) {
+                Userid_User.setText(documentSnapshot.getString("user_name"));
             }
         });
 
@@ -117,9 +108,6 @@ public class AddEvent extends AppCompatActivity {
         }
         if(userMail == null){
             userMail = user.getProviderData().get(1).getUid();
-        }
-        if(userMail == null){
-            userMail = user.getProviderData().get(1).getPhoneNumber();
         }
 
         Date.setText(dateRecover);
@@ -140,32 +128,28 @@ public class AddEvent extends AppCompatActivity {
         month = calendar.get(Calendar.MONTH);
         year = calendar.get(Calendar.YEAR);
 
-        DatePickerDialog datePickerDialog = new DatePickerDialog(AddEvent.this, new DatePickerDialog.OnDateSetListener() {
-            @SuppressLint("SetTextI18n")
-            @Override
-            public void onDateSet(DatePicker view, int yearSelected, int monthSelected, int daySelected) {
+        @SuppressLint("SetTextI18n") DatePickerDialog datePickerDialog = new DatePickerDialog(AddEvent.this, (view, yearSelected, monthSelected, daySelected) -> {
 
-                String dayFormatted, monthFormatted;
+            String dayFormatted, monthFormatted;
 
-                //Format day
-                if (daySelected < 10) {
-                    dayFormatted = "0" + daySelected;
-                } else {
-                    dayFormatted = String.valueOf(daySelected);
-                }
-
-                //Format month
-                int Month = monthSelected + 1;
-
-                if (Month < 10) {
-                    monthFormatted = "0" + Month;
-                } else {
-                    monthFormatted = String.valueOf(Month);
-                }
-
-                // Set Date on TextView
-                Date.setText(dayFormatted + "/" + monthFormatted + "/" + yearSelected);
+            //Format day
+            if (daySelected < 10) {
+                dayFormatted = "0" + daySelected;
+            } else {
+                dayFormatted = String.valueOf(daySelected);
             }
+
+            //Format month
+            int Month = monthSelected + 1;
+
+            if (Month < 10) {
+                monthFormatted = "0" + Month;
+            } else {
+                monthFormatted = String.valueOf(Month);
+            }
+
+            // Set Date on TextView
+            Date.setText(dayFormatted + "/" + monthFormatted + "/" + yearSelected);
         }
                 , year, month, day);
         datePickerDialog.show();
@@ -177,30 +161,26 @@ public class AddEvent extends AppCompatActivity {
         hour = clock.get(Calendar.HOUR_OF_DAY);
         minutes = clock.get(Calendar.MINUTE);
 
-        TimePickerDialog timePickerDialog = new TimePickerDialog(AddEvent.this, new TimePickerDialog.OnTimeSetListener() {
-            @SuppressLint("SetTextI18n")
-            @Override
-            public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+        @SuppressLint("SetTextI18n") TimePickerDialog timePickerDialog = new TimePickerDialog(AddEvent.this, (view, hourOfDay, minute) -> {
 
-                String hourFormatted, minutesFormatted;
+            String hourFormatted, minutesFormatted;
 
-                //Format hour
-                if (hourOfDay < 10) {
-                    hourFormatted = "0" + hourOfDay;
-                } else {
-                    hourFormatted = String.valueOf(hourOfDay);
-                }
-
-                //Format minutes
-                if (minute < 10) {
-                    minutesFormatted = "0" + minute;
-                } else {
-                    minutesFormatted = String.valueOf(minute);
-                }
-
-                // Set Time on TextView
-                Hour.setText(hourFormatted + ":" + minutesFormatted);
+            //Format hour
+            if (hourOfDay < 10) {
+                hourFormatted = "0" + hourOfDay;
+            } else {
+                hourFormatted = String.valueOf(hourOfDay);
             }
+
+            //Format minutes
+            if (minute < 10) {
+                minutesFormatted = "0" + minute;
+            } else {
+                minutesFormatted = String.valueOf(minute);
+            }
+
+            // Set Time on TextView
+            Hour.setText(hourFormatted + ":" + minutesFormatted);
         },hour,minutes,false);
         timePickerDialog.show();
     }
