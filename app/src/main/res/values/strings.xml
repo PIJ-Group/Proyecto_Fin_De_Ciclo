@@ -9,7 +9,7 @@
     <string name="hint_Correo">email</string>
     <string name="hint_Pass">password</string>
     <string name="login">Login</string>
-    <string name="create_Account">Don\'t have an account yet? Sign up now!</string>
+    <string name="create_Account">Don\'t have an account yet? <u>Sign up now!</u></string>
     <string name="signUp_With">or sign up with</string>
     <string name="empty_field">empty field</string>
     <string name="invalid_email">invalid email</string>

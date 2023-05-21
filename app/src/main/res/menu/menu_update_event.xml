@@ -4,6 +4,7 @@
     <item
         android:id="@+id/Update_Event"
         android:icon="@drawable/icon_update_event"
+        android:iconTint="@color/white"
         android:title="@string/Update_Event"
         app:showAsAction="ifRoom">
     </item>
