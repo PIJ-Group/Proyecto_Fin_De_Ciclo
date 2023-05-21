@@ -43,7 +43,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/Userid_User" />
 
-        <!--NOTE TITLE-->
+        <!--EVENT TITLE-->
         <EditText
             android:id="@+id/Title"
             android:layout_width="match_parent"
@@ -62,7 +62,7 @@
             android:inputType="text"
             android:autofillHints="" />
 
-            <!--NOTE DESCRIPTION-->
+            <!--EVENT DESCRIPTION-->
         <EditText
             android:id="@+id/Description"
             android:layout_width="match_parent"
@@ -133,8 +133,6 @@
             tools:ignore="TextContrastCheck" />
 
         <!--TIME SELECTED-->
-
-        <!--NOTE STATUS-->
         <TextView
             android:id="@+id/Hour"
             android:layout_width="wrap_content"
@@ -152,6 +150,7 @@
             app:layout_constraintTop_toBottomOf="@+id/Date"
             app:layout_constraintVertical_bias="0.083" />
 
+        <!--NOTE STATUS-->
         <TextView
             android:id="@+id/Status"
             android:layout_width="wrap_content"

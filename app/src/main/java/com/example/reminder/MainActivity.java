@@ -17,7 +17,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.reminder.UpdateNotes.UpdateEvents;
+import com.example.reminder.UpdateEvents.UpdateEvents;
 import com.example.reminder.ListEvents.ListEvents;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;

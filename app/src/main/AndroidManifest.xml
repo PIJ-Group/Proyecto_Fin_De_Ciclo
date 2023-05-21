@@ -36,7 +36,7 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".UpdateNotes.UpdateEvents"
+            android:name=".UpdateEvents.UpdateEvents"
             android:exported="false" >
             <meta-data
                 android:name="android.app.lib_name"
