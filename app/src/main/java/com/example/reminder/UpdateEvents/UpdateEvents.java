@@ -60,9 +60,11 @@ public class UpdateEvents extends AppCompatActivity implements AdapterView.OnIte
     //Declare String for eventStatus
     String event_Status;
 
+    //Declare variables for Firebase actions
     FirebaseFirestore db;
     FirebaseAuth nAuth;
 
+    //Declare variables for formatting  date and time
     int year, month, day, hour,minutes;
 
     @Override
@@ -70,6 +72,7 @@ public class UpdateEvents extends AppCompatActivity implements AdapterView.OnIte
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_update_events);
 
+        //Set Action Bar
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setTitle("Update Event");
@@ -141,6 +144,7 @@ public class UpdateEvents extends AppCompatActivity implements AdapterView.OnIte
         month = calendar.get(Calendar.MONTH);
         year = calendar.get(Calendar.YEAR);
 
+        //Dialog with Calendar Picker
         DatePickerDialog datePickerDialog = new DatePickerDialog(UpdateEvents.this, new DatePickerDialog.OnDateSetListener() {
             @SuppressLint("SetTextI18n")
             @Override
@@ -228,15 +232,12 @@ public class UpdateEvents extends AppCompatActivity implements AdapterView.OnIte
                         // Makes the necessary changes to the data
                         data.put("title", titleUpdate);
                         data.put("description", descriptionUpdate);
-                        data.put("date", dateUpdate);
-                        data.put("hour", hourUpdate);
+                        data.put("eventDate", dateUpdate);
+                        data.put("eventHour", hourUpdate);
                         data.put("status", statusUpdate);
-                        data.put("user_id", userId);
-                        data.put("user_mail", userMail);
-                        data.put("event_id", id_event_R);
-                        data.put("event_date", dateUpdate);
-                        data.put("event_hour", hourUpdate);
-                        data.put("event_status", statusUpdate);
+                        data.put("userId", userId);
+                        data.put("userMail", userMail);
+                        data.put("eventId", id_event_R);
 
                         // Save changes to the document
                         documentSnapshot.getReference().set(data)
@@ -307,6 +308,7 @@ public class UpdateEvents extends AppCompatActivity implements AdapterView.OnIte
         return super.onCreateOptionsMenu(menu);
     }
 
+    //Backward functionality
     @Override
     public boolean onSupportNavigateUp() {
         onBackPressed();
