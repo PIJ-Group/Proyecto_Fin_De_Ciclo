@@ -19,6 +19,7 @@ public class ListEvents extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_events);
 
+        //Set Action Bar
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setTitle("Event");
@@ -29,7 +30,7 @@ public class ListEvents extends AppCompatActivity {
         VarInit();
         GetData();
     }
-
+    //Initialize Views
     private void VarInit() {
         Date_Detail = findViewById(R.id.Date_Detail);
         Hour_Detail = findViewById(R.id.Hour_Detail);
@@ -38,8 +39,8 @@ public class ListEvents extends AppCompatActivity {
         Description_Detail = findViewById(R.id.Description_Detail);
     }
 
+    //Get Data from intent in Main Activity and display it in Views
     private void GetData(){
-
         Date_Detail.setText(getIntent().getStringExtra("eventDate"));
         Hour_Detail.setText(getIntent().getStringExtra("eventHour"));
         Status_Detail.setText(getIntent().getStringExtra("status"));
@@ -47,6 +48,7 @@ public class ListEvents extends AppCompatActivity {
         Description_Detail.setText(getIntent().getStringExtra("description"));
     }
 
+    //Backward functionality
     @Override
     public boolean onSupportNavigateUp() {
         onBackPressed();
