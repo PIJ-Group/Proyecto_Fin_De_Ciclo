@@ -43,6 +43,7 @@ public class AddEvent extends AppCompatActivity {
     int day, month, year, hour, minutes;
     String userMail;
 
+    //Declare variables for Firebase actions
     FirebaseFirestore db;
     FirebaseAuth nAuth;
     String dateRecover, userId;
@@ -53,6 +54,7 @@ public class AddEvent extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_event);
 
+        //Set Action Bar
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setTitle("Add Event");
@@ -76,10 +78,8 @@ public class AddEvent extends AppCompatActivity {
         Date = findViewById(R.id.Date);
         Hour = findViewById(R.id.Hour);
         Status = findViewById(R.id.Status);
-
         Title = findViewById(R.id.Title);
         Description = findViewById((R.id.Description));
-
         Calendar_btn = findViewById(R.id.Calendar_btn);
         Hour_btn = findViewById(R.id.Hour_btn);
 
