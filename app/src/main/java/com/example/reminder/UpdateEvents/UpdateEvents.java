@@ -54,10 +54,10 @@ public class UpdateEvents extends AppCompatActivity implements AdapterView.OnIte
     //Declare strings to store the data of the main activity
     String id_event_R, user_id_R, registration_date_R, title_R, description_R, date_R, hour_R, status_R, user_mail_R;
 
-    //Declare strings to get data for update the note in firebase
+    //Declare strings to get data for update the event in firebase
     String titleUpdate, descriptionUpdate, dateUpdate, hourUpdate, statusUpdate;
 
-    //Declare String for noteStatus
+    //Declare String for eventStatus
     String event_Status;
 
     FirebaseFirestore db;
@@ -80,7 +80,7 @@ public class UpdateEvents extends AppCompatActivity implements AdapterView.OnIte
         VarInit();
         GetData();
         SetData();
-        checkNoteStatus();
+        checkEventStatus();
         spinner_Status();
         Calendar_btn_Update.setOnClickListener(v -> dateSelect());
         Hour_btn_Update.setOnClickListener(v -> selectHour());
@@ -110,13 +110,13 @@ public class UpdateEvents extends AppCompatActivity implements AdapterView.OnIte
 
     //Get data from intent in Main Activity
     private void GetData(){
-        id_event_R = getIntent().getStringExtra("noteId");
+        id_event_R = getIntent().getStringExtra("eventId");
         user_id_R = getIntent().getStringExtra("userId");
         registration_date_R = getIntent().getStringExtra("currentDate");
         title_R = getIntent().getStringExtra("title");
         description_R = getIntent().getStringExtra("description");
-        date_R = getIntent().getStringExtra("noteDate");
-        hour_R = getIntent().getStringExtra("noteHour");
+        date_R = getIntent().getStringExtra("eventDate");
+        hour_R = getIntent().getStringExtra("eventHour");
         status_R = getIntent().getStringExtra("status");
         user_mail_R = getIntent().getStringExtra("userMail");
     }
@@ -216,8 +216,8 @@ public class UpdateEvents extends AppCompatActivity implements AdapterView.OnIte
         statusUpdate = New_Status.getText().toString();
         String userId = Userid_User_Update.getText().toString();
 
-        CollectionReference collectionRef = db.collection("Notes");
-        Query query = collectionRef.whereEqualTo("noteId", id_event_R);
+        CollectionReference collectionRef = db.collection("Events");
+        Query query = collectionRef.whereEqualTo("eventId", id_event_R);
 
         query.get()
                 .addOnSuccessListener(queryDocumentSnapshots -> {
@@ -233,10 +233,10 @@ public class UpdateEvents extends AppCompatActivity implements AdapterView.OnIte
                         data.put("status", statusUpdate);
                         data.put("user_id", userId);
                         data.put("user_mail", userMail);
-                        data.put("note_id", id_event_R);
-                        data.put("note_date", dateUpdate);
-                        data.put("note_hour", hourUpdate);
-                        data.put("note_status", statusUpdate);
+                        data.put("event_id", id_event_R);
+                        data.put("event_date", dateUpdate);
+                        data.put("event_hour", hourUpdate);
+                        data.put("event_status", statusUpdate);
 
                         // Save changes to the document
                         documentSnapshot.getReference().set(data)
@@ -258,8 +258,8 @@ public class UpdateEvents extends AppCompatActivity implements AdapterView.OnIte
                 });
   }
 
-    //Check note status
-    private void checkNoteStatus(){
+    //Check event status
+    private void checkEventStatus(){
         event_Status = Status_Update.getText().toString();
 
         if(event_Status.equals("Not finished")){
@@ -292,7 +292,7 @@ public class UpdateEvents extends AppCompatActivity implements AdapterView.OnIte
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if (item.getItemId() == R.id.Update_Note) {
+        if (item.getItemId() == R.id.Update_Event) {
             updateEventFirebase();
             Intent intent = new Intent(UpdateEvents.this, MainActivity.class);
             startActivity(intent);

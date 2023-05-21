@@ -2,8 +2,8 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/Add_Note_BD"
-        android:icon="@drawable/icon_add_note"
+        android:id="@+id/Add_Event_BD"
+        android:icon="@drawable/icon_add_event"
         android:title="@string/Add_Event"
         app:showAsAction="ifRoom">
     </item>

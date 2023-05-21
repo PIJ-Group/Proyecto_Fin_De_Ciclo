@@ -1,24 +1,25 @@
 package com.example.reminder;
 
+//Class for save specifics data to use them in our item list.
 public class DataModal {
 
-    private String noteHour, title;
+    private String eventHour, title;
 
     public DataModal() {
 
     }
 
-    public DataModal(String title, String noteHour) {
-        this.noteHour = noteHour;
+    public DataModal(String title, String eventHour) {
+        this.eventHour = eventHour;
         this.title = title;
     }
 
-    public String getNoteHour() {
-        return noteHour;
+    public String getEventHour() {
+        return eventHour;
     }
 
-    public void setNoteHour(String noteHour) {
-        this.noteHour = noteHour;
+    public void setEventHour(String eventHour) {
+        this.eventHour = eventHour;
     }
 
     public String getTitle() {

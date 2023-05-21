@@ -40,8 +40,8 @@ public class ListEvents extends AppCompatActivity {
 
     private void GetData(){
 
-        Date_Detail.setText(getIntent().getStringExtra("noteDate"));
-        Hour_Detail.setText(getIntent().getStringExtra("noteHour"));
+        Date_Detail.setText(getIntent().getStringExtra("eventDate"));
+        Hour_Detail.setText(getIntent().getStringExtra("eventHour"));
         Status_Detail.setText(getIntent().getStringExtra("status"));
         Title_Detail.setText(getIntent().getStringExtra("title"));
         Description_Detail.setText(getIntent().getStringExtra("description"));
