@@ -79,6 +79,7 @@
     <string name="info_twitter">Twitter</string>
     <string name="aditional_options">Opciones adicionales</string>
     <string name="github_Login">GITHUB LOGIN</string>
+    <string name="no_events">No hay eventos</string>
 
     <!--Spinner-->
     <string-array name="Event_Status">

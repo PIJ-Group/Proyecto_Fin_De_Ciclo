@@ -14,7 +14,7 @@ import java.util.ArrayList;
 
 public class AdapterListView  extends ArrayAdapter<DataModal> {
 
-    //Constructor para el adapter
+    //Constructor with array list of DataModal objects.
     public AdapterListView(@NonNull Context context, ArrayList<DataModal> dataModalArrayList) {
         super(context, 0, dataModalArrayList);
     }
@@ -23,13 +23,13 @@ public class AdapterListView  extends ArrayAdapter<DataModal> {
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
 
-        //Inflamos el layour para el item de list view
+        //Inflate layout for the list view item
         View listItemView = convertView;
         if (listItemView == null) {
-            listItemView = LayoutInflater.from(getContext()).inflate(R.layout.item_note,parent,false);
+            listItemView = LayoutInflater.from(getContext()).inflate(R.layout.event_item,parent,false);
         }
 
-        //Obtenemos los datos de nuestro arraylist dentro de nuestra clase modal.
+        //Get data for our array list inside of our modal class.
         DataModal dataModal = getItem(position);
 
         //Iniciamos los componentes de la lista de items.
@@ -38,7 +38,7 @@ public class AdapterListView  extends ArrayAdapter<DataModal> {
 
         //Obtenemos el texto a incluir desde las variables de la clase modal.
         titleItem.setText(dataModal.getTitle());
-        hourItem.setText(dataModal.getNoteHour());
+        hourItem.setText(dataModal.getEventHour());
 
         return listItemView;
     }

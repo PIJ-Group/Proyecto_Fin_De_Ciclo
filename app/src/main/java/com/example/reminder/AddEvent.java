@@ -204,7 +204,7 @@ public class AddEvent extends AppCompatActivity {
     }
 
 
-    //Add a event in Notes collection in Firebase Database
+    //Add a event in Events collection in Firebase Database
     private void AddEventFireBase() {
 
         //Get data
@@ -225,7 +225,7 @@ public class AddEvent extends AppCompatActivity {
             Event event = new Event(mail + "/" + dateTimeCurrent, userId,
                     mail, dateTimeCurrent, title, description, date, hour, status);
 
-            db.collection("Notes").add(event);
+            db.collection("Events").add(event);
 
             toastOk("Event successfully added");
             onBackPressed();
@@ -244,7 +244,7 @@ public class AddEvent extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if (item.getItemId() == R.id.Add_Note_BD) {
+        if (item.getItemId() == R.id.Add_Event_BD) {
             AddEventFireBase();
         }
         return super.onOptionsItemSelected(item);

@@ -42,10 +42,10 @@ public class MainActivity extends AppCompatActivity {
     DataModal dataModal;
     Event event;
 
-    ListView listViewNotes;
-    List<String> listNotesTitle = new ArrayList<>();
-    List<String> listNotesId = new ArrayList<>();
-    ArrayList<DataModal> listNotesComplete = new ArrayList<>();
+    ListView listViewEvents;
+    List<String> listEventsTitle = new ArrayList<>();
+    List<String> listEventsId = new ArrayList<>();
+    ArrayList<DataModal> listEventsComplete = new ArrayList<>();
 
     CalendarView calendarView;
     String calendarDate;
@@ -61,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
 
         db = FirebaseFirestore.getInstance();
         mAuth = FirebaseAuth.getInstance();
-        listViewNotes = findViewById(R.id.listView);
+        listViewEvents = findViewById(R.id.listView);
         calendarView = findViewById(R.id.calendar);
 
         //We initialize the gso variable that will get the necessary elements to the login user.
@@ -90,7 +90,7 @@ public class MainActivity extends AppCompatActivity {
             calendarDate = dayFormatted + "/" + monthFormatted + "/" + year;
 
             //Method called to update the current user's tasks.
-            updateNotes();
+            updateEvents();
         });
 
     }
@@ -142,7 +142,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     //Insert items in the listView.
-    private void updateNotes() {
+    private void updateEvents() {
         user = mAuth.getCurrentUser();
 
         if (user != null) {
@@ -161,36 +161,36 @@ public class MainActivity extends AppCompatActivity {
     //Obtain data of the database to show in the Item of the listView.
     public void getItemData(String userRegisterType){
         //Object used to sort the events array.
-        Comparator<DataModal> hoursComparator = Comparator.comparing(DataModal::getNoteHour);
+        Comparator<DataModal> hoursComparator = Comparator.comparing(DataModal::getEventHour);
 
-        db.collection("Notes")
-                .whereEqualTo("noteDate", calendarDate)
+        db.collection("Events")
+                .whereEqualTo("eventDate", calendarDate)
                 .whereEqualTo("userMail", userRegisterType)
                 .addSnapshotListener((value, error) -> {
                     if (error != null) {
                         return;
                     }
 
-                    listNotesId.clear();
-                    listNotesComplete.clear();
-                    listNotesTitle.clear();
+                    listEventsId.clear();
+                    listEventsComplete.clear();
+                    listEventsTitle.clear();
 
                     for (QueryDocumentSnapshot doc : value) {
-                        listNotesId.add(doc.getId());
-                        dataModal = new DataModal(doc.getString("title"), doc.getString("noteHour"));
-                        listNotesTitle.add(doc.getString("title"));
-                        listNotesComplete.add(dataModal);
+                        listEventsId.add(doc.getId());
+                        dataModal = new DataModal(doc.getString("title"), doc.getString("eventHour"));
+                        listEventsTitle.add(doc.getString("title"));
+                        listEventsComplete.add(dataModal);
                         //Sorting the events array by hours.
-                        Collections.sort(listNotesComplete, hoursComparator);
+                        Collections.sort(listEventsComplete, hoursComparator);
                     }
 
-                    if (listNotesComplete.size() == 0) {
-                        listViewNotes.setAdapter(null);
-                        toastWarning("No hay eventos");
+                    if (listEventsComplete.size() == 0) {
+                        listViewEvents.setAdapter(null);
+                        toastWarning(getString(R.string.no_events));
 
                     } else {
-                        AdapterListView adapter = new AdapterListView(MainActivity.this, listNotesComplete);
-                        listViewNotes.setAdapter(adapter);
+                        AdapterListView adapter = new AdapterListView(MainActivity.this, listEventsComplete);
+                        listViewEvents.setAdapter(adapter);
                     }
 
                 });
@@ -244,7 +244,7 @@ public class MainActivity extends AppCompatActivity {
                 .setNegativeButton(R.string.dialog_item_delete, (dialog13, i) -> {
                     //Delete event.
                     int position = listPosition(view);
-                    db.collection("Notes").document(listNotesId.get(position)).delete();
+                    db.collection("Events").document(listEventsId.get(position)).delete();
 
                     toastOk(getString(R.string.event_deleted));
                 })
@@ -257,16 +257,16 @@ public class MainActivity extends AppCompatActivity {
         int position = listPosition(view);
         event = new Event();
 
-        DocumentReference docRef = db.collection("Notes").document(listNotesId.get(position));
+        DocumentReference docRef = db.collection("Events").document(listEventsId.get(position));
         docRef.get().addOnSuccessListener(documentSnapshot -> {
             event = documentSnapshot.toObject(Event.class);
 
             Intent intent = new Intent(MainActivity.this, activity);
             intent.putExtra("currentDate", event.getCurrentDate());
             intent.putExtra("description", event.getDescription());
-            intent.putExtra("noteDate", event.getNoteDate());
-            intent.putExtra("noteHour", event.getNoteHour());
-            intent.putExtra("noteId", event.getNoteId());
+            intent.putExtra("eventDate", event.getEventDate());
+            intent.putExtra("eventHour", event.getEventHour());
+            intent.putExtra("eventId", event.getEventId());
             intent.putExtra("status", event.getStatus());
             intent.putExtra("title", event.getTitle());
             intent.putExtra("userId", event.getUserId());
@@ -278,9 +278,9 @@ public class MainActivity extends AppCompatActivity {
     //Obtain the position of the event in the database.
     public int listPosition(View view){
         View parentDelete = (View) view.getParent();
-        TextView noteTitleItem = parentDelete.findViewById(R.id.item_title);
-        String noteContent = noteTitleItem.getText().toString();
-        int position = listNotesTitle.indexOf(noteContent);
+        TextView eventTitleItem = parentDelete.findViewById(R.id.item_title);
+        String eventContent = eventTitleItem.getText().toString();
+        int position = listEventsTitle.indexOf(eventContent);
         return position;
     }
 

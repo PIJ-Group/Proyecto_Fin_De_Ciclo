@@ -5,31 +5,31 @@ import java.io.Serializable;
 public class Event implements Serializable {
 
     //Class attributes
-    String noteId, userId, userMail, currentDate, title, description, noteDate, noteHour, status;
+    String eventId, userId, userMail, currentDate, title, description, eventDate, eventHour, status;
 
     public Event() {
     }
 
-    public Event(String noteId, String userId, String userMail, String currentDate, String title, String description, String noteDate, String noteHour, String status) {
-        this.noteId = noteId;
+    public Event(String eventId, String userId, String userMail, String currentDate, String title, String description, String eventDate, String eventHour, String status) {
+        this.eventId = eventId;
         this.userId = userId;
         this.userMail= userMail;
         this.currentDate = currentDate;
         this.title = title;
         this.description = description;
-        this.noteDate = noteDate;
-        this.noteHour = noteHour;
+        this.eventDate = eventDate;
+        this.eventHour = eventHour;
         this.status = status;
     }
 
 
 
-    public String getNoteId() {
-        return noteId;
+    public String getEventId() {
+        return eventId;
     }
 
-    public void setNoteId(String noteId) {
-        this.noteId = noteId;
+    public void setEventId(String eventId) {
+        this.eventId = eventId;
     }
 
     public String getUserId() {
@@ -68,20 +68,20 @@ public class Event implements Serializable {
         this.description = description;
     }
 
-    public String getNoteDate() {
-        return noteDate;
+    public String getEventDate() {
+        return eventDate;
     }
 
-    public void setNoteDate(String noteDate) {
-        this.noteDate = noteDate;
+    public void setEventDate(String eventDate) {
+        this.eventDate = eventDate;
     }
 
-    public String getNoteHour() {
-        return noteHour;
+    public String getEventHour() {
+        return eventHour;
     }
 
-    public void setNoteHour(String noteHour) {
-        this.noteHour = noteHour;
+    public void setEventHour(String eventHour) {
+        this.eventHour = eventHour;
     }
 
     public String getStatus() {
