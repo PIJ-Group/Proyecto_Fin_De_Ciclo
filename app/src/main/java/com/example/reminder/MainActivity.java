@@ -74,6 +74,9 @@ public class MainActivity extends AppCompatActivity {
         //Method called to obtain the current date.
         actualDate();
 
+        //1st Method called to update the current user's tasks.
+        updateEvents();
+
         //Get the calendar date.
         calendarView.setOnDateChangeListener((view, year, month, dayOfMonth) -> {
 
