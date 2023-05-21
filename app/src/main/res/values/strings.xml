@@ -29,7 +29,7 @@
     <string name="Hour">00:00</string>
 
     <!--Update Event-->
-    <string name="Id_Note_Update">Note id</string>
+    <string name="Id_Event_Update">Event id</string>
     <string name="Userid_User_Update">User id</string>
     <string name="User_mail_Update">User e-mail</string>
     <string name="Registration_Date_Update">Registration date</string>
@@ -41,8 +41,8 @@
     <string name="New_Status"> -- </string>
     <string name="Hour_btn_Update">Hour</string>
     <string name="Hour_Update">00:00</string>
-    <string name="Image_Note_finished">Image Finished</string>
-    <string name="Image_Note_Not_finished">Image Not Finished</string>
+    <string name="Image_Event_finished">Image Finished</string>
+    <string name="Image_Event_Not_finished">Image Not Finished</string>
 
     <!--Event Detail-->
     <string name="Title_Detail">Title</string>
@@ -52,7 +52,7 @@
     <string name="Hour_Detail">00:00</string>
 
     <!--Menu-->
-    <string name="Add_Note">Add Note</string>
+    <string name="Add_Event">Add Event</string>
     <string name="Add_btn">add</string>
     <string name="Edit_btn">edit</string>
     <string name="Logout">logout</string>
@@ -73,7 +73,7 @@
     <string name="already_user_registered">User already registered</string>
     <string name="invalid_password">Too short password</string>
     <string name="not_match">Passwords do not match</string>
-    <string name="Update_Note">Update Note</string>
+    <string name="Update_Event">Update Event</string>
     <string name="info_google">Google</string>
     <string name="info_github">Facebook</string>
     <string name="info_twitter">Twitter</string>
@@ -81,9 +81,9 @@
     <string name="github_Login">GITHUB LOGIN</string>
 
     <!--Spinner-->
-    <string-array name="Note_Status">
-        <item>"Finished"</item>
+    <string-array name="Event_Status">
         <item>"Not finished</item>
+        <item>"Finished"</item>
     </string-array>
 
 
