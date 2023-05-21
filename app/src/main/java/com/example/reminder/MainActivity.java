@@ -240,16 +240,16 @@ public class MainActivity extends AppCompatActivity {
                     //Go to the event details activity.
                     getAndSendObject(view, ListEvents.class);
                 })
-                .setNeutralButton(R.string.dialog_item_edit, (dialog12, i) -> {
-                    //Go to edit event activity.
-                    getAndSendObject(view, UpdateEvents.class);
-                })
-                .setNegativeButton(R.string.dialog_item_delete, (dialog13, i) -> {
+                .setNeutralButton(R.string.dialog_item_delete, (dialog12, i) -> {
                     //Delete event.
                     int position = listPosition(view);
                     db.collection("Events").document(listEventsId.get(position)).delete();
 
                     toastOk(getString(R.string.event_deleted));
+                })
+                .setNegativeButton(R.string.dialog_item_edit, (dialog13, i) -> {
+                    //Go to edit event activity.
+                    getAndSendObject(view, UpdateEvents.class);
                 })
                 .create();
         dialog.show();
