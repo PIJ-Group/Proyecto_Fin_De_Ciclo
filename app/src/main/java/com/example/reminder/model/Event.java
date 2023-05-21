@@ -1,4 +1,4 @@
-package com.example.reminder;
+package com.example.reminder.model;
 
 import java.io.Serializable;
 

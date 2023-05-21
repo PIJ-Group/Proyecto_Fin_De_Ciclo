@@ -50,7 +50,7 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".AddEvent"
+            android:name=".AddEvents.AddEvent"
             android:exported="false" >
             <meta-data
                 android:name="android.app.lib_name"

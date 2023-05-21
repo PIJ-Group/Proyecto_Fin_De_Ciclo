@@ -1,4 +1,4 @@
-package com.example.reminder;
+package com.example.reminder.AddEvents;
 
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
@@ -22,6 +22,8 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.reminder.R;
+import com.example.reminder.model.Event;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
