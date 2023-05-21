@@ -35,7 +35,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:fontFamily="@font/vanilla"
-            android:text="@string/Id_Note_Update"
+            android:text="@string/Id_Event_Update"
             android:visibility="gone"
             android:textSize="18sp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -69,7 +69,7 @@
             android:visibility="gone"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:contentDescription="@string/Image_Note_finished" />
+            android:contentDescription="@string/Image_Event_finished" />
 
         <!--NOTE NOT FINISHED-->
         <ImageView
@@ -82,7 +82,7 @@
             android:visibility="gone"
             app:layout_constraintStart_toEndOf="@+id/Note_finished"
             app:layout_constraintTop_toTopOf="parent"
-            android:contentDescription="@string/Image_Note_Not_finished" />
+            android:contentDescription="@string/Image_Event_Not_finished" />
 
         <!--NOTE STATUS-->
         <TextView

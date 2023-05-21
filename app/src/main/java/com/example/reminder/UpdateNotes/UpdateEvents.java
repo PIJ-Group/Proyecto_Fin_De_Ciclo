@@ -5,6 +5,7 @@ import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
@@ -28,11 +29,13 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.reminder.Event;
+import com.example.reminder.MainActivity;
 import com.example.reminder.R;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import java.util.Calendar;
 import java.util.Map;
@@ -210,20 +213,19 @@ public class UpdateEvents extends AppCompatActivity implements AdapterView.OnIte
         descriptionUpdate = Description_Update.getText().toString();
         dateUpdate = Date_Update.getText().toString();
         hourUpdate = Hour_Update.getText().toString();
-        statusUpdate = Status_Update.getText().toString();
+        statusUpdate = New_Status.getText().toString();
         String userId = Userid_User_Update.getText().toString();
 
+        CollectionReference collectionRef = db.collection("Notes");
+        Query query = collectionRef.whereEqualTo("noteId", id_note_R);
 
-        Event event = new Event(id_note_R, userId,
-                userMail, registration_date_R, titleUpdate, descriptionUpdate, dateUpdate, hourUpdate, statusUpdate);
-
-
-        DocumentReference documentReference = db.collection("Notes").document("noteId");
-
-        documentReference.get()
-                .addOnSuccessListener(documentSnapshot -> {
-                    if (documentSnapshot.exists()) {
+        query.get()
+                .addOnSuccessListener(queryDocumentSnapshots -> {
+                    for (QueryDocumentSnapshot documentSnapshot : queryDocumentSnapshots) {
+                        // Accesses document data using documentSnapshot.getData()
                         Map<String, Object> data = documentSnapshot.getData();
+
+                        // Makes the necessary changes to the data
                         data.put("title", titleUpdate);
                         data.put("description", descriptionUpdate);
                         data.put("date", dateUpdate);
@@ -236,23 +238,22 @@ public class UpdateEvents extends AppCompatActivity implements AdapterView.OnIte
                         data.put("note_hour", hourUpdate);
                         data.put("note_status", statusUpdate);
 
-                        documentReference.set(data)
-                              .addOnSuccessListener(aVoid -> {
-                                  Log.d(TAG, "Document successfully modified.");
-                                  toastOk("Updated event");
-                              })
+                        // Save changes to the document
+                        documentSnapshot.getReference().set(data)
+                                .addOnSuccessListener(aVoid -> {
+                                    // Successful modification for document
+                                    Log.d(TAG, "Document successfully modified.");
+                                    toastOk("Updated event");
+                                })
                                 .addOnFailureListener(e -> {
+                                    // Error when modifying the document
                                     Log.e(TAG, "Error when modifying the document.", e);
-                                        toastWarning("Failure to update event");
-
+                                    toastWarning("Failure to update event");
                                 });
-                    }else {
-                        Log.d(TAG, "The document does not exist");
-                        toastWarning("Event does not exist");
                     }
                 })
                 .addOnFailureListener(e -> {
-                    Log.e(TAG, "Error obtaining the document", e);
+                    Log.e(TAG, "Error obtaining the document.", e);
                     toastWarning("Event not found");
                 });
   }
@@ -271,7 +272,7 @@ public class UpdateEvents extends AppCompatActivity implements AdapterView.OnIte
 
     private void spinner_Status(){
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
-                R.array.Note_Status, android.R.layout.simple_spinner_item);
+                R.array.Event_Status, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         Spinner_Status.setAdapter(adapter);
         Spinner_Status.setOnItemSelectedListener(this);
@@ -293,6 +294,8 @@ public class UpdateEvents extends AppCompatActivity implements AdapterView.OnIte
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == R.id.Update_Note) {
             updateNoteFirebase();
+            Intent intent = new Intent(UpdateEvents.this, MainActivity.class);
+            startActivity(intent);
         }
         return super.onOptionsItemSelected(item);
     }

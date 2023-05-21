@@ -4,7 +4,7 @@
     <item
         android:id="@+id/Update_Note"
         android:icon="@drawable/icon_update_note"
-        android:title="@string/Update_Note"
+        android:title="@string/Update_Event"
         app:showAsAction="ifRoom">
     </item>
 </menu>
