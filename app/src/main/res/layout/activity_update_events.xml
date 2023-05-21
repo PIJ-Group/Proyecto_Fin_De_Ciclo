@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:theme="@style/Theme.Reminder"
-        tools:context=".UpdateNote.UpdateNote">
+        tools:context=".UpdateEvents.UpdateEvents">
 
         <!--USER ID-->
         <TextView
@@ -30,7 +30,7 @@
 
         <!--ID NOTA-->
         <TextView
-            android:id="@+id/Id_Note_Update"
+            android:id="@+id/Id_Event_Update"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
@@ -56,11 +56,11 @@
             android:textSize="18sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/Id_Note_Update" />
+            app:layout_constraintTop_toBottomOf="@+id/Id_Event_Update" />
 
         <!--NOTE FINISHED-->
         <ImageView
-            android:id="@+id/Note_finished"
+            android:id="@+id/Event_finished"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_marginStart="8dp"
@@ -73,14 +73,14 @@
 
         <!--NOTE NOT FINISHED-->
         <ImageView
-            android:id="@+id/Note_not_finished"
+            android:id="@+id/Event_not_finished"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:background="#E74C3C"
             android:visibility="gone"
-            app:layout_constraintStart_toEndOf="@+id/Note_finished"
+            app:layout_constraintStart_toEndOf="@+id/Event_finished"
             app:layout_constraintTop_toTopOf="parent"
             android:contentDescription="@string/Image_Event_Not_finished" />
 
@@ -94,7 +94,7 @@
             android:fontFamily="@font/vanilla"
             android:text="@string/Status_Update"
             android:textSize="20sp"
-            app:layout_constraintStart_toEndOf="@+id/Note_not_finished"
+            app:layout_constraintStart_toEndOf="@+id/Event_not_finished"
             app:layout_constraintTop_toTopOf="parent" />
 
         <!--NOTE TITLE-->

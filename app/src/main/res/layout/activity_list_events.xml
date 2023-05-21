@@ -13,7 +13,7 @@
         tools:context=".ListEvents.ListEvents">
 
 
-        <!--NOTE TITLE-->
+        <!--EVENT TITLE-->
         <EditText
             android:id="@+id/Title_Detail"
             android:layout_width="match_parent"
@@ -33,7 +33,7 @@
             android:autofillHints=""
             android:inputType="text" />
 
-        <!--NOTE DESCRIPTION-->
+        <!--EVENT DESCRIPTION-->
         <EditText
             android:id="@+id/Description_Detail"
             android:layout_width="match_parent"
@@ -84,7 +84,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/Date_Detail" />
 
-        <!--NOTE STATUS-->
+        <!--EVENT STATUS-->
         <TextView
             android:id="@+id/Status_Detail"
             android:layout_width="wrap_content"

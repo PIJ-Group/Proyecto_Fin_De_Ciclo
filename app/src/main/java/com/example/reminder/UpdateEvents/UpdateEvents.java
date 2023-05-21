@@ -1,4 +1,4 @@
-package com.example.reminder.UpdateNotes;
+package com.example.reminder.UpdateEvents;
 
 import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
 
@@ -44,21 +44,21 @@ import java.util.Objects;
 public class UpdateEvents extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
 
-    TextView Id_Note_Update, Userid_User_Update, Registration_Date_Update, Date_Update,
+    TextView Id_Event_Update, Userid_User_Update, Registration_Date_Update, Date_Update,
             Hour_Update, Status_Update, New_Status;
     EditText Title_Update, Description_Update;
     Button Calendar_btn_Update, Hour_btn_Update;
-    ImageView Note_finished, Note_not_finished;
+    ImageView Event_finished, Event_not_finished;
     Spinner Spinner_Status;
 
     //Declare strings to store the data of the main activity
-    String id_note_R, user_id_R, registration_date_R, title_R, description_R, date_R, hour_R, status_R, user_mail_R;
+    String id_event_R, user_id_R, registration_date_R, title_R, description_R, date_R, hour_R, status_R, user_mail_R;
 
     //Declare strings to get data for update the note in firebase
     String titleUpdate, descriptionUpdate, dateUpdate, hourUpdate, statusUpdate;
 
     //Declare String for noteStatus
-    String note_Status;
+    String event_Status;
 
     FirebaseFirestore db;
     FirebaseAuth nAuth;
@@ -88,7 +88,7 @@ public class UpdateEvents extends AppCompatActivity implements AdapterView.OnIte
 
     //Initialize Views
     private void VarInit(){
-        Id_Note_Update = findViewById(R.id.Id_Note_Update);
+        Id_Event_Update = findViewById(R.id.Id_Event_Update);
         Userid_User_Update = findViewById(R.id.Userid_User_Update);
         Registration_Date_Update = findViewById(R.id.Registration_Date_Update);
         Date_Update = findViewById(R.id.Date_Update);
@@ -98,8 +98,8 @@ public class UpdateEvents extends AppCompatActivity implements AdapterView.OnIte
         Description_Update = findViewById(R.id.Description_Update);
         Calendar_btn_Update = findViewById(R.id.Calendar_btn_Update);
         Hour_btn_Update = findViewById(R.id.Hour_btn_Update);
-        Note_finished = findViewById(R.id.Note_finished);
-        Note_not_finished = findViewById(R.id.Note_not_finished);
+        Event_finished = findViewById(R.id.Event_finished);
+        Event_not_finished = findViewById(R.id.Event_not_finished);
         Spinner_Status = findViewById(R.id.Spinner_Status);
         New_Status = findViewById(R.id.New_Status);
 
@@ -110,7 +110,7 @@ public class UpdateEvents extends AppCompatActivity implements AdapterView.OnIte
 
     //Get data from intent in Main Activity
     private void GetData(){
-        id_note_R = getIntent().getStringExtra("noteId");
+        id_event_R = getIntent().getStringExtra("noteId");
         user_id_R = getIntent().getStringExtra("userId");
         registration_date_R = getIntent().getStringExtra("currentDate");
         title_R = getIntent().getStringExtra("title");
@@ -123,7 +123,7 @@ public class UpdateEvents extends AppCompatActivity implements AdapterView.OnIte
 
     //Setting Data
     private void SetData(){
-        Id_Note_Update.setText(id_note_R);
+        Id_Event_Update.setText(id_event_R);
         Userid_User_Update.setText(user_id_R);
         Registration_Date_Update.setText(registration_date_R);
         Date_Update.setText(date_R);
@@ -206,7 +206,7 @@ public class UpdateEvents extends AppCompatActivity implements AdapterView.OnIte
         timePickerDialog.show();
     }
     //Update a Event in firebase
-    private void updateNoteFirebase(){
+    private void updateEventFirebase(){
 
         String userMail = Objects.requireNonNull(nAuth.getCurrentUser()).getEmail();
         titleUpdate = Title_Update.getText().toString();
@@ -217,7 +217,7 @@ public class UpdateEvents extends AppCompatActivity implements AdapterView.OnIte
         String userId = Userid_User_Update.getText().toString();
 
         CollectionReference collectionRef = db.collection("Notes");
-        Query query = collectionRef.whereEqualTo("noteId", id_note_R);
+        Query query = collectionRef.whereEqualTo("noteId", id_event_R);
 
         query.get()
                 .addOnSuccessListener(queryDocumentSnapshots -> {
@@ -233,7 +233,7 @@ public class UpdateEvents extends AppCompatActivity implements AdapterView.OnIte
                         data.put("status", statusUpdate);
                         data.put("user_id", userId);
                         data.put("user_mail", userMail);
-                        data.put("note_id", id_note_R);
+                        data.put("note_id", id_event_R);
                         data.put("note_date", dateUpdate);
                         data.put("note_hour", hourUpdate);
                         data.put("note_status", statusUpdate);
@@ -260,13 +260,13 @@ public class UpdateEvents extends AppCompatActivity implements AdapterView.OnIte
 
     //Check note status
     private void checkNoteStatus(){
-        note_Status = Status_Update.getText().toString();
+        event_Status = Status_Update.getText().toString();
 
-        if(note_Status.equals("Not finished")){
-            Note_not_finished.setVisibility(View.VISIBLE);
+        if(event_Status.equals("Not finished")){
+            Event_not_finished.setVisibility(View.VISIBLE);
         }
-        if(note_Status.equals("Finished")){
-            Note_finished.setVisibility(View.VISIBLE);
+        if(event_Status.equals("Finished")){
+            Event_finished.setVisibility(View.VISIBLE);
         }
     }
 
@@ -293,7 +293,7 @@ public class UpdateEvents extends AppCompatActivity implements AdapterView.OnIte
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == R.id.Update_Note) {
-            updateNoteFirebase();
+            updateEventFirebase();
             Intent intent = new Intent(UpdateEvents.this, MainActivity.class);
             startActivity(intent);
         }
