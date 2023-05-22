@@ -191,7 +191,6 @@ public class MainActivity extends AppCompatActivity {
 
                     if (listEventsComplete.size() == 0) {
                         listViewEvents.setAdapter(null);
-                        toastWarning(getString(R.string.no_events));
 
                     } else {
                         AdapterListView adapter = new AdapterListView(MainActivity.this, listEventsComplete);
