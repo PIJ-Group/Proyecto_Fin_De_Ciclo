@@ -58,10 +58,10 @@
     <string name="Logout">logout</string>
     <string name="item_title">Title</string>
     <string name="item_hour">Hour</string>
-    <string name="dialog_item_details">Ver detalles</string>
-    <string name="dialog_item_edit">Editar</string>
-    <string name="dialog_item_delete">Eliminar</string>
-    <string name="event_deleted">Evento eliminado</string>
+    <string name="dialog_item_details">View event details</string>
+    <string name="dialog_item_edit">Edit event</string>
+    <string name="dialog_item_delete">Delete event</string>
+    <string name="event_deleted">Deleted event</string>
 
     <!--Register-->
     <string name="name">Complete name</string>
