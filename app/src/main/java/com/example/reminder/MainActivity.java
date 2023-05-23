@@ -3,6 +3,7 @@ package com.example.reminder;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Html;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -16,6 +17,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.text.HtmlCompat;
 
 import com.example.reminder.AddEvents.AddEvent;
 import com.example.reminder.UpdateEvents.UpdateEvents;
@@ -101,7 +103,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     //Get current date.
-    private String actualDate(){
+    private String actualDate() {
         int actualDay, actualMonth, actualYear;
         String actualDayFormatted, actualMonthFormatted;
 
@@ -125,7 +127,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     //Method to format the day.
-    private String createDayFormatted(int day){
+    private String createDayFormatted(int day) {
         String dayFormatted;
         if (day < 10) {
             dayFormatted = "0" + day;
@@ -136,7 +138,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     //Method to format the month.
-    private String createMonthFormatted(int month){
+    private String createMonthFormatted(int month) {
         String monthFormatted;
         if (month < 10) {
             monthFormatted = "0" + month;
@@ -164,7 +166,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     //Obtain data of the database to show in the Item of the listView.
-    public void getItemData(String userRegisterType){
+    public void getItemData(String userRegisterType) {
         //Object used to sort the events array.
         Comparator<DataModal> hoursComparator = Comparator.comparing(DataModal::getEventHour);
 
@@ -237,18 +239,18 @@ public class MainActivity extends AppCompatActivity {
 
         AlertDialog dialog = new AlertDialog.Builder(this)
 
-                .setPositiveButton(R.string.dialog_item_details, (dialog1, i) -> {
+                .setPositiveButton(HtmlCompat.fromHtml("<font color='#FD6476'>" + getString(R.string.dialog_item_details) + "</font>", HtmlCompat.FROM_HTML_MODE_LEGACY), (dialog1, i) -> {
                     //Go to the event details activity.
                     getAndSendObject(view, ListEvents.class);
                 })
-                .setNeutralButton(R.string.dialog_item_delete, (dialog12, i) -> {
+                .setNeutralButton(HtmlCompat.fromHtml("<font color='#FD6476'>" + getString(R.string.dialog_item_delete) + "</font>", HtmlCompat.FROM_HTML_MODE_LEGACY), (dialog12, i) -> {
                     //Delete event.
                     int position = listPosition(view);
                     db.collection("Events").document(listEventsId.get(position)).delete();
 
                     toastOk(getString(R.string.event_deleted));
                 })
-                .setNegativeButton(R.string.dialog_item_edit, (dialog13, i) -> {
+                .setNegativeButton(HtmlCompat.fromHtml("<font color='#FD6476'>" + getString(R.string.dialog_item_edit) + "</font>", HtmlCompat.FROM_HTML_MODE_LEGACY), (dialog13, i) -> {
                     //Go to edit event activity.
                     getAndSendObject(view, UpdateEvents.class);
                 })
@@ -257,7 +259,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     //Method to get the object of the database and send it to other activity.
-    public void getAndSendObject(View view, Class activity){
+    public void getAndSendObject(View view, Class activity) {
         int position = listPosition(view);
         event = new Event();
 
@@ -280,7 +282,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     //Obtain the position of the event in the database.
-    public int listPosition(View view){
+    public int listPosition(View view) {
         View parentDelete = (View) view.getParent();
         TextView eventTitleItem = parentDelete.findViewById(R.id.item_title);
         String eventContent = eventTitleItem.getText().toString();
