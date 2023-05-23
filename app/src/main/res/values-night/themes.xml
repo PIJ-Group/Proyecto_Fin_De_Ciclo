@@ -1,6 +1,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Theme.Reminder" parent="Theme.AppCompat.DayNight">
+    <style name="Theme.Reminder" parent="Theme.MaterialComponents.DayNight">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/blue_dark</item>
         <item name="colorPrimaryVariant">@color/blue_principal</item>
@@ -12,5 +12,6 @@
         <!-- Status bar color. -->
         <item name="android:statusBarColor">@color/blue_dark</item>
         <!-- Customize your theme here. -->
+        <item name="android:textColor">@color/white</item>
     </style>
 </resources>

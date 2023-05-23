@@ -8,6 +8,7 @@
     android:layout_height="wrap_content"
     android:orientation="horizontal"
     android:background="@drawable/toast_color_and_radius"
+    android:backgroundTint="@color/pink_principal"
     android:gravity="center"
     android:padding="18dp">
 
@@ -15,6 +16,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:srcCompat="@drawable/check"
+
         />
 
     <TextView
