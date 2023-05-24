@@ -9,9 +9,10 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="729dp"
         android:theme="@style/Theme.Reminder"
-        tools:context=".UpdateEvents.UpdateEvents">
+        tools:context=".UpdateEvents.UpdateEvents"
+        tools:layout_editor_absoluteY="1dp">
 
         <!--USER ID-->
         <TextView
@@ -20,9 +21,9 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:hint="@string/Userid_User_Update"
-            android:visibility="gone"
             android:textColorHint="#757575"
             android:textSize="18sp"
+            android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -34,8 +35,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:text="@string/Id_Event_Update"
-            android:visibility="gone"
             android:textSize="18sp"
+            android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.504"
             app:layout_constraintStart_toStartOf="parent"
@@ -48,9 +49,9 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:hint="@string/Registration_Date_Update"
-            android:visibility="gone"
             android:textColorHint="#757575"
             android:textSize="18sp"
+            android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/Id_Event_Update" />
@@ -63,10 +64,10 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:background="#16A085"
+            android:contentDescription="@string/Image_Event_finished"
             android:visibility="gone"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:contentDescription="@string/Image_Event_finished" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <!--NOTE NOT FINISHED-->
         <ImageView
@@ -76,10 +77,10 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:background="#E74C3C"
+            android:contentDescription="@string/Image_Event_Not_finished"
             android:visibility="gone"
             app:layout_constraintStart_toEndOf="@+id/Event_finished"
-            app:layout_constraintTop_toTopOf="parent"
-            android:contentDescription="@string/Image_Event_Not_finished" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <!--NOTE STATUS-->
         <TextView
@@ -101,7 +102,9 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="64dp"
             android:layout_marginEnd="8dp"
+            android:autofillHints=""
             android:hint="@string/Title_Update"
+            android:inputType="textMultiLine"
             android:textColorHint="#585858"
             android:textSize="25sp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -109,9 +112,7 @@
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/Registration_Date_Update"
-            app:layout_constraintVertical_bias="0.0"
-            android:inputType="text"
-            android:autofillHints="" />
+            app:layout_constraintVertical_bias="0.0" />
 
         <!--NOTE DESCRIPTION-->
         <EditText
@@ -121,8 +122,10 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
+            android:autofillHints=""
             android:gravity="start"
             android:hint="@string/Description_Update"
+            android:inputType="textMultiLine"
             android:minHeight="150dp"
             android:textColorHint="#585858"
             android:textSize="20sp"
@@ -131,9 +134,7 @@
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/Title_Update"
-            app:layout_constraintVertical_bias="0.066"
-            android:inputType="text"
-            android:autofillHints="" />
+            app:layout_constraintVertical_bias="0.066" />
 
         <!--CALENDAR BUTTON-->
         <Button
@@ -177,21 +178,18 @@
             android:id="@+id/Hour_btn_Update"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="296dp"
             android:backgroundTint="@color/pink_principal"
-            android:text="@string/Hour_btn_Update"
+            android:text="@string/Hour_btn"
             android:textColor="@color/black"
             app:cornerRadius="32sp"
             app:icon="@drawable/icon_hour"
             app:iconTint="@color/black"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintHorizontal_bias="0.036"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/Calendar_btn_Update"
-            app:layout_constraintVertical_bias="0.024"
+            app:layout_constraintVertical_bias="0.051"
             tools:ignore="TextContrastCheck" />
 
         <!--TIME SELECTED-->
@@ -236,7 +234,6 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/Spinner_Status"
             app:layout_constraintTop_toBottomOf="@+id/Hour_btn_Update" />
-
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
