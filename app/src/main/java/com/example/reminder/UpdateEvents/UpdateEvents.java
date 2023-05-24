@@ -5,6 +5,7 @@ import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -26,6 +27,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.text.HtmlCompat;
 
 import com.example.reminder.MainActivity;
 import com.example.reminder.R;
@@ -167,6 +169,17 @@ public class UpdateEvents extends AppCompatActivity implements AdapterView.OnIte
             Date_Update.setText(dayFormatted + "/" + monthFormatted + "/" + yearSelected);
         }
                 , year, month, day);
+        datePickerDialog.setButton(DialogInterface.BUTTON_NEGATIVE,
+                HtmlCompat.fromHtml("<font color='#FD6476'>" + getString(android.R.string.cancel) + "</font>",
+                        HtmlCompat.FROM_HTML_MODE_LEGACY), (dialog, i) -> {
+                    // Acciones a realizar cuando se hace clic en el botón "Cancel"
+                });
+
+        datePickerDialog.setButton(DialogInterface.BUTTON_POSITIVE,
+                HtmlCompat.fromHtml("<font color='#FD6476'>" + getString(android.R.string.ok) + "</font>",
+                        HtmlCompat.FROM_HTML_MODE_LEGACY), (dialog, i) -> {
+                    // Acciones a realizar cuando se hace clic en el botón "OK"
+                });
         datePickerDialog.show();
     }
 
@@ -197,6 +210,17 @@ public class UpdateEvents extends AppCompatActivity implements AdapterView.OnIte
             // Set Time on TextView
             Hour_Update.setText(hourFormatted + ":" + minutesFormatted);
         },hour,minutes,false);
+        timePickerDialog.setButton(DialogInterface.BUTTON_NEGATIVE,
+                HtmlCompat.fromHtml("<font color='#FD6476'>" + getString(android.R.string.cancel) + "</font>",
+                        HtmlCompat.FROM_HTML_MODE_LEGACY), (dialog, i) -> {
+                    // Acciones a realizar cuando se hace clic en el botón "Cancel"
+                });
+
+        timePickerDialog.setButton(DialogInterface.BUTTON_POSITIVE,
+                HtmlCompat.fromHtml("<font color='#FD6476'>" + getString(android.R.string.ok) + "</font>",
+                        HtmlCompat.FROM_HTML_MODE_LEGACY), (dialog, i) -> {
+                    // Acciones a realizar cuando se hace clic en el botón "OK"
+                });
         timePickerDialog.show();
     }
     //Update a Event in firebase

@@ -3,6 +3,7 @@ package com.example.reminder.AddEvents;
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -18,6 +19,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.text.HtmlCompat;
 
 import com.example.reminder.R;
 import com.example.reminder.model.Event;
@@ -102,11 +104,11 @@ public class AddEvent extends AppCompatActivity {
 
         //Get the user mail from authentication
         userMail = nAuth.getCurrentUser().getEmail();
-        if(userMail == null){
+        if (userMail == null) {
             assert user != null;
             userMail = user.getProviderData().get(1).getEmail();
         }
-        if(userMail == null){
+        if (userMail == null) {
             userMail = user.getProviderData().get(1).getUid();
         }
 
@@ -122,7 +124,7 @@ public class AddEvent extends AppCompatActivity {
     }
 
     //method to select a date
-    private void dateSelect(){
+    private void dateSelect() {
         final Calendar calendar = Calendar.getInstance();
         day = calendar.get(Calendar.DAY_OF_MONTH);
         month = calendar.get(Calendar.MONTH);
@@ -152,19 +154,28 @@ public class AddEvent extends AppCompatActivity {
             Date.setText(dayFormatted + "/" + monthFormatted + "/" + yearSelected);
         }
                 , year, month, day);
+        datePickerDialog.setButton(DialogInterface.BUTTON_NEGATIVE,
+                HtmlCompat.fromHtml("<font color='#FD6476'>" + getString(android.R.string.cancel) + "</font>",
+                        HtmlCompat.FROM_HTML_MODE_LEGACY), (dialog, i) -> {
+                    // Acciones a realizar cuando se hace clic en el botón "Cancel"
+                });
+
+        datePickerDialog.setButton(DialogInterface.BUTTON_POSITIVE,
+                HtmlCompat.fromHtml("<font color='#FD6476'>" + getString(android.R.string.ok) + "</font>",
+                        HtmlCompat.FROM_HTML_MODE_LEGACY), (dialog, i) -> {
+                    // Acciones a realizar cuando se hace clic en el botón "OK"
+                });
         datePickerDialog.show();
     }
 
     //method to select an hour
-    private void hourSelect(){
+    private void hourSelect() {
         final Calendar clock = Calendar.getInstance();
         hour = clock.get(Calendar.HOUR_OF_DAY);
         minutes = clock.get(Calendar.MINUTE);
 
         @SuppressLint("SetTextI18n") TimePickerDialog timePickerDialog = new TimePickerDialog(AddEvent.this, (view, hourOfDay, minute) -> {
-
             String hourFormatted, minutesFormatted;
-
             //Format hour
             if (hourOfDay < 10) {
                 hourFormatted = "0" + hourOfDay;
@@ -181,7 +192,18 @@ public class AddEvent extends AppCompatActivity {
 
             // Set Time on TextView
             Hour.setText(hourFormatted + ":" + minutesFormatted);
-        },hour,minutes,false);
+        }, hour, minutes, false);
+        timePickerDialog.setButton(DialogInterface.BUTTON_NEGATIVE,
+                HtmlCompat.fromHtml("<font color='#FD6476'>" + getString(android.R.string.cancel) + "</font>",
+                        HtmlCompat.FROM_HTML_MODE_LEGACY), (dialog, i) -> {
+                    // Acciones a realizar cuando se hace clic en el botón "Cancel"
+                });
+
+        timePickerDialog.setButton(DialogInterface.BUTTON_POSITIVE,
+                HtmlCompat.fromHtml("<font color='#FD6476'>" + getString(android.R.string.ok) + "</font>",
+                        HtmlCompat.FROM_HTML_MODE_LEGACY), (dialog, i) -> {
+                    // Acciones a realizar cuando se hace clic en el botón "OK"
+                });
         timePickerDialog.show();
     }
 

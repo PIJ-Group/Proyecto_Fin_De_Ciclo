@@ -11,7 +11,9 @@
         <item name="colorOnSecondary">@color/black</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor">@color/blue_principal</item>
-        <!-- Customize your theme here. -->
+        <!-- textColor: lightTheme -->
         <item name="android:textColor">@color/black</item>
+        <!-- Type of Font -->
+        <item name="android:fontFamily">@font/infinity_regular</item>
     </style>
 </resources>
