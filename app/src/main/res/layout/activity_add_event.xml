@@ -49,17 +49,17 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
+            android:autofillHints=""
             android:hint="@string/Title"
+            android:inputType="textMultiLine"
             android:textColorHint="#585858"
             android:textSize="25sp"
             app:layout_constraintBottom_toTopOf="@+id/Description"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/Current_Date_time"
-            android:inputType="textMultiLine"
-            android:autofillHints="" />
+            app:layout_constraintTop_toBottomOf="@+id/Current_Date_time" />
 
-            <!--EVENT DESCRIPTION-->
+        <!--EVENT DESCRIPTION-->
         <EditText
             android:id="@+id/Description"
             android:layout_width="match_parent"
@@ -67,33 +67,37 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="8dp"
+            android:autofillHints=""
             android:gravity="start"
             android:hint="@string/Description"
+            android:inputType="textMultiLine"
             android:minHeight="150dp"
             android:textColorHint="#585858"
             android:textSize="20sp"
             app:layout_constraintBottom_toTopOf="@+id/Calendar_btn"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/Title"
-            android:inputType="textMultiLine"
-            android:autofillHints="" />
+            app:layout_constraintTop_toBottomOf="@+id/Title" />
 
         <!--CALENDAR BUTTON-->
         <Button
             android:id="@+id/Calendar_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="88dp"
             android:backgroundTint="@color/pink_principal"
             android:text="@string/Calendar_btn"
             android:textColor="@color/black"
             app:cornerRadius="32sp"
             app:icon="@drawable/icon_calendar"
             app:iconTint="@color/black"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.061"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/Description"
+            app:layout_constraintVertical_bias="0.117"
             tools:ignore="TextContrastCheck" />
 
         <!--DATE SELECTED-->
@@ -101,8 +105,8 @@
             android:id="@+id/Date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="24dp"
+            android:layout_marginStart="64dp"
+            android:layout_marginTop="16dp"
             android:layout_marginEnd="90dp"
             android:hint="@string/Date"
             android:textColorHint="#585858"
