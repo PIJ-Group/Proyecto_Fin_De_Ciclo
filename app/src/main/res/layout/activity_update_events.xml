@@ -235,6 +235,5 @@
             app:layout_constraintStart_toEndOf="@+id/Spinner_Status"
             app:layout_constraintTop_toBottomOf="@+id/Hour_btn_Update" />
 
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

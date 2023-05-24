@@ -56,7 +56,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/Current_Date_time"
-            android:inputType="text"
+            android:inputType="textMultiLine"
             android:autofillHints="" />
 
             <!--EVENT DESCRIPTION-->
@@ -76,7 +76,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/Title"
-            android:inputType="text"
+            android:inputType="textMultiLine"
             android:autofillHints="" />
 
         <!--CALENDAR BUTTON-->
