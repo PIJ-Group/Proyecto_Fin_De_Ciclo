@@ -55,6 +55,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
+                app:hintTextColor="#858585"
                 app:boxCornerRadiusTopStart="32dp">
 
                 <EditText
@@ -62,7 +63,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:autofillHints="Name"
-                    android:backgroundTint="@color/white"
                     android:drawableStart="@drawable/name_icon"
                     android:drawablePadding="10dp"
                     android:hint="@string/name"
@@ -75,6 +75,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
+                app:hintTextColor="#858585"
                 app:boxCornerRadiusTopStart="32dp">
 
                 <EditText
@@ -82,7 +83,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:autofillHints="Email"
-                    android:backgroundTint="@color/white"
                     android:drawableStart="@drawable/email_icon"
                     android:drawablePadding="10dp"
                     android:hint="@string/email"
@@ -96,6 +96,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
+                app:hintTextColor="#858585"
                 app:boxCornerRadiusTopStart="32dp"
                 app:hintEnabled="false"
                 app:passwordToggleEnabled="true">
@@ -105,7 +106,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:autofillHints="Pass"
-                    android:backgroundTint="@color/white"
                     android:drawableStart="@drawable/ic_baseline_lock_24"
                     android:drawablePadding="10dp"
                     android:hint="@string/hint_Pass"
@@ -120,6 +120,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
+                app:hintTextColor="#858585"
                 app:boxCornerRadiusTopStart="32dp"
                 app:hintEnabled="false"
                 app:passwordToggleEnabled="true">
@@ -129,7 +130,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:autofillHints="ConfirmedPass"
-                    android:backgroundTint="@color/white"
                     android:drawableStart="@drawable/ic_baseline_lock_24"
                     android:drawablePadding="10dp"
                     android:hint="@string/confirm_password"
@@ -143,6 +143,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
+                android:textColor="@color/black"
                 android:backgroundTint="@color/pink_principal"
                 android:text="@string/user_registration"
                 android:textSize="18sp"
