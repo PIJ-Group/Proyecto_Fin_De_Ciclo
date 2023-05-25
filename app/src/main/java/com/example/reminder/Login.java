@@ -50,14 +50,14 @@ public class Login extends AppCompatActivity {
     public void onBackPressed() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage("¿Do you want to exit?")
-                .setPositiveButton(HtmlCompat.fromHtml("<font color='#FD6476'>YES</font>",
+                .setPositiveButton(HtmlCompat.fromHtml("<font color='#FD6476'>Yes</font>",
                         HtmlCompat.FROM_HTML_MODE_LEGACY),(dialog, i) -> {
                     Intent intent = new Intent(Intent.ACTION_MAIN);
                     intent.addCategory(Intent.CATEGORY_HOME);
                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(intent);
                 })
-                .setNegativeButton(HtmlCompat.fromHtml("<font color='#FD6476'>YES</font>",
+                .setNegativeButton(HtmlCompat.fromHtml("<font color='#FD6476'>NO</font>",
                         HtmlCompat.FROM_HTML_MODE_LEGACY),(dialog12, i) -> dialog12.dismiss());
         builder.show();
     }
