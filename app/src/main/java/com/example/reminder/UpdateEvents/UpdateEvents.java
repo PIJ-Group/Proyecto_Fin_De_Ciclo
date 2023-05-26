@@ -39,7 +39,6 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import java.util.Calendar;
 import java.util.Map;
-import java.util.Objects;
 
 public class UpdateEvents extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
@@ -226,7 +225,7 @@ public class UpdateEvents extends AppCompatActivity implements AdapterView.OnIte
     //Update a Event in firebase
     private void updateEventFirebase(){
 
-        String userMail = Objects.requireNonNull(nAuth.getCurrentUser()).getEmail();
+//        String userMail = Objects.requireNonNull(nAuth.getCurrentUser()).getEmail();
         titleUpdate = Title_Update.getText().toString();
         descriptionUpdate = Description_Update.getText().toString();
         dateUpdate = Date_Update.getText().toString();
@@ -250,7 +249,7 @@ public class UpdateEvents extends AppCompatActivity implements AdapterView.OnIte
                         data.put("eventHour", hourUpdate);
                         data.put("status", statusUpdate);
                         data.put("userId", userId);
-                        data.put("userMail", userMail);
+                        data.put("userMail", user_mail_R);
                         data.put("eventId", id_event_R);
 
                         // Save changes to the document
