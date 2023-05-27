@@ -13,13 +13,12 @@
 
         <com.airbnb.lottie.LottieAnimationView
             android:id="@+id/lottieAnimationView"
-            android:layout_width="273dp"
-            android:layout_height="229dp"
-            android:layout_marginBottom="72dp"
-            android:scaleType="fitXY"
-            app:layout_constraintBottom_toTopOf="@+id/layoutPass"
+            android:layout_width="241dp"
+            android:layout_height="173dp"
+            android:scaleType="centerCrop"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
             app:lottie_autoPlay="true"
             app:lottie_fileName="calendar.json"
             app:lottie_loop="true" />
@@ -28,9 +27,10 @@
             android:id="@+id/mailLayout"
             android:layout_width="309dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="192dp"
+            android:layout_marginTop="172dp"
             app:hintTextColor="#858585"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.519"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:startIconDrawable="@drawable/ic_baseline_email_24">
