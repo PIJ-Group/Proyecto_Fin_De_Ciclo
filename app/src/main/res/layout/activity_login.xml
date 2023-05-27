@@ -13,8 +13,8 @@
 
         <com.airbnb.lottie.LottieAnimationView
             android:id="@+id/lottieAnimationView"
-            android:layout_width="241dp"
-            android:layout_height="173dp"
+            android:layout_width="268dp"
+            android:layout_height="188dp"
             android:scaleType="centerCrop"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -38,7 +38,7 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/boxMail"
                 android:layout_width="314dp"
-                android:layout_height="wrap_content"
+                android:layout_height="60dp"
                 android:hint="@string/hint_Correo"
                 android:textSize="16sp"
                 tools:ignore="TextContrastCheck"
@@ -132,7 +132,6 @@
             app:cornerRadius="30sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/githubButton"
-            app:layout_constraintHorizontal_bias="0.621"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/signUpWith"
             app:layout_constraintVertical_bias="0.0"
@@ -148,11 +147,10 @@
             android:drawableLeft="@drawable/icon_github_nuevo"
             app:cornerRadius="30sp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/twitterButton"
-            app:layout_constraintHorizontal_bias="0.854"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/signUpWith"
-            app:layout_constraintVertical_bias="0.0"
+            app:layout_constraintVertical_bias="1.0"
             tools:ignore="RtlHardcoded" />
 
         <Button
@@ -166,10 +164,10 @@
             app:cornerRadius="30sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.844"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintHorizontal_bias="0.409"
+            app:layout_constraintStart_toEndOf="@+id/githubButton"
             app:layout_constraintTop_toBottomOf="@+id/signUpWith"
-            app:layout_constraintVertical_bias="0.0"
+            app:layout_constraintVertical_bias="1.0"
             tools:ignore="RtlHardcoded" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
