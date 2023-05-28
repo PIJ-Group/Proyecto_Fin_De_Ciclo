@@ -90,6 +90,32 @@
             android:layout_marginTop="16dp"
             android:text="@string/Status_Detail"
             android:textSize="20sp"
+            app:layout_constraintStart_toEndOf="@+id/Event_finished_List"
+            app:layout_constraintTop_toBottomOf="@+id/Description_Detail" />
+
+        <!--NOTE FINISHED-->
+        <ImageView
+            android:id="@+id/Event_finished_List"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            android:background="@color/finished"
+            android:contentDescription="@string/Image_Event_finished_List"
+            android:visibility="gone"
+            app:layout_constraintStart_toEndOf="@+id/Event_not_finished_List"
+            app:layout_constraintTop_toBottomOf="@+id/Description_Detail" />
+
+        <!--NOTE NOT FINISHED-->
+        <ImageView
+            android:id="@+id/Event_not_finished_List"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            android:background="@color/not_finished"
+            android:contentDescription="@string/Image_Event_Not_finished_List"
+            android:visibility="gone"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/Description_Detail" />
 

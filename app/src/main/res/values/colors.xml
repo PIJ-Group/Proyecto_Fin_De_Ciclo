@@ -15,4 +15,7 @@
     <color name="pink_dark">#FD6476 </color>
     <color name="pink_light">#FE9FAA </color>
     <color name="grey_principal">#F9F9F9 </color>
+
+    <color name="finished">#16A085</color>
+    <color name="not_finished">#E74C3C</color>
 </resources>
