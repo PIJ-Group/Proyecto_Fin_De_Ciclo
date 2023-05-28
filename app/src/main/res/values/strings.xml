@@ -50,6 +50,8 @@
     <string name="Date_Detail">00/00/0000</string>
     <string name="Status_Detail">Not finished</string>
     <string name="Hour_Detail">00:00</string>
+    <string name="Image_Event_finished_List">Image Finished</string>
+    <string name="Image_Event_Not_finished_List">Image Not Finished</string>
 
     <!--Menu-->
     <string name="Add_Event">Add Event</string>
