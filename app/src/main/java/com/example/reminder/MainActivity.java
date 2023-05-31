@@ -32,6 +32,7 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
@@ -52,6 +53,7 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<DataModal> listEventsComplete = new ArrayList<>();
 
     CalendarView calendarView;
+    Calendar calendar;
     String calendarDate;
 
 
@@ -67,6 +69,7 @@ public class MainActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         listViewEvents = findViewById(R.id.listView);
         calendarView = findViewById(R.id.calendar);
+        calendar = Calendar.getInstance();
 
         //We initialize the gso variable that will get the necessary elements to the login user.
         gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -84,17 +87,12 @@ public class MainActivity extends AppCompatActivity {
         //Get the calendar date.
         calendarView.setOnDateChangeListener((view, year, month, dayOfMonth) -> {
 
-            String dayFormatted, monthFormatted;
+            calendar.set(Calendar.DAY_OF_MONTH,dayOfMonth);
+            calendar.set(Calendar.MONTH,month);
+            calendar.set(Calendar.YEAR,year);
 
-            //Get formatted date
-            dayFormatted = createDayFormatted(dayOfMonth);
-
-            //Get formatted month
-            month = month + 1;
-            monthFormatted = createMonthFormatted(month);
-
-            //Get formatted complete date.
-            calendarDate = dayFormatted + "/" + monthFormatted + "/" + year;
+            SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+            calendarDate = format.format(calendar.getTime());
 
             //Method called to update the current user's tasks.
             updateEvents();
@@ -104,48 +102,15 @@ public class MainActivity extends AppCompatActivity {
 
     //Get current date.
     private String actualDate() {
-        int actualDay, actualMonth, actualYear;
-        String actualDayFormatted, actualMonthFormatted;
 
-        Calendar calendario = Calendar.getInstance();
+        calendar.get(Calendar.DAY_OF_MONTH);
+        calendar.get(Calendar.MONTH + 1);
+        calendar.get(Calendar.YEAR);
 
-        //Get formatted date
-        actualDay = calendario.get(Calendar.DAY_OF_MONTH);
-        actualDayFormatted = createDayFormatted(actualDay);
-
-        //Get formatted month
-        actualMonth = calendario.get(Calendar.MONTH) + 1;
-        actualMonthFormatted = createMonthFormatted(actualMonth);
-
-        //Get year
-        actualYear = calendario.get(Calendar.YEAR);
-
-        //Get formatted complete date.
-        calendarDate = actualDayFormatted + "/" + actualMonthFormatted + "/" + actualYear;
+        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+        calendarDate = format.format(calendar.getTime());
 
         return calendarDate;
-    }
-
-    //Method to format the day.
-    private String createDayFormatted(int day) {
-        String dayFormatted;
-        if (day < 10) {
-            dayFormatted = "0" + day;
-        } else {
-            dayFormatted = String.valueOf(day);
-        }
-        return dayFormatted;
-    }
-
-    //Method to format the month.
-    private String createMonthFormatted(int month) {
-        String monthFormatted;
-        if (month < 10) {
-            monthFormatted = "0" + month;
-        } else {
-            monthFormatted = String.valueOf(month);
-        }
-        return monthFormatted;
     }
 
     //Insert items in the listView.
