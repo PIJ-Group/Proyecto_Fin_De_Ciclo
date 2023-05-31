@@ -3,7 +3,6 @@ package com.example.reminder.AddEvents;
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -19,7 +18,6 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.text.HtmlCompat;
 
 import com.example.reminder.R;
 import com.example.reminder.model.Event;
@@ -130,41 +128,32 @@ public class AddEvent extends AppCompatActivity {
         month = calendar.get(Calendar.MONTH);
         year = calendar.get(Calendar.YEAR);
 
-        @SuppressLint("SetTextI18n") DatePickerDialog datePickerDialog = new DatePickerDialog(AddEvent.this, (view, yearSelected, monthSelected, daySelected) -> {
+        @SuppressLint("SetTextI18n") DatePickerDialog datePickerDialog =
+                new DatePickerDialog(AddEvent.this, (view, yearSelected,
+                                                     monthSelected, daySelected) -> {
 
-            String dayFormatted, monthFormatted;
+                    String dayFormatted, monthFormatted;
 
-            //Format day
-            if (daySelected < 10) {
-                dayFormatted = "0" + daySelected;
-            } else {
-                dayFormatted = String.valueOf(daySelected);
-            }
+                    //Format day
+                    if (daySelected < 10) {
+                        dayFormatted = "0" + daySelected;
+                    } else {
+                        dayFormatted = String.valueOf(daySelected);
+                    }
 
-            //Format month
-            int Month = monthSelected + 1;
+                    //Format month
+                    int Month = monthSelected + 1;
 
-            if (Month < 10) {
-                monthFormatted = "0" + Month;
-            } else {
-                monthFormatted = String.valueOf(Month);
-            }
+                    if (Month < 10) {
+                        monthFormatted = "0" + Month;
+                    } else {
+                        monthFormatted = String.valueOf(Month);
+                    }
 
-            // Set Date on TextView
-            Date.setText(dayFormatted + "/" + monthFormatted + "/" + yearSelected);
-        }
-                , year, month, day);
-        datePickerDialog.setButton(DialogInterface.BUTTON_NEGATIVE,
-                HtmlCompat.fromHtml("<font color='#FD6476'>" + getString(android.R.string.cancel) + "</font>",
-                        HtmlCompat.FROM_HTML_MODE_LEGACY), (dialog, i) -> {
-                    // Acciones a realizar cuando se hace clic en el botón "Cancel"
-                });
+                    // Set Date on TextView
+                    Date.setText(dayFormatted + "/" + monthFormatted + "/" + yearSelected);
+                }, year, month, day);
 
-        datePickerDialog.setButton(DialogInterface.BUTTON_POSITIVE,
-                HtmlCompat.fromHtml("<font color='#FD6476'>" + getString(android.R.string.ok) + "</font>",
-                        HtmlCompat.FROM_HTML_MODE_LEGACY), (dialog, i) -> {
-                    // Acciones a realizar cuando se hace clic en el botón "OK"
-                });
         datePickerDialog.show();
     }
 
@@ -174,36 +163,27 @@ public class AddEvent extends AppCompatActivity {
         hour = clock.get(Calendar.HOUR_OF_DAY);
         minutes = clock.get(Calendar.MINUTE);
 
-        @SuppressLint("SetTextI18n") TimePickerDialog timePickerDialog = new TimePickerDialog(AddEvent.this, (view, hourOfDay, minute) -> {
-            String hourFormatted, minutesFormatted;
-            //Format hour
-            if (hourOfDay < 10) {
-                hourFormatted = "0" + hourOfDay;
-            } else {
-                hourFormatted = String.valueOf(hourOfDay);
-            }
+        @SuppressLint("SetTextI18n") TimePickerDialog timePickerDialog =
+                new TimePickerDialog(AddEvent.this, (view, hourOfDay, minute) -> {
+                    String hourFormatted, minutesFormatted;
+                    //Format hour
+                    if (hourOfDay < 10) {
+                        hourFormatted = "0" + hourOfDay;
+                    } else {
+                        hourFormatted = String.valueOf(hourOfDay);
+                    }
 
-            //Format minutes
-            if (minute < 10) {
-                minutesFormatted = "0" + minute;
-            } else {
-                minutesFormatted = String.valueOf(minute);
-            }
+                    //Format minutes
+                    if (minute < 10) {
+                        minutesFormatted = "0" + minute;
+                    } else {
+                        minutesFormatted = String.valueOf(minute);
+                    }
 
-            // Set Time on TextView
-            Hour.setText(hourFormatted + ":" + minutesFormatted);
-        }, hour, minutes, false);
-        timePickerDialog.setButton(DialogInterface.BUTTON_NEGATIVE,
-                HtmlCompat.fromHtml("<font color='#FD6476'>" + getString(android.R.string.cancel) + "</font>",
-                        HtmlCompat.FROM_HTML_MODE_LEGACY), (dialog, i) -> {
-                    // Acciones a realizar cuando se hace clic en el botón "Cancel"
-                });
+                    // Set Time on TextView
+                    Hour.setText(hourFormatted + ":" + minutesFormatted);
+                }, hour, minutes, false);
 
-        timePickerDialog.setButton(DialogInterface.BUTTON_POSITIVE,
-                HtmlCompat.fromHtml("<font color='#FD6476'>" + getString(android.R.string.ok) + "</font>",
-                        HtmlCompat.FROM_HTML_MODE_LEGACY), (dialog, i) -> {
-                    // Acciones a realizar cuando se hace clic en el botón "OK"
-                });
         timePickerDialog.show();
     }
 
@@ -275,7 +255,8 @@ public class AddEvent extends AppCompatActivity {
 
     public void toastWarning(String msg) {
         LayoutInflater layoutInflater = getLayoutInflater();
-        View view = layoutInflater.inflate(R.layout.toast_warning, findViewById(R.id.custom_warning));
+        View view = layoutInflater.inflate(R.layout.toast_warning,
+                findViewById(R.id.custom_warning));
         TextView txtMensaje = view.findViewById(R.id.text_warning);
         txtMensaje.setText(msg);
 

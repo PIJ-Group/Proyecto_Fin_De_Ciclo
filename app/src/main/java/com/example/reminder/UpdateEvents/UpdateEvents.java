@@ -5,7 +5,6 @@ import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -27,7 +26,6 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.text.HtmlCompat;
 
 import com.example.reminder.MainActivity;
 import com.example.reminder.R;
@@ -51,7 +49,8 @@ public class UpdateEvents extends AppCompatActivity implements AdapterView.OnIte
     Spinner Spinner_Status;
 
     //Declare strings to store the data of the main activity
-    String id_event_R, user_id_R, registration_date_R, title_R, description_R, date_R, hour_R, status_R, user_mail_R;
+    String id_event_R, user_id_R, registration_date_R, title_R, description_R,
+            date_R, hour_R, status_R, user_mail_R;
 
     //Declare strings to get data for update the event in firebase
     String titleUpdate, descriptionUpdate, dateUpdate, hourUpdate, statusUpdate;
@@ -64,7 +63,7 @@ public class UpdateEvents extends AppCompatActivity implements AdapterView.OnIte
     FirebaseAuth nAuth;
 
     //Declare variables for formatting  date and time
-    int year, month, day, hour,minutes;
+    int year, month, day, hour, minutes;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,7 +88,7 @@ public class UpdateEvents extends AppCompatActivity implements AdapterView.OnIte
     }
 
     //Initialize Views
-    private void VarInit(){
+    private void VarInit() {
         Id_Event_Update = findViewById(R.id.Id_Event_Update);
         Userid_User_Update = findViewById(R.id.Userid_User_Update);
         Registration_Date_Update = findViewById(R.id.Registration_Date_Update);
@@ -111,7 +110,7 @@ public class UpdateEvents extends AppCompatActivity implements AdapterView.OnIte
     }
 
     //Get data from intent in Main Activity
-    private void GetData(){
+    private void GetData() {
         id_event_R = getIntent().getStringExtra("eventId");
         user_id_R = getIntent().getStringExtra("userId");
         registration_date_R = getIntent().getStringExtra("currentDate");
@@ -124,7 +123,7 @@ public class UpdateEvents extends AppCompatActivity implements AdapterView.OnIte
     }
 
     //Setting Data
-    private void SetData(){
+    private void SetData() {
         Id_Event_Update.setText(id_event_R);
         Userid_User_Update.setText(user_id_R);
         Registration_Date_Update.setText(registration_date_R);
@@ -137,14 +136,16 @@ public class UpdateEvents extends AppCompatActivity implements AdapterView.OnIte
     }
 
     //method to select a date
-    private void dateSelect(){
+    private void dateSelect() {
         final Calendar calendar = Calendar.getInstance();
         day = calendar.get(Calendar.DAY_OF_MONTH);
         month = calendar.get(Calendar.MONTH);
         year = calendar.get(Calendar.YEAR);
 
         //Dialog with Calendar Picker
-        @SuppressLint("SetTextI18n") DatePickerDialog datePickerDialog = new DatePickerDialog(UpdateEvents.this, (view, yearSelected, monthSelected, daySelected) -> {
+        @SuppressLint("SetTextI18n") DatePickerDialog datePickerDialog =
+                new DatePickerDialog(UpdateEvents.this, (view, yearSelected,
+                                                         monthSelected, daySelected) -> {
 
             String dayFormatted, monthFormatted;
 
@@ -168,27 +169,18 @@ public class UpdateEvents extends AppCompatActivity implements AdapterView.OnIte
             Date_Update.setText(dayFormatted + "/" + monthFormatted + "/" + yearSelected);
         }
                 , year, month, day);
-        datePickerDialog.setButton(DialogInterface.BUTTON_NEGATIVE,
-                HtmlCompat.fromHtml("<font color='#FD6476'>" + getString(android.R.string.cancel) + "</font>",
-                        HtmlCompat.FROM_HTML_MODE_LEGACY), (dialog, i) -> {
-                    // Acciones a realizar cuando se hace clic en el botón "Cancel"
-                });
 
-        datePickerDialog.setButton(DialogInterface.BUTTON_POSITIVE,
-                HtmlCompat.fromHtml("<font color='#FD6476'>" + getString(android.R.string.ok) + "</font>",
-                        HtmlCompat.FROM_HTML_MODE_LEGACY), (dialog, i) -> {
-                    // Acciones a realizar cuando se hace clic en el botón "OK"
-                });
         datePickerDialog.show();
     }
 
     //method to select an hour
-    private void selectHour(){
+    private void selectHour() {
         final Calendar clock = Calendar.getInstance();
         hour = clock.get(Calendar.HOUR_OF_DAY);
         minutes = clock.get(Calendar.MINUTE);
 
-        @SuppressLint("SetTextI18n") TimePickerDialog timePickerDialog = new TimePickerDialog(UpdateEvents.this, (view, hourOfDay, minute) -> {
+        @SuppressLint("SetTextI18n") TimePickerDialog timePickerDialog =
+                new TimePickerDialog(UpdateEvents.this, (view, hourOfDay, minute) -> {
 
             String hourFormatted, minutesFormatted;
 
@@ -208,24 +200,14 @@ public class UpdateEvents extends AppCompatActivity implements AdapterView.OnIte
 
             // Set Time on TextView
             Hour_Update.setText(hourFormatted + ":" + minutesFormatted);
-        },hour,minutes,false);
-        timePickerDialog.setButton(DialogInterface.BUTTON_NEGATIVE,
-                HtmlCompat.fromHtml("<font color='#FD6476'>" + getString(android.R.string.cancel) + "</font>",
-                        HtmlCompat.FROM_HTML_MODE_LEGACY), (dialog, i) -> {
-                    // Acciones a realizar cuando se hace clic en el botón "Cancel"
-                });
+        }, hour, minutes, false);
 
-        timePickerDialog.setButton(DialogInterface.BUTTON_POSITIVE,
-                HtmlCompat.fromHtml("<font color='#FD6476'>" + getString(android.R.string.ok) + "</font>",
-                        HtmlCompat.FROM_HTML_MODE_LEGACY), (dialog, i) -> {
-                    // Acciones a realizar cuando se hace clic en el botón "OK"
-                });
         timePickerDialog.show();
     }
-    //Update a Event in firebase
-    private void updateEventFirebase(){
 
-//        String userMail = Objects.requireNonNull(nAuth.getCurrentUser()).getEmail();
+    //Update a Event in firebase
+    private void updateEventFirebase() {
+
         titleUpdate = Title_Update.getText().toString();
         descriptionUpdate = Description_Update.getText().toString();
         dateUpdate = Date_Update.getText().toString();
@@ -270,21 +252,21 @@ public class UpdateEvents extends AppCompatActivity implements AdapterView.OnIte
                     Log.e(TAG, "Error obtaining the document.", e);
                     toastWarning("Event not found");
                 });
-  }
+    }
 
     //Check event status
-    private void checkEventStatus(){
+    private void checkEventStatus() {
         event_Status = Status_Update.getText().toString();
 
-        if(event_Status.equals("Not finished")){
+        if (event_Status.equals("Not finished")) {
             Event_not_finished.setVisibility(View.VISIBLE);
         }
-        if(event_Status.equals("Finished")){
+        if (event_Status.equals("Finished")) {
             Event_finished.setVisibility(View.VISIBLE);
         }
     }
 
-    private void spinner_Status(){
+    private void spinner_Status() {
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
                 R.array.Event_Status, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -343,7 +325,8 @@ public class UpdateEvents extends AppCompatActivity implements AdapterView.OnIte
 
     public void toastWarning(String msg) {
         LayoutInflater layoutInflater = getLayoutInflater();
-        View view = layoutInflater.inflate(R.layout.toast_warning, findViewById(R.id.custom_warning));
+        View view = layoutInflater.inflate(R.layout.toast_warning,
+                findViewById(R.id.custom_warning));
         TextView txtMensaje = view.findViewById(R.id.text_warning);
         txtMensaje.setText(msg);
 
