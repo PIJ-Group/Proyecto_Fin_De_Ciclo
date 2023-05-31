@@ -1,7 +1,9 @@
 package com.example.reminder;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Html;
 import android.util.Log;
@@ -26,6 +28,7 @@ import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.api.Authentication;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -67,6 +70,8 @@ public class Login extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        //
+        checkAndRedirectToMain();
 
         // Initialize Firebase Auth
         mAuth = FirebaseAuth.getInstance();
@@ -95,6 +100,8 @@ public class Login extends AppCompatActivity {
                 mAuth.signInWithEmailAndPassword(email, password)
                         .addOnCompleteListener(this, task -> {
                             if (task.isSuccessful()) {
+                                //Persist the session
+                                persistSession();
                                 // Sign in success, update UI with the signed-in user's information
                                 Intent intent = new Intent(Login.this, MainActivity.class);
                                 startActivity(intent);
@@ -113,6 +120,8 @@ public class Login extends AppCompatActivity {
             startActivity(new Intent(Login.this, Register.class));
 
         });
+
+
 
 
         //-------------------GOOGLE------------------------//
@@ -146,6 +155,32 @@ public class Login extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+    }
+
+    // Method to persist the session
+    private void persistSession() {
+        SharedPreferences sharedPreferences = getSharedPreferences("MyPreferences", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putBoolean("isAuthen", true);
+        editor.apply();
+    }
+
+    //Method to verify and redirect to the user
+    private void checkAndRedirectToMain() {
+        SharedPreferences sharedPreferences = getSharedPreferences("MyPreferences", Context.MODE_PRIVATE);
+        boolean isAuthen = sharedPreferences.getBoolean("isAuthen", false);
+
+        if (isAuthen) {
+            //Verify if the user is authenticated in Firebase Authentication
+            FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+
+            if (currentUser != null) {
+                //If the user is authenticated, redirect to the MainActivity
+                Intent intent = new Intent(this, MainActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        }
     }
 
     //-------------------Google------------------------//
