@@ -118,10 +118,14 @@
             app:layout_constraintVertical_bias="0.0" />
 
         <!--TIME BUTTON-->
+
+        <!--TIME SELECTED-->
+
         <Button
             android:id="@+id/Hour_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
             android:backgroundTint="@color/pink_principal"
             android:text="@string/Hour_btn"
             android:textColor="@color/black"
@@ -130,13 +134,12 @@
             app:iconTint="@color/black"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.036"
+            app:layout_constraintHorizontal_bias="0.027"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/Calendar_btn"
-            app:layout_constraintVertical_bias="0.051"
+            app:layout_constraintVertical_bias="0.0"
             tools:ignore="TextContrastCheck" />
 
-        <!--TIME SELECTED-->
         <TextView
             android:id="@+id/Hour"
             android:layout_width="wrap_content"
