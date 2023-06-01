@@ -3,7 +3,6 @@ package com.example.reminder;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.Html;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -17,11 +16,10 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.text.HtmlCompat;
 
 import com.example.reminder.AddEvents.AddEvent;
-import com.example.reminder.UpdateEvents.UpdateEvents;
 import com.example.reminder.ListEvents.ListEvents;
+import com.example.reminder.UpdateEvents.UpdateEvents;
 import com.example.reminder.model.Event;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -204,18 +202,18 @@ public class MainActivity extends AppCompatActivity {
 
         AlertDialog dialog = new AlertDialog.Builder(this)
 
-                .setPositiveButton(HtmlCompat.fromHtml("<font color='#FD6476'>" + getString(R.string.dialog_item_details) + "</font>", HtmlCompat.FROM_HTML_MODE_LEGACY), (dialog1, i) -> {
+                .setPositiveButton(getString(R.string.dialog_item_details), (dialog1, i) -> {
                     //Go to the event details activity.
                     getAndSendObject(view, ListEvents.class);
                 })
-                .setNeutralButton(HtmlCompat.fromHtml("<font color='#FD6476'>" + getString(R.string.dialog_item_delete) + "</font>", HtmlCompat.FROM_HTML_MODE_LEGACY), (dialog12, i) -> {
+                .setNeutralButton(getString(R.string.dialog_item_delete), (dialog12, i) -> {
                     //Delete event.
                     int position = listPosition(view);
                     db.collection("Events").document(listEventsId.get(position)).delete();
 
                     toastOk(getString(R.string.event_deleted));
                 })
-                .setNegativeButton(HtmlCompat.fromHtml("<font color='#FD6476'>" + getString(R.string.dialog_item_edit) + "</font>", HtmlCompat.FROM_HTML_MODE_LEGACY), (dialog13, i) -> {
+                .setNegativeButton(getString(R.string.dialog_item_edit), (dialog13, i) -> {
                     //Go to edit event activity.
                     getAndSendObject(view, UpdateEvents.class);
                 })
@@ -289,17 +287,4 @@ public class MainActivity extends AppCompatActivity {
         toast.show();
     }
 
-    //Warning customized toast.
-    public void toastWarning(String msg) {
-        LayoutInflater layoutInflater = getLayoutInflater();
-        android.view.View view = layoutInflater.inflate(R.layout.toast_warning, findViewById(R.id.custom_warning));
-        TextView txtMensaje = view.findViewById(R.id.text_warning);
-        txtMensaje.setText(msg);
-
-        Toast toast = new Toast(getApplicationContext());
-        toast.setGravity(Gravity.CENTER_VERTICAL | Gravity.BOTTOM, 0, 200);
-        toast.setDuration(Toast.LENGTH_SHORT);
-        toast.setView(view);
-        toast.show();
-    }
 }

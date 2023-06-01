@@ -59,7 +59,9 @@ public class Register extends AppCompatActivity {
             String userName = inputUserName.getText().toString();
 
             //Validations
-            if (email.isEmpty()) {
+            if (userName.isEmpty()) {
+                inputUserName.setError(getString(R.string.empty_field));
+            } else if (email.isEmpty()) {
                 inputEmailText.setError(getString(R.string.empty_field));
             } else if (!email.contains("@") || !email.contains(".") || email.contains(" ")) {
                 inputEmailText.setError(getString(R.string.invalid_email));

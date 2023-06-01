@@ -82,6 +82,8 @@
     <string name="aditional_options">Aditional Options</string>
     <string name="github_Login">GITHUB LOGIN</string>
     <string name="no_events">No events</string>
+    <string name="dialog_login_yes">Yes</string>
+    <string name="dialog_login_no">No</string>
 
     <!--Spinner-->
     <string-array name="Event_Status">
