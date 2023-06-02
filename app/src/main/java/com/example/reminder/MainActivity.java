@@ -187,7 +187,9 @@ public class MainActivity extends AppCompatActivity {
                 mAuth.signOut();
                 //Log out of Google.
                 onBackPressed();
+                Intent intentMain = new Intent(MainActivity.this, Login.class);
                 finish();
+                startActivity(intentMain);
                 return true;
 
             default:
