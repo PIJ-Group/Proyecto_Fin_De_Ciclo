@@ -69,9 +69,10 @@ public class Register extends AppCompatActivity {
                 inputPassText.setError(getString(R.string.empty_field));
             } else if (password.length() < 6) {
                 inputPassText.setError(getString(R.string.invalid_password));
-            } else if (!confirmedPassword.equals(password) || confirmedPassword.isEmpty()) {
+            } else if (confirmedPassword.isEmpty()) {
                 inputConfirmedPassText.setError(getString(R.string.not_match));
-
+            } else if (!confirmedPassword.equals(password)) {
+                inputConfirmedPassText.setError(getString(R.string.not_match));
             } else {
                 //Create user in firebase
                 mAuth.createUserWithEmailAndPassword(email, password)
