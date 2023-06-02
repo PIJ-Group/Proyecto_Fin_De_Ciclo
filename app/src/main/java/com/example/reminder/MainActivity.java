@@ -1,5 +1,6 @@
 package com.example.reminder;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -33,7 +34,6 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
@@ -54,8 +54,6 @@ public class MainActivity extends AppCompatActivity {
     Calendar calendar;
     String calendarDate;
 
-
-    private GoogleSignInOptions gso;
     private GoogleSignInClient mGoogleSignInClient;
 
     @Override
@@ -70,10 +68,10 @@ public class MainActivity extends AppCompatActivity {
         calendar = Calendar.getInstance();
 
         //We initialize the gso variable that will get the necessary elements to the login user.
-        gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestIdToken(getString(R.string.default_web_client_id))
-                .requestEmail()
-                .build();
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                    .requestIdToken(getString(R.string.default_web_client_id))
+                    .requestEmail()
+                    .build();
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
 
         //Method called to obtain the current date.
@@ -89,7 +87,7 @@ public class MainActivity extends AppCompatActivity {
             calendar.set(Calendar.MONTH,month);
             calendar.set(Calendar.YEAR,year);
 
-            SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+            @SuppressLint("SimpleDateFormat") SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
             calendarDate = format.format(calendar.getTime());
 
             //Method called to update the current user's tasks.
@@ -99,16 +97,15 @@ public class MainActivity extends AppCompatActivity {
     }
 
     //Get current date.
-    private String actualDate() {
+    private void actualDate() {
 
         calendar.get(Calendar.DAY_OF_MONTH);
         calendar.get(Calendar.MONTH + 1);
         calendar.get(Calendar.YEAR);
 
-        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
         calendarDate = format.format(calendar.getTime());
 
-        return calendarDate;
     }
 
     //Insert items in the listView.
@@ -145,13 +142,14 @@ public class MainActivity extends AppCompatActivity {
                     listEventsComplete.clear();
                     listEventsTitle.clear();
 
+                    assert value != null;
                     for (QueryDocumentSnapshot doc : value) {
                         listEventsId.add(doc.getId());
                         dataModal = new DataModal(doc.getString("title"), doc.getString("eventHour"));
                         listEventsTitle.add(doc.getString("title"));
                         listEventsComplete.add(dataModal);
                         //Sorting the events array by hours.
-                        Collections.sort(listEventsComplete, hoursComparator);
+                        listEventsComplete.sort(hoursComparator);
                     }
 
                     if (listEventsComplete.size() == 0) {
@@ -173,6 +171,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     //Functionality of the menu buttons.
+    @SuppressLint("NonConstantResourceId")
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
@@ -222,6 +221,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     //Method to get the object of the database and send it to other activity.
+    @SuppressWarnings("rawtypes")
     public void getAndSendObject(View view, Class activity) {
         int position = listPosition(view);
         event = new Event();
@@ -249,8 +249,7 @@ public class MainActivity extends AppCompatActivity {
         View parentDelete = (View) view.getParent();
         TextView eventTitleItem = parentDelete.findViewById(R.id.item_title);
         String eventContent = eventTitleItem.getText().toString();
-        int position = listEventsTitle.indexOf(eventContent);
-        return position;
+        return listEventsTitle.indexOf(eventContent);
     }
 
     //Session closing of Google through the signOut method and go back to login activity.

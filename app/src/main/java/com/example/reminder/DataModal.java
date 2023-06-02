@@ -3,11 +3,8 @@ package com.example.reminder;
 //Class for save specifics data to use them in our item list.
 public class DataModal {
 
-    private String eventHour, title;
-
-    public DataModal() {
-
-    }
+    private String title;
+    private final String eventHour;
 
     public DataModal(String title, String eventHour) {
         this.eventHour = eventHour;
@@ -16,10 +13,6 @@ public class DataModal {
 
     public String getEventHour() {
         return eventHour;
-    }
-
-    public void setEventHour(String eventHour) {
-        this.eventHour = eventHour;
     }
 
     public String getTitle() {

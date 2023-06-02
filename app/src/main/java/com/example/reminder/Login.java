@@ -1,11 +1,9 @@
 package com.example.reminder;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.text.Html;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -15,20 +13,15 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.text.HtmlCompat;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-import com.google.api.Authentication;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -114,10 +107,8 @@ public class Login extends AppCompatActivity {
         });
         //User registration button
         btnRegister = findViewById(R.id.createAccount);
-        btnRegister.setOnClickListener(view -> {
-            startActivity(new Intent(Login.this, Register.class));
-
-        });
+        btnRegister.setOnClickListener(view ->
+                startActivity(new Intent(Login.this, Register.class)));
 
 
         //-------------------GOOGLE------------------------//
@@ -132,24 +123,18 @@ public class Login extends AppCompatActivity {
 
         //-------------------Github------------------------//
         //GitHub login settings
-        btnGithub.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(Login.this, GithubActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-                startActivity(intent);
-            }
+        btnGithub.setOnClickListener(v -> {
+            Intent intent = new Intent(Login.this, GithubActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+            startActivity(intent);
         });
 
         //-------------------Twitter------------------------//
         //GitHub Twitter settings
-        btnTwitter.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(Login.this, TwitterActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-                startActivity(intent);
-            }
+        btnTwitter.setOnClickListener(v -> {
+            Intent intent = new Intent(Login.this, TwitterActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+            startActivity(intent);
         });
     }
 
@@ -181,6 +166,7 @@ public class Login extends AppCompatActivity {
 
     //-------------------Google------------------------//
     //Method for logging in
+    @SuppressWarnings("deprecation")
     public void signIn() {
         Intent signInIntent = mGoogleSignInClient.getSignInIntent();
         startActivityForResult(signInIntent, RC_SIGN_IN);
@@ -223,17 +209,9 @@ public class Login extends AppCompatActivity {
                         Map<String, Object> dataUser = new HashMap<>();
                         dataUser.put("email_user", email);
                         dataUser.put("user_name", name);
-                        documentReference.set(dataUser).addOnSuccessListener(new OnSuccessListener<Void>() {
-                            @Override
-                            public void onSuccess(Void aVoid) {
-                                Log.d("register", "Created user data");
-                            }
-                        }).addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-                                Log.d("register", "Error creating document");
-                            }
-                        });
+                        documentReference.set(dataUser).addOnSuccessListener(aVoid ->
+                                Log.d("register", "Created user data")).addOnFailureListener(e ->
+                                Log.d("register", "Error creating document"));
                         updateUI();
 
                     } else {
